@@ -1,9 +1,11 @@
 import React from 'react'
+import Dice from './dice'
 
 const DebugPage = () => {
     return (
         <div>
-            Hello
+            <button>Roll Dice</button>
+            <Dice />
         </div>
     )
 }
