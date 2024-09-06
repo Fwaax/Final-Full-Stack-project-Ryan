@@ -7,6 +7,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import CharacterSheetPage from "./pages/characterSheetPage";
 
 const queryClient = new QueryClient()
 
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
   {
     path: "/debug",
     element: <DebugPage />,
+  }
+  ,
+  {
+    path: "/character-sheet",
+    element: <CharacterSheetPage />,
   }
 ]);
 

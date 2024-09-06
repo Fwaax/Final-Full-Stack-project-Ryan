@@ -1,5 +1,5 @@
 import React from 'react'
-import Dice from './dice'
+import Dice from '../components/dice'
 
 const DebugPage = () => {
     return (
