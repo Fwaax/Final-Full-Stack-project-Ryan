@@ -162,6 +162,46 @@ const CharacterCreationPage: React.FC = () => {
                         <option value="Urchin">Urchin</option>
                     </select>
                 </label>
+
+                <label className="block">
+                    Faith:
+                    <select
+                        name="faith"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        value={character.appearance.faith}
+                        onChange={handleChange} defaultValue={'Select Faith'}
+                    >
+                        <option value="">Select Faith</option>
+                        <option value="Torm">Torm</option>
+                        <option value="Tyr">Tyr</option>
+                        <option value="Lathander">Lathander</option>
+                        <option value="Mystra">Mystra</option>
+                        <option value="Selûne">Selûne</option>
+                        <option value="Sune">Sune</option>
+                        <option value="Tempus">Tempus</option>
+                        <option value="Kelemvor">Kelemvor</option>
+                        <option value="Bane">Bane</option>
+                        <option value="Bhaal">Bhaal</option>
+                        <option value="Shar">Shar</option>
+                        <option value="Lolth">Lolth</option>
+                        <option value="Pelor">Pelor</option>
+                        <option value="Heironeous">Heironeous</option>
+                        <option value="Rao">Rao</option>
+                        <option value="St. Cuthbert">St. Cuthbert</option>
+                        <option value="Nerull">Nerull</option>
+                        <option value="Vecna">Vecna</option>
+                        <option value="Erythnul">Erythnul</option>
+                        <option value="Iuz">Iuz</option>
+                        <option value="Arawai">Arawai</option>
+                        <option value="Balinor">Balinor</option>
+                        <option value="Boldrei">Boldrei</option>
+                        <option value="The Devourer">The Devourer</option>
+                        <option value="The Mockery">The Mockery</option>
+                        <option value="Nature">Nature</option>
+                        <option value="Philosophies">Philosophies</option>
+                    </select>
+                </label>
+
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
