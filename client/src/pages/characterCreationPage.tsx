@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+// Updating the currect state for the character to update on the webpage
 
 interface Character {
     name: string;
@@ -9,6 +11,16 @@ interface Character {
     characteristics: string;
     personalityTraits: string;
     appearance: CharacterAppearance;
+    // alignment: Alignment;
+    // faith: Faith;
+    // gender: Gender;
+    // hair: string;
+    // eyes: string;
+    // height: string;
+    // size: Size;
+    // weight: string;
+    // skin: string;
+    // age: string;
     organizations: string;
     allies: string;
     enemies: string;
@@ -22,10 +34,10 @@ interface Character {
     charisma: number;
 }
 
-type Gender = "male" | "female";
-type Alignment = "Lawful Good" | "Neutral Good" | "Chaotic Good" | "Lawful Neutral" | "True Neutral" | "Chaotic Neutral" | "Lawful Evil" | "Neutral Evil" | "Chaotic Evil";
-type Size = "Small" | "Medium" | "Large";
-type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune" | "Tempus" | "Kelemvor" | "Bane" | "Bhaal" | "Shar" | "Lolth" | "Pelor" | "Heironeous" | "Rao" | "St. Cuthbert" | "Nerull" | "Vecna" | "Erythnul" | "Iuz" | "Arawai" | "Balinor" | "Boldrei" | "The Devourer" | "The Mockery" | "Nature" | "Philosophies";
+type Gender = "male" | "female" | "";
+type Alignment = "Lawful Good" | "Neutral Good" | "Chaotic Good" | "Lawful Neutral" | "True Neutral" | "Chaotic Neutral" | "Lawful Evil" | "Neutral Evil" | "Chaotic Evil" | "";
+type Size = "Small" | "Medium" | "Large" | "";
+type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune" | "Tempus" | "Kelemvor" | "Bane" | "Bhaal" | "Shar" | "Lolth" | "Pelor" | "Heironeous" | "Rao" | "St. Cuthbert" | "Nerull" | "Vecna" | "Erythnul" | "Iuz" | "Arawai" | "Balinor" | "Boldrei" | "The Devourer" | "The Mockery" | "Nature" | "Philosophies" | "";
 
 interface CharacterAppearance {
     alignment: Alignment;
@@ -52,18 +64,20 @@ const CharacterCreationPage: React.FC = () => {
         background: '',
         characteristics: '',
         personalityTraits: '',
+
         appearance: {
-            alignment: 'True Neutral',
-            gender: 'male',
-            eyes: 'brown',
-            size: 'Medium',
-            height: '5\'8"',
-            faith: 'Nature',
-            hair: 'black',
-            skin: 'light',
-            age: '25',
-            weight: '150 lbs',
-        },
+            alignment: '',
+            gender: '',
+            eyes: '',
+            size: '',
+            height: '',
+            faith: '',
+            hair: '',
+            skin: '',
+            age: '',
+            weight: '',
+        } as CharacterAppearance,
+
         organizations: '',
         allies: '',
         enemies: '',
@@ -77,10 +91,8 @@ const CharacterCreationPage: React.FC = () => {
         charisma: 10,
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setCharacter({ ...character, [name]: value });
-    };
+
+
 
     // Helper function for handling ability score changes
     const handleAbilityChange = (ability: AbilityScore, value: number) => {
@@ -99,7 +111,7 @@ const CharacterCreationPage: React.FC = () => {
                         name="name"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                         value={character.name}
-                        onChange={handleChange}
+                        onChange={(e) => setCharacter({ ...character, name: e.target.value })}
                     />
                 </label>
 
@@ -109,7 +121,7 @@ const CharacterCreationPage: React.FC = () => {
                         name="race"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                         value={character.race}
-                        onChange={handleChange}
+                        onChange={(e) => setCharacter({ ...character, race: e.target.value })}
                     >
                         <option value="">Select Race</option>
                         <option value="Human">Human</option>
@@ -127,7 +139,7 @@ const CharacterCreationPage: React.FC = () => {
                         name="class"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                         value={character.class}
-                        onChange={handleChange}
+                        onChange={(e) => setCharacter({ ...character, class: e.target.value })}
                     >
                         <option value="">Select Class</option>
                         <option value="Fighter">Fighter</option>
@@ -145,7 +157,7 @@ const CharacterCreationPage: React.FC = () => {
                         name="background"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                         value={character.background}
-                        onChange={handleChange}
+                        onChange={(e) => setCharacter({ ...character, background: e.target.value })}
                     >
                         <option value="">Select Background</option>
                         <option value="Acolyte">Acolyte</option>
@@ -164,12 +176,60 @@ const CharacterCreationPage: React.FC = () => {
                 </label>
 
                 <label className="block">
+                    Gender:
+                    <select
+                        name="gender"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        value={character.appearance.gender}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, gender: e.target.value as Gender } })}
+                    >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </label>
+
+                <label className="block">
+                    Alignment:
+                    <select
+                        name="alignment"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        value={character.appearance.alignment}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, alignment: e.target.value as Alignment } })}
+                    >
+                        <option value="">Select Alignment</option>
+                        <option value="True Neutral">True Neutral</option>
+                        <option value="Lawful Good">Lawful Good</option>
+                        <option value="Lawful Neutral">Lawful Neutral</option>
+                        <option value="Lawful Evil">Lawful Evil</option>
+                        <option value="Chaotic Good">Chaotic Good</option>
+                        <option value="Chaotic Neutral">Chaotic Neutral</option>
+                        <option value="Chaotic Evil">Chaotic Evil</option>
+                    </select>
+                </label>
+
+                <label className='block'>
+                    Size:
+                    <select
+                        name="size"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        value={character.appearance.size}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, size: e.target.value as Size } })}
+                    >
+                        <option value="">Select Size</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </label>
+
+                <label className="block">
                     Faith:
                     <select
                         name="faith"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                         value={character.appearance.faith}
-                        onChange={handleChange} defaultValue={'Select Faith'}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, faith: e.target.value as Faith } })}
                     >
                         <option value="">Select Faith</option>
                         <option value="Torm">Torm</option>
@@ -201,7 +261,52 @@ const CharacterCreationPage: React.FC = () => {
                         <option value="Philosophies">Philosophies</option>
                     </select>
                 </label>
+            </div>
 
+            <div className="flex flex-row justify-between">
+                <div>
+                    <label htmlFor="hair">Hair</label>
+                    <input type="text" name="hair" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.hair}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, hair: e.target.value } })} placeholder="Hair" />
+                </div>
+
+                <div>
+                    <label htmlFor="skin">Skin</label>
+                    <input type="text" name="skin" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.skin}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, skin: e.target.value } })} placeholder="Skin" />
+                </div>
+
+                <div>
+                    <label htmlFor="eyes">Eyes</label>
+                    <input type="text" name="eyes" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.eyes}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, eyes: e.target.value } })} placeholder="Eyes" />
+                </div>
+
+                <div>
+                    <label htmlFor="age">Age</label>
+                    <input type="text" name="age" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.age}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, age: e.target.value } })} placeholder="Age" />
+                </div>
+
+                <div>
+                    <label htmlFor="weight">Weight</label>
+                    <input type="text" name="weight" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.weight}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, weight: e.target.value } })} placeholder="Weight" />
+                </div>
+
+                <div>
+                    <label htmlFor="height">Height</label>
+                    <input type="text" name="height" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.height}
+                        onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, height: e.target.value } })} placeholder="Height" />
+                </div>
+            </div>
+
+            <div className='flex flex[6_6_0%]'>
+                <div className='flex flex-col'>
+                    <label htmlFor="personality_traits">Personality Traits</label>
+                    <input className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.personalityTraits}
+                        onChange={(e) => setCharacter({ ...character, personalityTraits: e.target.value })} placeholder="Personality Traits" type="text" name='personality_traits' />
+                </div>
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
@@ -227,6 +332,17 @@ const CharacterCreationPage: React.FC = () => {
                 <p><strong>Name:</strong> {character.name}</p>
                 <p><strong>Race:</strong> {character.race}</p>
                 <p><strong>Class:</strong> {character.class}</p>
+                <p><strong>Level:</strong> {character.level}</p>
+                <p><strong>Background:</strong> {character.background}</p>
+                <p><strong>Characteristics:</strong> {character.characteristics}</p>
+                <p><strong>Personality Traits:</strong> {character.personalityTraits}</p>
+                <p><strong>Size:</strong> {character.appearance.size}</p>
+                <p><strong>Faith:</strong> {character.appearance.faith}</p>
+                <p><strong>Organizations:</strong> {character.organizations}</p>
+                <p><strong>Allies:</strong> {character.allies}</p>
+                <p><strong>Enemies:</strong> {character.enemies}</p>
+                <p><strong>Backstory:</strong> {character.backstory}</p>
+                <p><strong>Other:</strong> {character.other}</p>
                 <p><strong>Strength:</strong> {character.strength}</p>
                 <p><strong>Dexterity:</strong> {character.dexterity}</p>
                 <p><strong>Constitution:</strong> {character.constitution}</p>
