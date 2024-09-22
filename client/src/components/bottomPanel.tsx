@@ -15,7 +15,7 @@ const BottomPanel = () => {
 
 function LeftSection() {
     return (
-        <div className='bg-red-700 h-[800px] w-full flex-[2_2_0%]'>
+        <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg'>
 
             <div className='flex flex-col justify-around gap-2 border border-black border-solid' id='saving_throws'>
                 <div className='flex flex-row justify-around'>
@@ -50,10 +50,10 @@ function LeftSection() {
                     </div>
                 </div>
                 <div className='flex flex-col gap-2'>
-                    <div className='col-span-2 bg-yellow-500 flex justify-center'>
+                    <div className='col-span-2 flex justify-center'>
                         <p>Advantage display</p>
                     </div>
-                    <div className='col-span-2 bg-purple-500 flex justify-center'>
+                    <div className='col-span-2 flex justify-center'>
                         <p>SAVING THROWS</p>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ const SKILLS = [
 ]
 function MiddleSection() {
     return (
-        <div className='bg-blue-700 h-[800px] w-full flex-[2_2_0%] flex flex-col gap-y-1' >
+        <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg' >
             {/* Header Table */}
             <div className='flex flex-row w-full text-center underline'>
                 <div className='flex-[1_1_0%]'>PROF</div>
@@ -164,7 +164,7 @@ function MiddleSection() {
 
 function RightSection() {
     return (
-        <div className='bg-green-700 h-[800px] w-full flex-[4_4_0%]'>
+        <div className='bg-gray-800 h-[800px] w-full flex-[4_4_0%] p-4 rounded-lg'>
             <div className='flex flex-row gap-x-4 text-center justify-around h-fit border border-black border-solid' id='initAcResistances'>
                 <div className='flex flex-row gap-x-6 items-center'>
                     <div>

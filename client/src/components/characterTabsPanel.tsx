@@ -52,25 +52,27 @@ function CharacterTabsPanel() {
     }
 
     return (
-        <div className='flex flex-col'>
+        <div className="flex flex-col w-full">
             {/* Tabs Navigation */}
-            <div className='flex flex-row justify-around'>
+            <div className="flex justify-around bg-gray-800 p-2 rounded-t-lg">
                 {tabs.map((tab) => (
-                    <h6
+                    <button
                         key={tab.label}
                         className={clsx(
-                            'cursor-pointer hover:underline',
-                            activeTab === tab.label && 'font-bold'
+                            'px-4 py-2 transition-colors duration-300',
+                            activeTab === tab.label
+                                ? 'bg-red-700 text-white'
+                                : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
                         )}
                         onClick={() => setActiveTab(tab.label)}
                     >
                         {tab.label}
-                    </h6>
+                    </button>
                 ))}
             </div>
 
             {/* Tab Content */}
-            <div className='tab-content mt-4'>
+            <div className="tab-content mt-4 p-4 bg-gray-700 text-white">
                 {renderTabContent()}
             </div>
         </div>

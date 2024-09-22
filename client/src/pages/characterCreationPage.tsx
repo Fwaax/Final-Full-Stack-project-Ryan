@@ -11,16 +11,6 @@ interface Character {
     characteristics: string;
     personalityTraits: string;
     appearance: CharacterAppearance;
-    // alignment: Alignment;
-    // faith: Faith;
-    // gender: Gender;
-    // hair: string;
-    // eyes: string;
-    // height: string;
-    // size: Size;
-    // weight: string;
-    // skin: string;
-    // age: string;
     organizations: string;
     allies: string;
     enemies: string;
