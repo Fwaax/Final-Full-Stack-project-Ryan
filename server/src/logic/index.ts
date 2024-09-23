@@ -43,7 +43,7 @@ export async function findUserByEmail(email: string) {
 }
 
 
-export async function getLoginTokenAndUser(
+export async function getLoginTokenByUsernameValidation(
 
     userName: string,
     password: string
@@ -79,6 +79,46 @@ export async function getLoginTokenAndUser(
         userName: foundUserByUserName.userName,
         email: foundUserByUserName.email,
         nickname: foundUserByUserName.nickname,
+    }
+    return { token, user: userToReturn };
+}
+
+export async function getLoginTokenByEmailValidation(
+
+    email: string,
+    password: string
+) {
+    // Find user by username
+    const foundUserByEmail = await findUserByEmail(email);
+    if (!foundUserByEmail) {
+        throw new Error("User not found");
+    }
+
+    // Check password
+    const passwordMatch: boolean = await bcrypt.compare(
+        password,
+        foundUserByEmail.hashedPassword
+    );
+
+    if (!passwordMatch) {
+        throw new Error("Wrong password");
+    }
+
+    // Create object to sign
+    const objectToSign: LoginData = {
+        userName: foundUserByEmail.userName,
+        email: foundUserByEmail.email,
+    };
+
+    // Generate JWT token
+    const token: string = jwt.sign(objectToSign, JWT_SECRET, {
+        expiresIn: "24h",
+    });
+
+    const userToReturn = {
+        userName: foundUserByEmail.userName,
+        email: foundUserByEmail.email,
+        nickname: foundUserByEmail.nickname,
     }
     return { token, user: userToReturn };
 }

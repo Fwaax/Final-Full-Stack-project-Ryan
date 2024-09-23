@@ -40,7 +40,7 @@ export async function startExpressServer() {
     });
 
     app.use("/", usersRouter);
-    app.use("/", authRouter);
+    app.use("/login", authRouter);
     app.use("/", registerRouter);
 
     app.listen(PORT, () => {
