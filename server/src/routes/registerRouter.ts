@@ -23,19 +23,27 @@ const registerRouter: Router = express.Router();
  * }
  */
 registerRouter.post("/register", async (req: Request, res: Response) => {
-    const { userName, nickname, email, password } = req.body;
 
-    const userToAdd: IUser = {
-        userName,
-        nickname,
-        email,
-        hashedPassword: hashPassword(password),
-    };
+    try {
+        const { userName, nickname, email, password } = req.body;
 
-    await addUserToDataBase(userToAdd);
+        const userToAdd: IUser = {
+            userName,
+            nickname,
+            email,
+            hashedPassword: hashPassword(password),
+        };
+
+        await addUserToDataBase(userToAdd);
 
 
-    res.send("User registered successfully.");
+        res.send("User registered successfully.");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to register user.");
+    }
+
+
 });
 
 export default registerRouter;
