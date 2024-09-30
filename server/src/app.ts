@@ -4,7 +4,6 @@ import cors from "cors";
 import morgan from "morgan";
 import colorfulMorganFormat from "./utils/morgan";
 import { DB_CONNECTION_URL, DEFAULT_CONNECTION_URL, PORT } from "./const/env";
-import COUNTRIES from "./const/countries";
 import usersRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import registerRouter from "./routes/registerRouter";
@@ -39,7 +38,7 @@ export async function startExpressServer() {
         res.send("Alive!");
     });
 
-    app.use("/", usersRouter);
+    app.use("/user", usersRouter);
     app.use("/login", authRouter);
     app.use("/", registerRouter);
 

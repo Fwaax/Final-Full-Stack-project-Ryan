@@ -1,6 +1,6 @@
 import { JWT_SECRET } from "../const/env";
 import { LoginData } from "../interfaces";
-import { IUser, UserModel } from "../schema";
+import { IUser, UserModel } from "../schema/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -14,7 +14,6 @@ export async function addUserToDataBase(user: IUser) {
     if (foundUserByEmail) {
         throw new Error("User with this email already exists");
     }
-
     user.userName = user.userName.toLowerCase();
     user.email = user.email.toLowerCase();
     await UserModel.create(user);
@@ -66,6 +65,7 @@ export async function getLoginTokenByUsernameValidation(
 
     // Create object to sign
     const objectToSign: LoginData = {
+        id: foundUserByUserName._id.toString(),
         userName: foundUserByUserName.userName,
         email: foundUserByUserName.email,
     };
@@ -84,17 +84,19 @@ export async function getLoginTokenByUsernameValidation(
 }
 
 export async function getLoginTokenByEmailValidation(
-
     email: string,
     password: string
 ) {
-    // Find user by username
-    const foundUserByEmail = await findUserByEmail(email);
+    // Find user by email and explicitly include hashedPassword for validation
+    const foundUserByEmail = await UserModel.findOne({ email })
+        .select('+hashedPassword')
+        .exec();
+
     if (!foundUserByEmail) {
         throw new Error("User not found");
     }
 
-    // Check password
+    // Check password using bcrypt in backend
     const passwordMatch: boolean = await bcrypt.compare(
         password,
         foundUserByEmail.hashedPassword
@@ -104,21 +106,25 @@ export async function getLoginTokenByEmailValidation(
         throw new Error("Wrong password");
     }
 
-    // Create object to sign
+    // Create object to sign for the JWT
     const objectToSign: LoginData = {
+        id: foundUserByEmail._id.toString(), // Convert ObjectId to string
         userName: foundUserByEmail.userName,
         email: foundUserByEmail.email,
     };
+
 
     // Generate JWT token
     const token: string = jwt.sign(objectToSign, JWT_SECRET, {
         expiresIn: "24h",
     });
 
+    // Return user data without the hashedPassword
     const userToReturn = {
         userName: foundUserByEmail.userName,
         email: foundUserByEmail.email,
         nickname: foundUserByEmail.nickname,
-    }
+    };
+
     return { token, user: userToReturn };
 }
