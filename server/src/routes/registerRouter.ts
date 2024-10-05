@@ -33,11 +33,10 @@ registerRouter.post("/register", async (req: Request, res: Response) => {
             return res.status(400).send(validationResult.error.details[0].message);
         }
 
-        const { userName, email, password, nickname } = req.body;
+        const { email, password, nickname } = req.body;
 
 
         const userToAdd: IUser = {
-            userName,
             nickname,
             email,
             hashedPassword: hashPassword(password),

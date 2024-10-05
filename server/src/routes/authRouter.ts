@@ -1,6 +1,6 @@
 // routes.ts
 import express, { Request, Response, Router } from "express";
-import { getLoginTokenByEmailValidation, getLoginTokenByUsernameValidation } from "../logic";
+import { getLoginTokenByEmailValidation } from "../logic";
 import { EMAIL_REGEX, PASSWORD_REGEX, LoginValidationJoi } from "../validation/validationJoi";
 import { UserModel } from "../schema/user";
 
@@ -43,19 +43,27 @@ authRouter.post("/by-email", async (req: Request, res: Response) => {
     }
 });
 
-
-authRouter.post("/by-username", async (req: Request, res: Response) => {
+// logout
+authRouter.post("/logout", async (req: Request, res: Response) => {
     try {
-        const { userName, password } = req.body;
-        if (!userName || !password) {
-            return res.status(400).send("Missing name or password");
-        }
-
-        const loginTokenAndUser = await getLoginTokenByUsernameValidation(userName, password);
-        res.json({ token: loginTokenAndUser.token, user: loginTokenAndUser.user });
+        res.send("Logout successful.");
     } catch (error) {
         res.status(500).send(error);
     }
-});
+})
+
+// authRouter.post("/by-username", async (req: Request, res: Response) => {
+//     try {
+//         const { userName, password } = req.body;
+//         if (!userName || !password) {
+//             return res.status(400).send("Missing name or password");
+//         }
+
+//         const loginTokenAndUser = await getLoginTokenByUsernameValidation(userName, password);
+//         res.json({ token: loginTokenAndUser.token, user: loginTokenAndUser.user });
+//     } catch (error) {
+//         res.status(500).send(error);
+//     }
+// });
 
 export default authRouter;

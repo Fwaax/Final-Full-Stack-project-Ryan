@@ -7,6 +7,7 @@ import { DB_CONNECTION_URL, DEFAULT_CONNECTION_URL, PORT } from "./const/env";
 import usersRouter from "./routes/userRouter";
 import authRouter from "./routes/authRouter";
 import registerRouter from "./routes/registerRouter";
+import characterRouter from "./routes/characterRouter";
 
 export async function startExpressServer() {
     // Create Express app
@@ -41,6 +42,7 @@ export async function startExpressServer() {
     app.use("/user", usersRouter);
     app.use("/login", authRouter);
     app.use("/", registerRouter);
+    app.use("/char", characterRouter);
 
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:${PORT}`);

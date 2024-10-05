@@ -14,7 +14,6 @@ const objectIdValidation = (value, helpers) => {
 
 // Signup
 export const UserSignupValidationJoi = Joi.object({
-    userName: Joi.string().min(2).max(20).required(),
     email: Joi.string().email().pattern(EMAIL_REGEX).required(),
     password: Joi.string().min(8).max(20).pattern(PASSWORD_REGEX).required(),
     nickname: Joi.string().min(2).max(20)
@@ -25,6 +24,18 @@ export const LoginValidationJoi = Joi.object({
     email: Joi.string().email().pattern(EMAIL_REGEX).required(),
     password: Joi.string().min(7).max(20).pattern(PASSWORD_REGEX).required(),
 });
+
+
+export const CharacterCreationValidationJoi = Joi.object({
+    name: Joi.string().min(2).max(20).required(),
+    description: Joi.string().min(2).max(60).required(),
+    image: Joi.object({
+        url: Joi.string().uri().required(),
+        alt: Joi.string().required(),
+    }).required(),
+    createdByUserId: Joi.custom(objectIdValidation, 'ObjectId validation').required(),
+    createdAt: Joi.date().iso().required(),
+})
 
 // Card joi
 export const cardValidationCreationJoi = Joi.object({

@@ -1,13 +1,11 @@
 
 import { Request } from "express";
-export interface LoginData {
+export interface DataContainedInToken {
     id: string;
-    userName: string;
-    email: string;
 }
 
 
 // Extend the Request interface to include requesterUser
 export interface AuthorizedRequest extends Request {
-    jwtDecodedUser: LoginData;
+    jwtDecodedUser: DataContainedInToken;
 }

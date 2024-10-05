@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NumericInputWithNumberValue } from '../components/numberInput';
 
 // Updating the currect state for the character to update on the webpage
 
@@ -90,7 +91,7 @@ const CharacterCreationPage: React.FC = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 bg-gray-700">
             <h1 className="text-3xl font-bold mb-4">Create Your D&D Character</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -99,7 +100,7 @@ const CharacterCreationPage: React.FC = () => {
                     <input
                         type="text"
                         name="name"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.name}
                         onChange={(e) => setCharacter({ ...character, name: e.target.value })}
                     />
@@ -109,7 +110,7 @@ const CharacterCreationPage: React.FC = () => {
                     Race:
                     <select
                         name="race"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.race}
                         onChange={(e) => setCharacter({ ...character, race: e.target.value })}
                     >
@@ -127,7 +128,7 @@ const CharacterCreationPage: React.FC = () => {
                     Class:
                     <select
                         name="class"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.class}
                         onChange={(e) => setCharacter({ ...character, class: e.target.value })}
                     >
@@ -145,7 +146,7 @@ const CharacterCreationPage: React.FC = () => {
                     Background:
                     <select
                         name="background"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.background}
                         onChange={(e) => setCharacter({ ...character, background: e.target.value })}
                     >
@@ -169,7 +170,7 @@ const CharacterCreationPage: React.FC = () => {
                     Gender:
                     <select
                         name="gender"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.appearance.gender}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, gender: e.target.value as Gender } })}
                     >
@@ -183,7 +184,7 @@ const CharacterCreationPage: React.FC = () => {
                     Alignment:
                     <select
                         name="alignment"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.appearance.alignment}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, alignment: e.target.value as Alignment } })}
                     >
@@ -202,7 +203,7 @@ const CharacterCreationPage: React.FC = () => {
                     Size:
                     <select
                         name="size"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.appearance.size}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, size: e.target.value as Size } })}
                     >
@@ -217,7 +218,7 @@ const CharacterCreationPage: React.FC = () => {
                     Faith:
                     <select
                         name="faith"
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
                         value={character.appearance.faith}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, faith: e.target.value as Faith } })}
                     >
@@ -253,48 +254,48 @@ const CharacterCreationPage: React.FC = () => {
                 </label>
             </div>
 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row flex-wrap justify-between">
                 <div>
                     <label htmlFor="hair">Hair</label>
-                    <input type="text" name="hair" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.hair}
+                    <input type="text" name="hair" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.hair}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, hair: e.target.value } })} placeholder="Hair" />
                 </div>
 
                 <div>
                     <label htmlFor="skin">Skin</label>
-                    <input type="text" name="skin" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.skin}
+                    <input type="text" name="skin" className="mt-1 flex  p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.skin}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, skin: e.target.value } })} placeholder="Skin" />
                 </div>
 
                 <div>
                     <label htmlFor="eyes">Eyes</label>
-                    <input type="text" name="eyes" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.eyes}
+                    <input type="text" name="eyes" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.eyes}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, eyes: e.target.value } })} placeholder="Eyes" />
                 </div>
 
                 <div>
                     <label htmlFor="age">Age</label>
-                    <input type="text" name="age" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.age}
+                    <input type="text" name="age" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.age}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, age: e.target.value } })} placeholder="Age" />
                 </div>
 
                 <div>
                     <label htmlFor="weight">Weight</label>
-                    <input type="text" name="weight" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.weight}
+                    <input type="text" name="weight" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.weight}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, weight: e.target.value } })} placeholder="Weight" />
                 </div>
 
                 <div>
                     <label htmlFor="height">Height</label>
-                    <input type="text" name="height" className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.appearance.height}
+                    <input type="text" name="height" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.height}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, height: e.target.value } })} placeholder="Height" />
                 </div>
             </div>
 
-            <div className='flex flex[6_6_0%]'>
+            <div className=' w-3/5 mx-auto'>
                 <div className='flex flex-col'>
                     <label htmlFor="personality_traits">Personality Traits</label>
-                    <input className="mt-1 flex flex[3_3_0%] p-2 border border-gray-300 rounded-md" value={character.personalityTraits}
+                    <input className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.personalityTraits}
                         onChange={(e) => setCharacter({ ...character, personalityTraits: e.target.value })} placeholder="Personality Traits" type="text" name='personality_traits' />
                 </div>
             </div>
@@ -304,21 +305,13 @@ const CharacterCreationPage: React.FC = () => {
                 {(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] as AbilityScore[]).map((ability) => (
                     <label key={ability} className="block">
                         {ability.charAt(0).toUpperCase() + ability.slice(1)}:
-                        <input
-                            type="number"
-                            name={ability}
-                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            value={character[ability]}
-                            min="8"
-                            max="20"
-                            onChange={(e) => handleAbilityChange(ability, Number(e.target.value))}
-                        />
+                        <NumericInputWithNumberValue className='' value={character[ability]} setValue={(num: number) => handleAbilityChange(ability, num)} />
                     </label>
                 ))}
             </div>
 
             <h3 className="text-xl font-semibold mt-6">Character Summary</h3>
-            <div className="bg-gray-100 p-4 rounded-lg shadow-lg">
+            <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
                 <p><strong>Name:</strong> {character.name}</p>
                 <p><strong>Race:</strong> {character.race}</p>
                 <p><strong>Class:</strong> {character.class}</p>

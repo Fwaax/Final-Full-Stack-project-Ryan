@@ -1,37 +1,56 @@
 import React from "react";
 
-interface NumberInputProps {
+interface NumericInputWithStringValueProps {
     className?: string;
+    id?: string;
     placeholder?: string;
     min?: number;
     max?: number;
     onlyAllowIntegers?: boolean;
     value: string;
     setValue: (value: string) => void;
+    disabled?: boolean;
 }
 
 // Forward ref to the input element
-const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
+export const NumericInputWithStringValue = React.forwardRef<
+    HTMLInputElement,
+    NumericInputWithStringValueProps
+>(
     (
         {
             className,
+            id,
             placeholder = "0",
             min = Number.MIN_SAFE_INTEGER,
             max = Number.MAX_SAFE_INTEGER,
             onlyAllowIntegers = false,
             value,
             setValue,
+            disabled = false,
         },
         ref,
     ) => {
         function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
             let newVal = e.target.value.trim();
 
+            if (disabled) {
+                return; // If the input is disabled, ignore any changes
+            }
+
             // Allow empty input to clear the value
             // **Potential Problem Without Fix:**
             // If we don't handle empty inputs, users might not be able to clear the input field properly.
             if (newVal === "") {
                 setValue("");
+                return;
+            }
+
+            // Allow "-" as a valid input if the min is less than 0
+            // **Potential Problem Without Fix:**
+            // If we don't allow "-" as an intermediate input, users won't be able to type negative numbers easily.
+            if (newVal === "-" && min < 0) {
+                setValue("-");
                 return;
             }
 
@@ -104,14 +123,127 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
         return (
             <input
+                id={id}
                 ref={ref} // Forward the ref here
                 className={className}
                 value={value}
                 onChange={inputChangeHandler}
                 placeholder={placeholder}
+                disabled={disabled}
             />
         );
     },
 );
 
-export default NumberInput;
+interface NumericInputWithNumberValueProps {
+    className?: string;
+    id?: string;
+    placeholder?: string;
+    min?: number;
+    max?: number;
+    onlyAllowIntegers?: boolean;
+    value: number;
+    setValue: (value: number) => void;
+    disabled?: boolean;
+}
+
+// Forward ref to the input element
+export const NumericInputWithNumberValue = React.forwardRef<
+    HTMLInputElement,
+    NumericInputWithNumberValueProps
+>(
+    (
+        {
+            className,
+            id,
+            placeholder = "0",
+            min = Number.MIN_SAFE_INTEGER,
+            max = Number.MAX_SAFE_INTEGER,
+            onlyAllowIntegers = false,
+            value,
+            setValue,
+            disabled = false,
+        },
+        ref,
+    ) => {
+        const [inputValue, setInputValue] = React.useState<string>(value.toString());
+
+        React.useEffect(() => {
+            setInputValue(isNaN(value) ? "" : value.toString());
+        }, [value]);
+
+        function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+            let newVal = e.target.value.trim();
+
+            if (disabled) {
+                return; // Ignore any changes if input is disabled
+            }
+
+            // Allow empty input to clear the value
+            if (newVal === "") {
+                setInputValue("");
+                setValue(NaN); // Represent empty input as NaN when dealing with numbers
+                return;
+            }
+
+            // Allow "-" as a valid input if min is less than 0
+            if (newVal === "-" && min < 0) {
+                setInputValue("-");
+                setValue(NaN); // Temporarily store NaN for incomplete negative numbers
+                return;
+            }
+
+            // Allow "." as a valid input if onlyAllowIntegers is false
+            if (newVal === "." && !onlyAllowIntegers) {
+                setInputValue("0.");
+                setValue(NaN); // Temporarily store NaN for incomplete decimal numbers
+                return;
+            }
+
+            // Prevent multiple dots in the input
+            if (newVal.split(".").length > 2) {
+                return; // Reject input with multiple dots
+            }
+
+            // Handle cases where only integers are allowed
+            if (onlyAllowIntegers) {
+                newVal = newVal.replace(/\..*/, ""); // Remove the decimal part
+            }
+
+            // Allow intermediate states that end with a dot (e.g., "54.") or negative sign "-"
+            if (newVal.endsWith(".") || newVal === "-") {
+                setInputValue(newVal);
+                return; // Skip further validation to allow intermediate states
+            }
+
+            // Validate if the input is a valid number
+            if (isNaN(Number(newVal))) {
+                return; // Reject invalid numbers that aren't valid
+            }
+
+            // Parse the input to a number
+            let parsedNum = parseFloat(newVal);
+
+            // Clamp the number between min and max
+            if (!isNaN(parsedNum)) {
+                parsedNum = Math.min(max, parsedNum);
+                parsedNum = Math.max(min, parsedNum);
+                setValue(parsedNum);
+            }
+
+            setInputValue(newVal); // Keep updating the input value
+        }
+
+        return (
+            <input
+                id={id}
+                ref={ref} // Forward the ref here
+                className={className}
+                value={inputValue} // Use the controlled input value
+                onChange={inputChangeHandler}
+                placeholder={placeholder}
+                disabled={disabled}
+            />
+        );
+    },
+);
