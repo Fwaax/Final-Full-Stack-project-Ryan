@@ -9,43 +9,54 @@ const usersRouter: Router = express.Router();
 // Search all users that are in the database
 usersRouter.get("/", userGaurd, async (req: Request, res: Response) => {
     try {
-        res.send(await UserModel.find());
+        const users = await UserModel.find();
+        if (users.length === 0) {
+            return res.status(404).send({ message: "No users found." });
+        }
+        res.status(200).send({ message: "Users fetched successfully.", data: users });
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({ message: "Error fetching users.", error });
     }
 });
-
 
 // Get one user
 usersRouter.get("/:id", userGaurd, async (req: Request, res: Response) => {
     try {
-        res.send(await UserModel.findById(req.params.id));
+        const user = await UserModel.findById(req.params.id);
+        if (!user) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        res.status(200).send({ message: "User fetched successfully.", data: user });
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({ message: "Error fetching user.", error });
     }
 });
-
 
 // Delete one user
-usersRouter.delete("/:id", userGaurd, async (req: AuthorizedRequest, res: Response) => {
+usersRouter.delete("/delete", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;
-        if (requesterId !== req.params.id) {
-            return res.status(403).send("Unauthorized, you can only delete your own account");
+        const deletedUser = await UserModel.findByIdAndDelete(requesterId);
+        if (!deletedUser) {
+            return res.status(404).send({ message: "User not found or already deleted." });
         }
-        res.send(await UserModel.findByIdAndDelete(req.params.id));
+        res.status(200).send({ message: "User deleted successfully.", data: deletedUser });
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({ message: "Error deleting user.", error });
     }
 });
 
-
 // Update one user
-usersRouter.put("/:id", userGaurd, async (req: Request, res: Response) => {
+usersRouter.put("/update", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
-        res.send(await UserModel.findByIdAndUpdate(req.params.id, req.body));
+        const requesterId = req.jwtDecodedUser.id;
+        const updatedUser = await UserModel.findByIdAndUpdate(requesterId, req.body, { new: true });
+        if (!updatedUser) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        res.status(200).send({ message: "User updated successfully.", data: updatedUser });
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({ message: "Error updating user.", error });
     }
 });
 

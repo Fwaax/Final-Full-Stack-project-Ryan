@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NumericInputWithNumberValue } from '../components/numberInput';
+import axios from 'axios';
+import { useJwtToken } from '../hooks/useJwtToken';
+import { useNavigate } from 'react-router-dom';
+import { faker } from '@faker-js/faker';
 
 // Updating the currect state for the character to update on the webpage
 
@@ -82,6 +86,56 @@ const CharacterCreationPage: React.FC = () => {
         charisma: 10,
     });
 
+    const { token } = useJwtToken();
+    const navigate = useNavigate();
+
+    async function sendToServerNewCharacter() {
+        try {
+            await axios.post('http://localhost:6969/char/new-character', character, { headers: { 'Authorization': `Bearer ${token}` } });
+            console.log("Character created successfully");
+            navigate("/character-selection");
+        } catch (error) {
+            console.error("Failed to create character:", error);
+        }
+    }
+
+
+
+
+    const randomizeCharacter = () => {
+        setCharacter({
+            name: faker.person.firstName(),
+            race: faker.helpers.arrayElement(['Human', 'Elf', 'Dwarf', 'Halfling', 'Tiefling', 'Orc']),
+            class: faker.helpers.arrayElement(['Fighter', 'Wizard', 'Rogue', 'Cleric', 'Bard', 'Ranger']),
+            level: faker.number.int({ min: 1, max: 20 }),
+            background: faker.helpers.arrayElement(['Acolyte', 'Charlatan', 'Criminal', 'Entertainer', 'Guild Artisan', 'Hermit', 'Noble', 'Outlander', 'Sage', 'Sailor', 'Soldier', 'Urchin']),
+            characteristics: faker.lorem.sentence(),
+            personalityTraits: faker.lorem.sentence(),
+            appearance: {
+                alignment: faker.helpers.arrayElement(['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'True Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil']),
+                gender: faker.helpers.arrayElement(['male', 'female']),
+                eyes: faker.color.human(),
+                size: faker.helpers.arrayElement(['Small', 'Medium', 'Large']),
+                height: `${faker.number.int({ min: 4, max: 7 })} ft`,
+                faith: faker.helpers.arrayElement(['Torm', 'Tyr', 'Lathander', 'Mystra', 'Selûne', 'Sune', 'Tempus', 'Kelemvor', 'Bane', 'Bhaal', 'Shar', 'Lolth', 'Pelor', 'Heironeous', 'Rao', 'St. Cuthbert', 'Nerull', 'Vecna', 'Erythnul', 'Iuz', 'Arawai', 'Balinor', 'Boldrei', 'The Devourer', 'The Mockery', 'Nature', 'Philosophies']),
+                hair: faker.color.human(),
+                skin: faker.color.human(),
+                age: faker.number.int({ min: 18, max: 120 }).toString(),
+                weight: `${faker.number.int({ min: 100, max: 300 })} lbs`,
+            },
+            organizations: faker.company.name(),
+            allies: faker.person.firstName(),
+            enemies: faker.person.firstName(),
+            backstory: faker.lorem.paragraph(),
+            other: faker.lorem.sentence(),
+            strength: faker.number.int({ min: 1, max: 20 }),
+            dexterity: faker.number.int({ min: 1, max: 20 }),
+            constitution: faker.number.int({ min: 1, max: 20 }),
+            intelligence: faker.number.int({ min: 1, max: 20 }),
+            wisdom: faker.number.int({ min: 1, max: 20 }),
+            charisma: faker.number.int({ min: 1, max: 20 }),
+        });
+    };
 
 
 
@@ -333,6 +387,8 @@ const CharacterCreationPage: React.FC = () => {
                 <p><strong>Wisdom:</strong> {character.wisdom}</p>
                 <p><strong>Charisma:</strong> {character.charisma}</p>
             </div>
+            <div><button className='bg-gray-800 p-4 rounded-lg shadow-lg' onClick={sendToServerNewCharacter}>Create Character</button></div>
+            <div><button className='bg-gray-800 p-4 rounded-lg shadow-lg' onClick={randomizeCharacter}>Random Character</button></div>
         </div>
     );
 };

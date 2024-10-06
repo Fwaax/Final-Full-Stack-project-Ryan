@@ -6,6 +6,7 @@ import { findUserByEmail } from "../logic";
 import { CharacterCreationValidationJoi } from "../validation/validationJoi";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
+import { CharacterModel } from "../schema/character";
 
 const characterRouter: Router = express.Router();
 
@@ -29,6 +30,32 @@ characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedReque
         res.status(500).send(error);
     }
 });
+
+// Import the CharacterModel at the top of your file
+
+characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
+    try {
+        const requesterId = req.jwtDecodedUser.id;
+
+        const foundUser = await UserModel.findById(requesterId);
+        if (!foundUser) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        // Directly create and save a new character using CharacterModel.create()
+        const savedCharacter = await CharacterModel.create({
+            ...req.body,
+            userId: requesterId,  // Assuming you want to associate the character with the user
+        });
+
+        // Respond with a success message and the saved character data
+        res.status(201).send({ message: "Character created successfully.", data: savedCharacter });
+    } catch (error) {
+        // Return a 500 error with a message
+        res.status(500).send({ message: "Error creating character.", error });
+    }
+});
+
+
 
 
 
