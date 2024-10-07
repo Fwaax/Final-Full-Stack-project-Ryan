@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useJwtToken } from '../hooks/useJwtToken';
 import { useNavigate } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
+import { toast } from 'react-toastify';
+
 
 // Updating the currect state for the character to update on the webpage
 
@@ -91,17 +93,22 @@ const CharacterCreationPage: React.FC = () => {
 
     async function sendToServerNewCharacter() {
         try {
-            await axios.post('http://localhost:6969/char/new-character', character, { headers: { 'Authorization': `Bearer ${token}` } });
+            await axios.post('http://localhost:6969/char/new-character', character, { headers: { 'Authorization': token } });
             console.log("Character created successfully");
             navigate("/character-selection");
+            toast(`Character created successfully`);
         } catch (error) {
-            console.error("Failed to create character:", error);
+            // Check if the error is an AxiosError and has a response
+            if (axios.isAxiosError(error) && error.response) {
+                toast(`Failed to create character: ${error.response.data}`);
+                console.error("Failed to create character:", error.response.data);
+            } else {
+                // For any other types of errors
+                toast(`Failed to create character: An unknown error occurred`);
+                console.error("Failed to create character:", error);
+            }
         }
     }
-
-
-
-
     const randomizeCharacter = () => {
         setCharacter({
             name: faker.person.firstName(),
@@ -143,6 +150,8 @@ const CharacterCreationPage: React.FC = () => {
     const handleAbilityChange = (ability: AbilityScore, value: number) => {
         setCharacter({ ...character, [ability]: value });
     };
+
+
 
     return (
         <div className="container mx-auto p-4 bg-gray-700">

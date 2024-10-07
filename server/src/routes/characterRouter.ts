@@ -3,23 +3,12 @@ import express, { Request, Response, Router } from "express";
 import { UserModel } from "../schema/user";
 // import { CharacterCreationData } from "../interfaces";
 import { findUserByEmail } from "../logic";
-import { CharacterCreationValidationJoi } from "../validation/validationJoi";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
 import { CharacterModel } from "../schema/character";
+import { newCharacterValidationJoi } from "../validation/characterValidationJoi";
 
 const characterRouter: Router = express.Router();
-
-characterRouter.post("/create-character", async (req: Request, res: Response) => {
-    try {
-        const validationResult = CharacterCreationValidationJoi.validate(req.body, { allowUnknown: false });
-        if (validationResult.error) {
-            return res.status(400).send(validationResult.error.details[0].message);
-        }
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-});
 
 characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
@@ -36,7 +25,10 @@ characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedReque
 characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;
-
+        const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: false });
+        if (validationResult.error) {
+            return res.status(400).send(validationResult.error.details[0].message);
+        }
         const foundUser = await UserModel.findById(requesterId);
         if (!foundUser) {
             return res.status(404).send({ message: "User not found." });

@@ -10,7 +10,8 @@ import CharacterSelectionPage from "./pages/characterSelectionPage";
 import LoginPage from "./pages/loginPage";
 import Header from "./components/header";
 import { useJwtToken } from "./hooks/useJwtToken"; // Assuming this is your custom hook
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Create a QueryClient instance for react-query
 const queryClient = new QueryClient();
 
@@ -20,6 +21,13 @@ function MainLayout() {
     <div className="flex flex-col w-full min-h-screen">
       {/* Header appears on all pages */}
       <Header />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={7000}
+        newestOnTop={true}
+        draggable={false}
+        hideProgressBar={true}
+      />
       <div className="flex-grow">
         {/* Outlet is where the child route components will render */}
         <Outlet />

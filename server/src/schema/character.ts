@@ -6,6 +6,22 @@ export interface ICharacter {
     class: string;
     race: string;
     level: number;
+    gender: string;
+    eyes: string;
+    hair: string;
+    skin: string;
+    height: string;
+    age: string;
+    weight: string;
+    size: string;
+    faith: string;
+    characteristics: string;
+    personalityTraits: string;
+    organizations: string;
+    allies: string;
+    enemies: string;
+    backstory: string;
+    other: string;
     stats: {
         strength: number;
         dexterity: number;
@@ -36,6 +52,22 @@ const CharacterSchema: Schema = new Schema({
     class: { type: String, required: true },
     race: { type: String, required: true },
     level: { type: Number, required: true },
+    gender: { type: String, required: true },
+    eyes: { type: String, required: true },
+    hair: { type: String, required: true },
+    skin: { type: String, required: true },
+    height: { type: String, required: true },
+    age: { type: String, required: true },
+    weight: { type: String, required: true },
+    size: { type: String, required: true },
+    faith: { type: String, required: true },
+    characteristics: { type: String, required: true },
+    personalityTraits: { type: String, required: true },
+    organizations: { type: String, required: false },
+    allies: { type: String, required: false },
+    enemies: { type: String, required: false },
+    backstory: { type: String, required: true },
+    other: { type: String, required: false },
     stats: {
         strength: { type: Number, required: true },
         dexterity: { type: Number, required: true },
