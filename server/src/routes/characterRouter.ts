@@ -7,6 +7,7 @@ import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
 import { CharacterModel } from "../schema/character";
 import { newCharacterValidationJoi } from "../validation/characterValidationJoi";
+import { log } from "node:console";
 
 const characterRouter: Router = express.Router();
 
@@ -14,7 +15,12 @@ characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedReque
     try {
         const requesterId = req.jwtDecodedUser.id;
         // to do: character model find
-        res.send(await UserModel.findById(req.params.id));
+        const foundCharacters = await CharacterModel.find({ userId: requesterId });
+        if (!foundCharacters || foundCharacters.length === 0) {
+            return res.status(404).send({ message: "No characters found." });
+        }
+
+        res.status(200).send({ message: "Characters fetched successfully.", data: foundCharacters });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -27,10 +33,14 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         const requesterId = req.jwtDecodedUser.id;
         const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: false });
         if (validationResult.error) {
+            console.log(`validationResult.error`);
+
             return res.status(400).send(validationResult.error.details[0].message);
         }
         const foundUser = await UserModel.findById(requesterId);
         if (!foundUser) {
+            console.log(`foundUser`);
+
             return res.status(404).send({ message: "User not found." });
         }
         // Directly create and save a new character using CharacterModel.create()

@@ -6,15 +6,7 @@ export interface ICharacter {
     class: string;
     race: string;
     level: number;
-    gender: string;
-    eyes: string;
-    hair: string;
-    skin: string;
-    height: string;
-    age: string;
-    weight: string;
-    size: string;
-    faith: string;
+    background: string;
     characteristics: string;
     personalityTraits: string;
     organizations: string;
@@ -22,22 +14,24 @@ export interface ICharacter {
     enemies: string;
     backstory: string;
     other: string;
-    stats: {
-        strength: number;
-        dexterity: number;
-        constitution: number;
-        intelligence: number;
-        wisdom: number;
-        charisma: number;
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
+    appearance: {
+        alignment: string;   // Will map to "alignment" in the backend
+        gender: string;      // Will map to "gender"
+        eyes: string;        // Will map to "eyes"
+        size: string;        // Will map to "size"
+        height: string;      // Will map to "height"
+        faith: string;       // Will map to "faith"
+        hair: string;        // Will map to "hair"
+        skin: string;        // Will map to "skin"
+        age: string;         // Will map to "age"
+        weight: string;      // Will map to "weight"
     };
-    hp: {
-        current: number;
-        max: number;
-    };
-    background: string;
-    alignment: string;
-    inventory: string[];
-    spells?: string[]; // Optional, for spellcasters
     userId: Types.ObjectId;  // Reference to the UserModel
     createdAt?: Date;
     updatedAt?: Date;
@@ -52,15 +46,7 @@ const CharacterSchema: Schema = new Schema({
     class: { type: String, required: true },
     race: { type: String, required: true },
     level: { type: Number, required: true },
-    gender: { type: String, required: true },
-    eyes: { type: String, required: true },
-    hair: { type: String, required: true },
-    skin: { type: String, required: true },
-    height: { type: String, required: true },
-    age: { type: String, required: true },
-    weight: { type: String, required: true },
-    size: { type: String, required: true },
-    faith: { type: String, required: true },
+    background: { type: String, required: true },
     characteristics: { type: String, required: true },
     personalityTraits: { type: String, required: true },
     organizations: { type: String, required: false },
@@ -68,22 +54,24 @@ const CharacterSchema: Schema = new Schema({
     enemies: { type: String, required: false },
     backstory: { type: String, required: true },
     other: { type: String, required: false },
-    stats: {
-        strength: { type: Number, required: true },
-        dexterity: { type: Number, required: true },
-        constitution: { type: Number, required: true },
-        intelligence: { type: Number, required: true },
-        wisdom: { type: Number, required: true },
-        charisma: { type: Number, required: true },
+    strength: { type: Number, required: true },
+    dexterity: { type: Number, required: true },
+    constitution: { type: Number, required: true },
+    intelligence: { type: Number, required: true },
+    wisdom: { type: Number, required: true },
+    charisma: { type: Number, required: true },
+    appearance: {
+        alignment: { type: String, required: true },
+        gender: { type: String, required: true },
+        eyes: { type: String, required: true },
+        size: { type: String, required: true },
+        height: { type: String, required: true },
+        faith: { type: String, required: true },
+        hair: { type: String, required: true },
+        skin: { type: String, required: true },
+        age: { type: String, required: true },
+        weight: { type: String, required: true },
     },
-    hp: {
-        current: { type: Number, required: true },
-        max: { type: Number, required: true },
-    },
-    background: { type: String, required: true },
-    alignment: { type: String, required: true },
-    inventory: [{ type: String }],
-    spells: [{ type: String }],
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',  // Reference to the UserModel
