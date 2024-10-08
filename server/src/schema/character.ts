@@ -81,5 +81,6 @@ const CharacterSchema: Schema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
+
 // Create the model from the schema
 export const CharacterModel = mongoose.model<ICharacterDocument>('Character', CharacterSchema);

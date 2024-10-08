@@ -3,6 +3,8 @@ import { BACKEND_URL } from "../const";
 import { useQuery } from "@tanstack/react-query";
 import { useJwtToken } from "../hooks/useJwtToken";
 import axios from "axios";
+import { ICharacterApiResponse } from "../Interfaces/apiRespose";
+import { toast } from "react-toastify";
 
 const CharacterSelection: React.FC = () => {
     const { user, token, clearData } = useJwtToken();
@@ -13,7 +15,7 @@ const CharacterSelection: React.FC = () => {
     const shouldRefetch = location.state?.refetch ?? false;
 
     // Fetch characters using React Query and the JWT token
-    const { data: yourCharacters = [], isLoading, isError } = useQuery({
+    const { data: yourCharacters = [], isLoading, isError, refetch } = useQuery({
         staleTime: 0,   // Ensure query refetches fresh data
         gcTime: 0,   // Prevent caching if necessary
         queryKey: ["yourCharacters", token],
@@ -29,7 +31,7 @@ const CharacterSelection: React.FC = () => {
                     },
                     url: `${BACKEND_URL}/char/all-my-characters`,
                 });
-                return response.data.data;
+                return response.data.data as ICharacterApiResponse[];
             } catch (err) {
                 console.error("Failed to fetch characters:", err);
                 return [];
@@ -45,6 +47,24 @@ const CharacterSelection: React.FC = () => {
 
     const handleAddCharacter = () => {
         navigate("/character-creation"); // Navigate to the character creation page
+    };
+
+    const handleDeleteCharacter = async (characterId: string) => {
+        try {
+            await axios({
+                method: "DELETE",
+                headers: {
+                    Authorization: token,
+                },
+                url: `${BACKEND_URL}/char/delete-character`,
+                data: { characterId },
+            });
+            refetch();
+            toast(`Character deleted successfully.`);
+        } catch (err) {
+            console.error("Failed to delete character:", err);
+            toast(`Failed to delete character.`);
+        }
     };
 
     if (isLoading) {
@@ -80,12 +100,12 @@ const CharacterSelection: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {yourCharacters.map((character: any) => (
+                    {yourCharacters.map((character) => (
                         <div
-                            key={character.id}
+                            key={character._id}
                             className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
                         >
-                            <h3 className="text-xl font-bold mb-2 text-gray-700">{character.name}</h3>
+                            <h3 className="text-xl font-bold mb-2 text-gray-700" >{character.name}</h3>
                             <p className="text-gray-600">Class: {character.class}</p>
                             <p className="text-gray-600">Level: {character.level}</p>
                             <button
@@ -95,7 +115,7 @@ const CharacterSelection: React.FC = () => {
                                 Select
                             </button>
                             <button className="mt-4 w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition duration-300"
-                                onClick={() => alert(`You selected ${character.name}`)}>Delete</button>
+                                onClick={() => handleDeleteCharacter(character._id)}>Delete</button>
                         </div>
                     ))}
                 </div>

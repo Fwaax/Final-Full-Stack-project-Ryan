@@ -57,8 +57,27 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
     }
 });
 
-
-
-
+characterRouter.delete("/delete-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
+    try {
+        console.log(`request the body`, req.body);
+        const requesterId = req.jwtDecodedUser.id;
+        if (!req.body.characterId) {
+            return res.status(400).send({ message: "Character ID is required." });
+        }
+        const characterIdToDelete = req.body.characterId;
+        const foundCharacter = await CharacterModel.findById(characterIdToDelete);
+        if (!foundCharacter) {
+            return res.status(404).send({ message: "Trying to delete a non-existent character." });
+        }
+        const characterOwnerId = foundCharacter.userId;
+        if (characterOwnerId.toString() !== requesterId) {
+            return res.status(403).send({ message: "You are not authorized to delete this character." });
+        }
+        await CharacterModel.findByIdAndDelete(characterIdToDelete);
+        res.status(200).send({ message: "Character deleted successfully." });
+    } catch (error) {
+        res.status(500).send({ message: "Error deleting character.", error });
+    }
+});
 
 export default characterRouter

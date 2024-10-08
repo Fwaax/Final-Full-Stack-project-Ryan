@@ -5,52 +5,12 @@ import { useJwtToken } from '../hooks/useJwtToken';
 import { useNavigate } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import { toast } from 'react-toastify';
+import { AbilityScore, Alignment, Character, CharacterAppearance, Faith, Gender, Size } from '../Interfaces';
 
 
 // Updating the currect state for the character to update on the webpage
 
-interface Character {
-    name: string;
-    race: string;
-    class: string;
-    level: number;
-    background: string;
-    characteristics: string;
-    personalityTraits: string;
-    appearance: CharacterAppearance;
-    organizations: string;
-    allies: string;
-    enemies: string;
-    backstory: string;
-    other: string;
-    strength: number;
-    dexterity: number;
-    constitution: number;
-    intelligence: number;
-    wisdom: number;
-    charisma: number;
-}
 
-type Gender = "male" | "female" | "";
-type Alignment = "Lawful Good" | "Neutral Good" | "Chaotic Good" | "Lawful Neutral" | "True Neutral" | "Chaotic Neutral" | "Lawful Evil" | "Neutral Evil" | "Chaotic Evil" | "";
-type Size = "Small" | "Medium" | "Large" | "";
-type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune" | "Tempus" | "Kelemvor" | "Bane" | "Bhaal" | "Shar" | "Lolth" | "Pelor" | "Heironeous" | "Rao" | "St. Cuthbert" | "Nerull" | "Vecna" | "Erythnul" | "Iuz" | "Arawai" | "Balinor" | "Boldrei" | "The Devourer" | "The Mockery" | "Nature" | "Philosophies" | "";
-
-interface CharacterAppearance {
-    alignment: Alignment;
-    gender: Gender;
-    eyes: string;
-    size: Size;
-    height: string;
-    faith: Faith;
-    hair: string;
-    skin: string;
-    age: string;
-    weight: string;
-}
-
-// Create a type for the ability score keys
-type AbilityScore = 'strength' | 'dexterity' | 'constitution' | 'intelligence' | 'wisdom' | 'charisma';
 
 const CharacterCreationPage: React.FC = () => {
     const [character, setCharacter] = useState<Character>({
