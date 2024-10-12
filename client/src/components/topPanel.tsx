@@ -1,8 +1,11 @@
 import AnvilSvg from "./svg/anvilSvg";
 import CampfireSvg from "./svg/campfireSvg";
 import MoonSvg from "./svg/moonSvg";
+import { useCharacterContext } from "../hooks/characterCotextProvider";
 
 export default function TopPanel() {
+
+    const { character } = useCharacterContext();
     return (
         <div className='h-[100px] flex flex-row justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg'>
             <div className='w-[250px] h-full flex flex-row gap-4 items-center'>
@@ -11,12 +14,12 @@ export default function TopPanel() {
                 </div>
                 <div>
                     <div className='flex flex-row items-center gap-2'>
-                        <h6 className='text-sm text-white'>Character Name</h6>
+                        <h6 className='text-sm text-white'>{character.name}</h6>
                         <button className='text-sm border border-solid border-red-700 hover:border-red-600 rounded-sm px-2 py-1 text-white'>
                             MANAGE
                         </button>
                     </div>
-                    <p className='text-sm text-gray-400'>Character Level and Race</p>
+                    <p className='text-sm text-gray-400'>{character.level}</p>
                 </div>
             </div>
             <div className='w-[300px] h-full flex flex-row justify-center items-center gap-4'>

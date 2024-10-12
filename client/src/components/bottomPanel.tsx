@@ -1,5 +1,6 @@
 import React from 'react'
 import CharacterTabsPanel from './characterTabsPanel'
+import { useCharacterContext } from '../hooks/characterCotextProvider';
 
 const BottomPanel = () => {
     return (
@@ -14,6 +15,7 @@ const BottomPanel = () => {
 }
 
 function LeftSection() {
+    const { character } = useCharacterContext();
     return (
         <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg'>
 
@@ -22,58 +24,60 @@ function LeftSection() {
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>STR</p>
-                            <p className='flex-[2_2_0%] text-center'>PH</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.strength}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>DEX</p>
-                            <p className='flex-[2_2_0%] text-center'>PH</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.dexterity}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>CON</p>
-                            <p className='flex-[2_2_0%] text-center'>PH</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.constitution}</p>
                         </div>
                     </div>
 
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>INT</p>
-                            <p className='flex-[2_2_0%] text-center'>PH</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.intelligence}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>WIS</p>
-                            <p className='flex-[2_2_0%] text-center'>PH</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.wisdom}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>CHA</p>
-                            <p className='flex-[2_2_0%] text-center'>PH</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.charisma}</p>
                         </div>
                     </div>
                 </div>
                 <div className='flex flex-col gap-2'>
-                    <div className='col-span-2 flex justify-center'>
+                    <div className='col-span-2 flex flex-col justify-center'>
                         <p>Advantage display</p>
+                        <p>character.advantages</p>
                     </div>
-                    <div className='col-span-2 flex justify-center'>
+                    <div className='col-span-2 flex flex-col justify-center'>
                         <p>SAVING THROWS</p>
+                        <p>character.savingThrows</p>
                     </div>
                 </div>
             </div>
 
-            {/* ----------------------------------------------------------- */}
+            {/* --------------------------MUST ADD AND CHECK PROFICEINCY--------------------------------- */}
 
             <div className='border border-black border-solid'>
                 <div className='flex flex-col'>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSTIVE PRECEPTION</p>
-                        <p className='text-center w-[2rem]'>PH</p>
+                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.wisdom) - 10) / 2)})</p>
                     </div>
                     <div className='flex flex-row  justify-around'>
                         <p className='text-center w-[11rem]'>PASSIVE INVESTIGATION</p>
-                        <p className='text-center w-[2rem]'>PH</p>
+                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.intelligence) - 10) / 2)})</p>
                     </div>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSIVE INSIGHT</p>
-                        <p className='text-center w-[2rem]'>PH</p>
+                        <p className='text-center w-[2rem]'>({(Math.floor(10 + ((character.wisdom) - 10) / 2))})</p>
                     </div>
                     <div className='flex justify-center'>
                         <p>Darkvision { } ft.</p>

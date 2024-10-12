@@ -1,5 +1,6 @@
 import CoreStatCard from "./coreStatCard";
 import DragonSvg from "./svg/dragonSvg";
+import { useCharacterContext } from "../hooks/characterCotextProvider";
 
 const stats = [
     { name: "STR", modifier: 0, currentStat: 0 },
@@ -8,6 +9,7 @@ const stats = [
 ];
 
 export default function StatsPanel() {
+    const { character } = useCharacterContext();
     return (
         <div className='flex flex-row bg-gray-800 p-4 shadow-lg'>
 
@@ -19,6 +21,7 @@ export default function StatsPanel() {
             <div className='flex flex-row flex-[3_3_0%] justify-around  '>
                 <div className='h-[100px] flex flex-col gap-2 items-center justify-center border border-red-700 p-2 rounded-md'>
                     <h6 className='text-white'>Proficiency</h6>
+                    <h6>{Math.ceil((character.level / 4) + 1)}</h6>
                     <h6 className='text-gray-400'>Bonus</h6>
                 </div>
                 <div className='h-[100px] flex flex-col gap-2 items-center justify-center border border-red-700 p-2 rounded-md'>

@@ -74,9 +74,10 @@ function App() {
             {/* Define child routes that require authentication */}
             <Route index element={<HomePage />} /> {/* Default route for "/" */}
             <Route path="debug" element={<DebugPage />} />
-            <Route path="character-sheet" element={<CharacterSheetPage />} />
             <Route path="character-creation" element={<CharacterCreationPage />} />
             <Route path="character-selection" element={<CharacterSelectionPage />} />
+            <Route path="character-sheet/:characterId" element={<CharacterSheetPage />} />
+
           </Route>
         </Routes>
       </Router>

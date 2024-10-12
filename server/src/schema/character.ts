@@ -72,6 +72,11 @@ const CharacterSchema: Schema = new Schema({
         age: { type: String, required: true },
         weight: { type: String, required: true },
     },
+    hitPoints: {
+        current: { type: Number, required: true },
+        max: { type: Number, required: true },
+        temp: { type: Number, required: false },
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',  // Reference to the UserModel

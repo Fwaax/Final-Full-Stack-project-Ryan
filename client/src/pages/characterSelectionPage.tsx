@@ -40,9 +40,8 @@ const CharacterSelection: React.FC = () => {
         refetchOnMount: shouldRefetch,  // Force refetch on remount if `refetch` state is true
     });
 
-    const handleLogout = () => {
-        clearData();
-        navigate("/"); // Redirect to the login page
+    const handleSelectCharacter = (characterId: string) => {
+        navigate(`/character-sheet/${characterId}`); // Navigate to the character sheet page
     };
 
     const handleAddCharacter = () => {
@@ -110,7 +109,7 @@ const CharacterSelection: React.FC = () => {
                             <p className="text-gray-600">Level: {character.level}</p>
                             <button
                                 className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300"
-                                onClick={() => alert(`You selected ${character.name}`)}
+                                onClick={() => handleSelectCharacter(character._id)}
                             >
                                 Select
                             </button>

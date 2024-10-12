@@ -26,6 +26,18 @@ characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedReque
     }
 });
 
+characterRouter.get("/my-character/:id", userGaurd, async (req: Request, res: Response) => {
+    try {
+        const character = await CharacterModel.findById(req.params.id);
+        if (!character) {
+            return res.status(404).send({ message: "Character not found." });
+        }
+        res.status(200).send({ message: "Character fetched successfully.", data: character });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 // Import the CharacterModel at the top of your file
 
 characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
