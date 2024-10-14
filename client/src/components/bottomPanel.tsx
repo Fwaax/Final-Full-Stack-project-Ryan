@@ -25,30 +25,30 @@ function LeftSection() {
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>STR</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.strength}</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['STR']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>DEX</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.dexterity}</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['DEX']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>CON</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.constitution}</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['CON']}</p>
                         </div>
                     </div>
 
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>INT</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.intelligence}</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['INT']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>WIS</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.wisdom}</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['WIS']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>CHA</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.charisma}</p>
+                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['CHA']}</p>
                         </div>
                     </div>
                 </div>
@@ -70,15 +70,15 @@ function LeftSection() {
                 <div className='flex flex-col'>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSTIVE PRECEPTION</p>
-                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.wisdom) - 10) / 2)})</p>
+                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.coreAttributes['WIS']) - 10) / 2)})</p>
                     </div>
                     <div className='flex flex-row  justify-around'>
                         <p className='text-center w-[11rem]'>PASSIVE INVESTIGATION</p>
-                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.intelligence) - 10) / 2)})</p>
+                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.coreAttributes['INT']) - 10) / 2)})</p>
                     </div>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSIVE INSIGHT</p>
-                        <p className='text-center w-[2rem]'>({(Math.floor(10 + ((character.wisdom) - 10) / 2))})</p>
+                        <p className='text-center w-[2rem]'>({(Math.floor(10 + ((character.coreAttributes['WIS']) - 10) / 2))})</p>
                     </div>
                     <div className='flex justify-center'>
                         <p>Darkvision { } ft.</p>
@@ -120,32 +120,36 @@ function LeftSection() {
 }
 
 
+function formatSkillName(skillKey: string) {
+    return skillKey
+        .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
+        .toUpperCase(); // Convert to uppercase
+}
+
 function MiddleSection() {
     const { character } = useCharacterContext();
     return (
-        <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg' >
+        <div className="bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg">
             {/* Header Table */}
-            <div className='flex flex-row w-full text-center underline'>
-                <div className='flex-[1_1_0%]'>PROF</div>
-                <div className='flex-[1_1_0%]'>MOD</div>
-                <div className='flex-[3_3_0%]'>SKILL</div>
-                <div className='flex-[1_1_0%]'>BONUS</div>
+            <div className="flex flex-row w-full text-center underline mb-4">
+                <div className="flex-[1_1_0%]">PROF</div>
+                <div className="flex-[1_1_0%]">MOD</div>
+                <div className="flex-[3_3_0%]">SKILL</div>
+                <div className="flex-[1_1_0%]">BONUS</div>
             </div>
             {/* Content Table */}
-            <div className='flex flex-col gap-y-3'>
-                {character.skills.map((s: Skill, index) => {
-                    return (
-                        <div className='flex flex-row w-full text-center underline'>
-                            <div className='flex-[1_1_0%]'>{s.proficiency ? "✅" : "❌"}</div>
-                            <div className='flex-[1_1_0%]'>{s.name}</div>
-                            <div className='flex-[3_3_0%]'>{s.mod}</div>
-                            <div className='flex-[1_1_0%]'>{ }</div>
-                        </div>
-                    )
-                })}
-            </div >
+            <div className="flex flex-col gap-y-3">
+                {Object.entries(character.skills).map(([skillKey, skillObj], index) => (
+                    <div className="flex flex-row w-full text-center" key={index}>
+                        <div className="flex-[1_1_0%]">{skillObj.proficiency ? '✅' : '❌'}</div>
+                        <div className="flex-[1_1_0%]">{formatSkillName(skillKey)}</div>
+                        <div className="flex-[3_3_0%]">{skillObj.modifier}</div>
+                        <div className="flex-[1_1_0%]">{/* Bonus value logic goes here */}</div>
+                    </div>
+                ))}
+            </div>
         </div>
-    )
+    );
 }
 
 function RightSection() {

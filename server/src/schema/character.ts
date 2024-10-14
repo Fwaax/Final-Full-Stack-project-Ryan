@@ -21,9 +21,10 @@ export interface INewCharacterToSentFromFrontend {
     charisma: number;
 }
 
+export type SkillKey = 'acrobatics' | 'animalHandling' | 'arcana' | 'athletics' | 'deception' | 'history' | 'insight' | 'intimidation' | 'investigation' | 'medicine' | 'nature' | 'perception' | 'performance' | 'persuasion' | 'religion' | 'sleightOfHand' | 'stealth' | 'survival';
+
 export interface Skill {
-    name: string;
-    mod: string;
+    modifier: AttributeKey;
     proficiency: boolean;
 }
 
@@ -31,7 +32,8 @@ export type Gender = "male" | "female" | "";
 export type Alignment = "Lawful Good" | "Neutral Good" | "Chaotic Good" | "Lawful Neutral" | "True Neutral" | "Chaotic Neutral" | "Lawful Evil" | "Neutral Evil" | "Chaotic Evil" | "";
 export type Size = "Small" | "Medium" | "Large" | "";
 export type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune" | "Tempus" | "Kelemvor" | "Bane" | "Bhaal" | "Shar" | "Lolth" | "Pelor" | "Heironeous" | "Rao" | "St. Cuthbert" | "Nerull" | "Vecna" | "Erythnul" | "Iuz" | "Arawai" | "Balinor" | "Boldrei" | "The Devourer" | "The Mockery" | "Nature" | "Philosophies" | "";
-export type AbilityScore = 'strength' | 'dexterity' | 'constitution' | 'intelligence' | 'wisdom' | 'charisma';
+
+export type AttributeKey = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
 
 export interface CharacterAppearance {
     alignment: Alignment;
@@ -46,10 +48,6 @@ export interface CharacterAppearance {
     weight: string;
 }
 
-// Create a type for the ability score keys
-// Define the TypeScript interface for a DnD character
-
-// ICharacter on Backend side is the same as ICharacterApiResponse on frontend
 export interface ICharacter {
     name: string;
     class: string;
@@ -63,47 +61,70 @@ export interface ICharacter {
     enemies: string;
     backstory: string;
     other: string;
-    strength: number;
-    dexterity: number;
-    constitution: number;
-    intelligence: number;
-    wisdom: number;
-    charisma: number;
+    coreAttributes: Record<AttributeKey, number>;
     appearance: CharacterAppearance;
-    skills: Skill[];
+    skills: Record<SkillKey, Skill>;
     proficiencyBonus: number;
     hitPoints: {
         current: number;
         max: number;
         temp: number;
     };
-    userId: Types.ObjectId;  // Reference to the UserModel
+    userId: Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-// Extending the ICharacter interface with mongoose Document
 export interface ICharacterDocument extends ICharacter, Document { }
-const SkillSchema = new Schema({
-    name: { type: String, required: true },
-    mod: { type: String, required: true },
-    proficiency: { type: Boolean, required: true }
-})
 
-const CharacterAppearanceSchema = new Schema({
-    alignment: { type: String, required: true },
-    gender: { type: String, required: true },
-    eyes: { type: String, required: true },
-    size: { type: String, required: true },
-    height: { type: String, required: true },
-    faith: { type: String, required: true },
-    hair: { type: String, required: true },
-    skin: { type: String, required: true },
-    age: { type: String, required: true },
-    weight: { type: String, required: true },
-})
+const SkillSchema = new Schema(
+    {
+        modifier: { type: String, required: true },
+        proficiency: { type: Boolean, required: true },
+    },
+    { _id: false } // Disable _id field for skill schema
+);
 
-// Create the Mongoose schema
+const CharacterAppearanceSchema = new Schema(
+    {
+        alignment: { type: String, required: true },
+        gender: { type: String, required: true },
+        eyes: { type: String, required: true },
+        size: { type: String, required: true },
+        height: { type: String, required: true },
+        faith: { type: String, required: true },
+        hair: { type: String, required: true },
+        skin: { type: String, required: true },
+        age: { type: String, required: true },
+        weight: { type: String, required: true },
+    },
+    { _id: false } // Disable _id for appearance schema
+);
+
+const CoreAttributesSchema = new Schema(
+    {
+        STR: { type: Number, required: true },
+        DEX: { type: Number, required: true },
+        CON: { type: Number, required: true },
+        INT: { type: Number, required: true },
+        WIS: { type: Number, required: true },
+        CHA: { type: Number, required: true },
+    },
+    { _id: false } // Disable _id field for core attributes schema
+);
+
+const SkillsSchema = new Schema(
+    Object.fromEntries(
+        [
+            'acrobatics', 'animalHandling', 'arcana', 'athletics', 'deception',
+            'history', 'insight', 'intimidation', 'investigation', 'medicine',
+            'nature', 'perception', 'performance', 'persuasion', 'religion',
+            'sleightOfHand', 'stealth', 'survival',
+        ].map((skill) => [skill, SkillSchema])
+    ),
+    { _id: false } // Disable _id for the entire skills schema
+);
+
 const CharacterSchema: Schema = new Schema({
     name: { type: String, required: true },
     class: { type: String, required: true },
@@ -112,34 +133,24 @@ const CharacterSchema: Schema = new Schema({
     background: { type: String, required: true },
     characteristics: { type: String, required: true },
     personalityTraits: { type: String, required: true },
-    organizations: { type: String, required: false },
-    allies: { type: String, required: false },
-    enemies: { type: String, required: false },
+    organizations: { type: String },
+    allies: { type: String },
+    enemies: { type: String },
     backstory: { type: String, required: true },
-    other: { type: String, required: false },
-    proficiencyBonus: { type: Number, required: true },
-    strength: { type: Number, required: true },
-    dexterity: { type: Number, required: true },
-    constitution: { type: Number, required: true },
-    intelligence: { type: Number, required: true },
-    wisdom: { type: Number, required: true },
-    charisma: { type: Number, required: true },
+    other: { type: String },
+    coreAttributes: CoreAttributesSchema,
     appearance: CharacterAppearanceSchema,
-    skills: [SkillSchema],
+    skills: SkillsSchema,
+    proficiencyBonus: { type: Number, required: true },
     hitPoints: {
         current: { type: Number, required: true },
         max: { type: Number, required: true },
-        temp: { type: Number, required: false },
+        temp: { type: Number },
     },
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',  // Reference to the UserModel
-        required: true
-    },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
 });
 
-
-// Create the model from the schema
 export const CharacterModel = mongoose.model<ICharacterDocument>('Character', CharacterSchema);
+

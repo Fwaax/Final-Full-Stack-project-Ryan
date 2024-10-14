@@ -24,27 +24,25 @@ export interface ICharacterApiResponse {
     enemies: string;
     backstory: string;
     other: string;
-    skills: Skill[];
+    skills: Record<SkillKey, Skill>;
     proficiencyBonus: number;
-    strength: number;
-    dexterity: number;
-    constitution: number;
-    intelligence: number;
-    wisdom: number;
-    charisma: number;
+    coreAttributes: Record<AttributeKey, number>;
     hitPoints: {
         max: number;
         current: number;
         temp: number;
     }
     userId: string;
-    createdAt: string; // ISO string for date
-    updatedAt: string; // ISO string for date
+    createdAt: string;
+    updatedAt: string;
     __v: number;
 }
 
+export type AttributeKey = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
+
+export type SkillKey = 'acrobatics' | 'animalHandling' | 'arcana' | 'athletics' | 'deception' | 'history' | 'insight' | 'intimidation' | 'investigation' | 'medicine' | 'nature' | 'perception' | 'performance' | 'persuasion' | 'religion' | 'sleightOfHand' | 'stealth' | 'survival';
+
 export interface Skill {
-    name: string;
-    mod: string;
+    modifier: AttributeKey;
     proficiency: boolean;
 }
