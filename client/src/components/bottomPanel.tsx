@@ -1,6 +1,7 @@
 import React from 'react'
 import CharacterTabsPanel from './characterTabsPanel'
 import { useCharacterContext } from '../hooks/characterCotextProvider';
+import { Skill } from '../Interfaces/apiRespose';
 
 const BottomPanel = () => {
     return (
@@ -118,27 +119,9 @@ function LeftSection() {
     )
 }
 
-const SKILLS = [
-    { mod: "DEX", skillName: "Acrobatics" },
-    { mod: "WIS", skillName: "Animal Handling" },
-    { mod: "INT", skillName: "Arcana" },
-    { mod: "STR", skillName: "Athletics" },
-    { mod: "CHA", skillName: "Deception" },
-    { mod: "INT", skillName: "History" },
-    { mod: "WIS", skillName: "Insight" },
-    { mod: "CHA", skillName: "Intimidation" },
-    { mod: "INT", skillName: "Investigation" },
-    { mod: "WIS", skillName: "Medicine" },
-    { mod: "INT", skillName: "Nature" },
-    { mod: "WIS", skillName: "Perception" },
-    { mod: "CHA", skillName: "Performance" },
-    { mod: "CHA", skillName: "Persuasion" },
-    { mod: "INT", skillName: "Religion" },
-    { mod: "DEX", skillName: "Sleight of Hand" },
-    { mod: "DEX", skillName: "Stealth" },
-    { mod: "WIS", skillName: "Survival" },
-]
+
 function MiddleSection() {
+    const { character } = useCharacterContext();
     return (
         <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg' >
             {/* Header Table */}
@@ -150,15 +133,14 @@ function MiddleSection() {
             </div>
             {/* Content Table */}
             <div className='flex flex-col gap-y-3'>
-                {SKILLS.map((s, index) => {
+                {character.skills.map((s: Skill, index) => {
                     return (
                         <div className='flex flex-row w-full text-center underline'>
-                            <div className='flex-[1_1_0%]'>1</div>
-                            <div className='flex-[1_1_0%]'>{s.mod}</div>
-                            <div className='flex-[3_3_0%]'>{s.skillName}</div>
-                            <div className='flex-[1_1_0%]'>4</div>
+                            <div className='flex-[1_1_0%]'>{s.proficiency ? "✅" : "❌"}</div>
+                            <div className='flex-[1_1_0%]'>{s.name}</div>
+                            <div className='flex-[3_3_0%]'>{s.mod}</div>
+                            <div className='flex-[1_1_0%]'>{ }</div>
                         </div>
-
                     )
                 })}
             </div >

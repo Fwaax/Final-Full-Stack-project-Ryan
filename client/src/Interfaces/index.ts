@@ -1,8 +1,7 @@
-export interface Character {
+export interface INewCharacterToSendToBackend {
     name: string;
     race: string;
     class: string;
-    level: number;
     background: string;
     characteristics: string;
     personalityTraits: string;

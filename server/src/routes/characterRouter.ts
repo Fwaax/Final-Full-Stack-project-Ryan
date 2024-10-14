@@ -5,9 +5,10 @@ import { UserModel } from "../schema/user";
 import { findUserByEmail } from "../logic";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
-import { CharacterModel } from "../schema/character";
+import { CharacterModel, ICharacter, INewCharacterToSentFromFrontend } from "../schema/character";
 import { newCharacterValidationJoi } from "../validation/characterValidationJoi";
 import { log } from "node:console";
+import mongoose from "mongoose";
 
 const characterRouter: Router = express.Router();
 
@@ -55,17 +56,51 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
 
             return res.status(404).send({ message: "User not found." });
         }
+        const charFromFrontend: INewCharacterToSentFromFrontend = req.body;
         // Directly create and save a new character using CharacterModel.create()
-        const savedCharacter = await CharacterModel.create({
-            ...req.body,
-            userId: requesterId,  // Assuming you want to associate the character with the user
-        });
+        const newCharacterWeAreStoringToDB: ICharacter = {
+            ...charFromFrontend,
+            level: 1,
+            proficiencyBonus: 2,
+            userId: new mongoose.Types.ObjectId(requesterId),
+            hitPoints: {
+                current: 0,
+                max: 0,
+                temp: 0
+            },
+            skills: [
+                { name: "Acrobatics", mod: "DEX", proficiency: false },
+                { name: "Animal Handling", mod: "WIS", proficiency: false },
+                { name: "Arcana", mod: "INT", proficiency: false },
+                { name: "Athletics", mod: "STR", proficiency: false },
+                { name: "Deception", mod: "CHA", proficiency: false },
+                { name: "History", mod: "INT", proficiency: false },
+                { name: "Insight", mod: "WIS", proficiency: false },
+                { name: "Intimidation", mod: "CHA", proficiency: false },
+                { name: "Investigation", mod: "INT", proficiency: false },
+                { name: "Medicine", mod: "WIS", proficiency: false },
+                { name: "Nature", mod: "INT", proficiency: false },
+                { name: "Perception", mod: "WIS", proficiency: false },
+                { name: "Performance", mod: "CHA", proficiency: false },
+                { name: "Persuasion", mod: "CHA", proficiency: false },
+                { name: "Religion", mod: "INT", proficiency: false },
+                { name: "Sleight of Hand", mod: "DEX", proficiency: false },
+                { name: "Stealth", mod: "DEX", proficiency: false },
+                { name: "Survival", mod: "WIS", proficiency: false },
+            ]
+        }
+
+        const savedCharacter = await CharacterModel.create(
+            newCharacterWeAreStoringToDB
+        );
 
         // Respond with a success message and the saved character data
         res.status(201).send({ message: "Character created successfully.", data: savedCharacter });
     } catch (error) {
         // Return a 500 error with a message
+        console.log(`error`, error);
         res.status(500).send({ message: "Error creating character.", error });
+
     }
 });
 

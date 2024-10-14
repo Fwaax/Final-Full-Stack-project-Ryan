@@ -12,6 +12,8 @@ import Header from "./components/header";
 import { useJwtToken } from "./hooks/useJwtToken"; // Assuming this is your custom hook
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Practice from "./pages/practice";
+import PracticeTwo from "./pages/practiceTwo";
 // Create a QueryClient instance for react-query
 const queryClient = new QueryClient();
 
@@ -74,6 +76,8 @@ function App() {
             {/* Define child routes that require authentication */}
             <Route index element={<HomePage />} /> {/* Default route for "/" */}
             <Route path="debug" element={<DebugPage />} />
+            <Route path="practice" element={<Practice />} />
+            <Route path="practiceTwo" element={<PracticeTwo />} />
             <Route path="character-creation" element={<CharacterCreationPage />} />
             <Route path="character-selection" element={<CharacterSelectionPage />} />
             <Route path="character-sheet/:characterId" element={<CharacterSheetPage />} />

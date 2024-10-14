@@ -24,14 +24,27 @@ export interface ICharacterApiResponse {
     enemies: string;
     backstory: string;
     other: string;
+    skills: Skill[];
+    proficiencyBonus: number;
     strength: number;
     dexterity: number;
     constitution: number;
     intelligence: number;
     wisdom: number;
     charisma: number;
+    hitPoints: {
+        max: number;
+        current: number;
+        temp: number;
+    }
     userId: string;
     createdAt: string; // ISO string for date
     updatedAt: string; // ISO string for date
     __v: number;
+}
+
+export interface Skill {
+    name: string;
+    mod: string;
+    proficiency: boolean;
 }

@@ -4,7 +4,6 @@ export const newCharacterValidationJoi = Joi.object({
     name: Joi.string().required(),
     class: Joi.string().required(),
     race: Joi.string().required(),
-    level: Joi.number().required(),
     background: Joi.string().required(),
     characteristics: Joi.string().required(),
     personalityTraits: Joi.string().required(),

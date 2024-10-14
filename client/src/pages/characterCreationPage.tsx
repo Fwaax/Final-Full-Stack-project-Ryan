@@ -5,7 +5,7 @@ import { useJwtToken } from '../hooks/useJwtToken';
 import { useNavigate } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import { toast } from 'react-toastify';
-import { AbilityScore, Alignment, Character, CharacterAppearance, Faith, Gender, Size } from '../Interfaces';
+import { AbilityScore, Alignment, INewCharacterToSendToBackend, CharacterAppearance, Faith, Gender, Size } from '../Interfaces';
 
 
 // Updating the currect state for the character to update on the webpage
@@ -13,11 +13,10 @@ import { AbilityScore, Alignment, Character, CharacterAppearance, Faith, Gender,
 
 
 const CharacterCreationPage: React.FC = () => {
-    const [character, setCharacter] = useState<Character>({
+    const [character, setCharacter] = useState<INewCharacterToSendToBackend>({
         name: '',
         race: '',
         class: '',
-        level: 1,
         background: '',
         characteristics: '',
         personalityTraits: '',
@@ -53,6 +52,10 @@ const CharacterCreationPage: React.FC = () => {
 
     async function sendToServerNewCharacter() {
         try {
+            if (!token) {
+                toast(`Please log in first`);
+                return;
+            }
             await axios.post('http://localhost:6969/char/new-character', character, { headers: { 'Authorization': token } });
             console.log("Character created successfully");
             navigate("/character-selection", { state: { refetch: true } });
@@ -74,7 +77,6 @@ const CharacterCreationPage: React.FC = () => {
             name: faker.person.firstName(),
             race: faker.helpers.arrayElement(['Human', 'Elf', 'Dwarf', 'Halfling', 'Tiefling', 'Orc']),
             class: faker.helpers.arrayElement(['Fighter', 'Wizard', 'Rogue', 'Cleric', 'Bard', 'Ranger']),
-            level: faker.number.int({ min: 1, max: 20 }),
             background: faker.helpers.arrayElement(['Acolyte', 'Charlatan', 'Criminal', 'Entertainer', 'Guild Artisan', 'Hermit', 'Noble', 'Outlander', 'Sage', 'Sailor', 'Soldier', 'Urchin']),
             characteristics: faker.lorem.sentence(),
             personalityTraits: faker.lorem.sentence(),
@@ -338,7 +340,6 @@ const CharacterCreationPage: React.FC = () => {
                 <p><strong>Name:</strong> {character.name}</p>
                 <p><strong>Race:</strong> {character.race}</p>
                 <p><strong>Class:</strong> {character.class}</p>
-                <p><strong>Level:</strong> {character.level}</p>
                 <p><strong>Background:</strong> {character.background}</p>
                 <p><strong>Characteristics:</strong> {character.characteristics}</p>
                 <p><strong>Personality Traits:</strong> {character.personalityTraits}</p>
