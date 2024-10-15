@@ -20,7 +20,6 @@ characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedReque
         if (!foundCharacters || foundCharacters.length === 0) {
             return res.status(404).send({ message: "No characters found." });
         }
-
         res.status(200).send({ message: "Characters fetched successfully.", data: foundCharacters });
     } catch (error) {
         res.status(500).send(error);

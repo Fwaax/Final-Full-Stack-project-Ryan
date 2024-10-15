@@ -6,6 +6,9 @@ const stats = [
     { name: "STR", modifier: 0, currentStat: 0 },
     { name: "DEX", modifier: 0, currentStat: 0 },
     { name: "CON", modifier: 0, currentStat: 0 },
+    { name: "INT", modifier: 0, currentStat: 0 },
+    { name: "WIS", modifier: 0, currentStat: 0 },
+    { name: "CHA", modifier: 0, currentStat: 0 },
 ];
 
 export default function StatsPanel() {

@@ -1,5 +1,26 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
+export const SKILL_MODIFIER: { [key: string]: string } = {
+    acrobatics: "DEX",
+    animalHandling: "WIS",
+    arcana: "INT",
+    athletics: "STR",
+    deception: "CHA",
+    history: "INT",
+    insight: "WIS",
+    intimidation: "CHA",
+    investigation: "INT",
+    medicine: "WIS",
+    nature: "INT",
+    perception: "WIS",
+    performance: "CHA",
+    persuasion: "CHA",
+    religion: "INT",
+    sleightOfHand: "DEX",
+    stealth: "DEX",
+    survival: "WIS",
+};
+
 export interface INewCharacterToSentFromFrontend {
     name: string;
     race: string;
