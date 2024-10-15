@@ -128,6 +128,7 @@ function formatSkillName(skillKey: string) {
 
 function MiddleSection() {
     const { character } = useCharacterContext();
+
     return (
         <div className="bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg">
             {/* Header Table */}
@@ -139,14 +140,18 @@ function MiddleSection() {
             </div>
             {/* Content Table */}
             <div className="flex flex-col gap-y-3">
-                {Object.entries(character.skills).map(([skillKey, skillObj], index) => (
-                    <div className="flex flex-row w-full text-center" key={index}>
-                        <div className="flex-[1_1_0%]">{skillObj.proficiency ? '✅' : '❌'}</div>
-                        <div className="flex-[1_1_0%]">{formatSkillName(skillKey)}</div>
-                        <div className="flex-[3_3_0%]">{skillObj.modifier}</div>
-                        <div className="flex-[1_1_0%]">{/* Bonus value logic goes here */}</div>
-                    </div>
-                ))}
+                {Object.entries(character.skills).map((s, index) => {
+                    const [skillKey, skillObj] = s;
+                    return (
+                        <div className="flex flex-row w-full text-center" key={index}>
+                            <div className="flex-[1_1_0%]">{skillObj.proficiency ? '✅' : '❌'}</div>
+                            <div className="flex-[1_1_0%]">{formatSkillName(skillKey)}</div>
+                            <div className="flex-[3_3_0%]">{skillObj.modifier}</div>
+                            <div className="flex-[1_1_0%]">{/* Bonus value logic goes here */}</div>
+                        </div>
+                    )
+                }
+                )}
             </div>
         </div>
     );

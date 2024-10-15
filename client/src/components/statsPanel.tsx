@@ -2,24 +2,18 @@ import CoreStatCard from "./coreStatCard";
 import DragonSvg from "./svg/dragonSvg";
 import { useCharacterContext } from "../hooks/characterCotextProvider";
 
-const stats = [
-    { name: "STR", modifier: 0, currentStat: 0 },
-    { name: "DEX", modifier: 0, currentStat: 0 },
-    { name: "CON", modifier: 0, currentStat: 0 },
-    { name: "INT", modifier: 0, currentStat: 0 },
-    { name: "WIS", modifier: 0, currentStat: 0 },
-    { name: "CHA", modifier: 0, currentStat: 0 },
-];
-
 export default function StatsPanel() {
     const { character } = useCharacterContext();
+
     return (
         <div className='flex flex-row bg-gray-800 p-4 shadow-lg'>
 
             <div className='h-[100px] flex flex-row gap-4 items-center flex-[4_4_0%] justify-center  '>
-                {stats.map((stat) => (
-                    <CoreStatCard name={stat.name} key={stat.name} modifier={stat.modifier} currentStat={stat.currentStat} />
-                ))}
+                {Object.entries(character.coreAttributes).map((stat) => {
+                    const [attrKey, attrValue] = stat;
+                    const calcModifier = Math.floor((attrValue - 10) / 2);
+                    return <CoreStatCard name={attrKey} key={attrKey} modifier={calcModifier} currentStat={attrValue} />
+                })}
             </div>
             <div className='flex flex-row flex-[3_3_0%] justify-around  '>
                 <div className='h-[100px] flex flex-col gap-2 items-center justify-center border border-red-700 p-2 rounded-md'>
