@@ -5,7 +5,7 @@ import { Skill } from '../Interfaces/apiRespose';
 
 const BottomPanel = () => {
     return (
-        <div className='flex flex-row w-full'>
+        <div className='flex flex-row w-full h-[800px] gap-x-4'>
             <LeftSection />
 
             <MiddleSection />
@@ -18,9 +18,9 @@ const BottomPanel = () => {
 function LeftSection() {
     const { character } = useCharacterContext();
     return (
-        <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg'>
+        <div className='bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col gap-y-7'>
 
-            <div className='flex flex-col justify-around gap-2 border border-black border-solid' id='saving_throws'>
+            <div className='flex flex-col justify-around gap-2 border border-black border-solid py-2' id='saving_throws'>
                 <div className='flex flex-row justify-around'>
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
@@ -53,11 +53,11 @@ function LeftSection() {
                     </div>
                 </div>
                 <div className='flex flex-col gap-2'>
-                    <div className='col-span-2 flex flex-col justify-center'>
+                    <div className='col-span-2 flex flex-col items-center justify-center'>
                         <p>Advantage display</p>
                         <p>character.advantages</p>
                     </div>
-                    <div className='col-span-2 flex flex-col justify-center'>
+                    <div className='col-span-2 flex flex-col items-center justify-center'>
                         <p>SAVING THROWS</p>
                         <p>character.savingThrows</p>
                     </div>
@@ -66,8 +66,8 @@ function LeftSection() {
 
             {/* --------------------------MUST ADD AND CHECK PROFICEINCY--------------------------------- */}
 
-            <div className='border border-black border-solid'>
-                <div className='flex flex-col'>
+            <div className='border border-black border-solid py-2'>
+                <div className='flex flex-col gap-y-2'>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSTIVE PRECEPTION</p>
                         <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.coreAttributes['WIS']) - 10) / 2)})</p>
@@ -92,7 +92,7 @@ function LeftSection() {
             {/* ----------------------------------------------------------- */}
 
             <div className='border border-black border-solid'>
-                <div>
+                <div className='flex flex-col py-2 gap-y-2'>
                     <div className='flex flex-col items-center'>
                         <h6>ARMOR</h6>
                         <p>PH</p>
@@ -130,56 +130,65 @@ function MiddleSection() {
     const { character } = useCharacterContext();
 
     return (
-        <div className="bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg">
+        <div className="bg-gray-800 h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col">
             {/* Header Table */}
-            <div className="flex flex-row w-full text-center underline mb-4">
-                <div className="flex-[1_1_0%]">PROF</div>
-                <div className="flex-[1_1_0%]">MOD</div>
-                <div className="flex-[3_3_0%]">SKILL</div>
-                <div className="flex-[1_1_0%]">BONUS</div>
+            <div className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center underline mb-4 text-white font-semibold">
+                <div>PROF</div>
+                <div>SKILL</div>
+                <div>MOD</div>
+                <div>BONUS</div>
             </div>
+
             {/* Content Table */}
             <div className="flex flex-col gap-y-3">
-                {Object.entries(character.skills).map((s, index) => {
-                    const [skillKey, skillObj] = s;
-                    return (
-                        <div className="flex flex-row w-full text-center" key={index}>
-                            <div className="flex-[1_1_0%]">{skillObj.proficiency ? '✅' : '❌'}</div>
-                            <div className="flex-[1_1_0%]">{formatSkillName(skillKey)}</div>
-                            <div className="flex-[3_3_0%]">{skillObj.modifier}</div>
-                            <div className="flex-[1_1_0%]">{/* Bonus value logic goes here */}</div>
-                        </div>
-                    )
-                }
-                )}
+                {Object.entries(character.skills).map(([skillKey, skillObj], index) => (
+                    <div
+                        className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center items-center text-gray-300"
+                        key={index}
+                    >
+                        <div>{skillObj.proficiency ? '✅' : '❌'}</div>
+                        <div>{formatSkillName(skillKey)}</div>
+                        <div>{skillObj.modifier}</div>
+                        <div>{/*Logic Later*/}</div>
+                    </div>
+                ))}
             </div>
         </div>
     );
 }
 
+
 function RightSection() {
+    const { character } = useCharacterContext();
+
+    const calcInitiative = Math.floor(0 + ((character.coreAttributes['DEX'] - 10) / 2));
+    const displayInitiative = calcInitiative >= 0 ? `+${calcInitiative}` : `${calcInitiative}`;
+
     return (
         <div className='bg-gray-800 h-[800px] w-full flex-[4_4_0%] p-4 rounded-lg'>
-            <div className='flex flex-row gap-x-4 text-center justify-around h-fit border border-black border-solid' id='initAcResistances'>
-                <div className='flex flex-row gap-x-6 items-center'>
+            <div className='flex flex-row gap-x-4 text-center justify-around border border-black border-solid h-[110px]' id='initAcResistances'>
+                <div className='flex flex-row gap-x-10 items-center'>
                     <div>
                         <h6>INITIATIVE</h6>
-                        <p>PH</p>
+                        <p>{displayInitiative}</p>
                     </div>
                     <div>
-                        <h6>ARMOR</h6>
+                        <h6>ARMOR CLASS</h6>
                         <p>PH</p>
-                        <h6>CLASS</h6>
                     </div>
                 </div>
-                <div className='flex flex-row items-center gap-x-4'>
-                    <div >
+                <div className='flex flex-row items-start py-2 gap-x-10'>
+                    <div className='flex flex-col justify-center '>
                         <h6>DEFENSES</h6>
-                        <p>PH</p>
+                        <div className='flex flex-row gap-x-4'>
+                            <p>Immunity to this</p>
+                        </div>
                     </div>
-                    <div>
+                    <div className='flex flex-col justify-center'>
                         <h6>CONDITIONS</h6>
-                        <p>PH</p>
+                        <div>
+                            <p>Exhauntion</p>
+                        </div>
                     </div>
                 </div>
             </div>

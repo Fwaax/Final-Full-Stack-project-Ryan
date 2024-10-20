@@ -82,7 +82,7 @@ const CharacterCreationPage: React.FC = () => {
             personalityTraits: faker.lorem.sentence(),
             appearance: {
                 alignment: faker.helpers.arrayElement(['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'True Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil']),
-                gender: faker.helpers.arrayElement(['male', 'female']),
+                gender: faker.helpers.arrayElement(['Male', 'Female']),
                 eyes: faker.color.human(),
                 size: faker.helpers.arrayElement(['Small', 'Medium', 'Large']),
                 height: `${faker.number.int({ min: 4, max: 7 })} ft`,
@@ -200,8 +200,8 @@ const CharacterCreationPage: React.FC = () => {
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, gender: e.target.value as Gender } })}
                     >
                         <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
                 </label>
 

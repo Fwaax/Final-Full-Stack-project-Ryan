@@ -14,15 +14,22 @@ export default function TopPanel() {
                 </div>
                 <div>
                     <div className='flex flex-row items-center gap-2'>
-                        <h6 className='text-sm text-white'>{character.name}</h6>
-                        <button className='text-sm border border-solid border-red-700 hover:border-red-600 rounded-sm px-2 py-1 text-white'>
-                            MANAGE
-                        </button>
+                        <div className='flex flex-col'>
+                            <div className="flex flex-row gap-x-4">
+                                <h6 className='text-xl text-white'>{character.name}</h6>
+                                <button className='text-sm border border-solid border-red-700 hover:border-red-600 rounded-sm px-2 py-1 text-white'>
+                                    MANAGE
+                                </button>
+                            </div>
+                            <h6 className="text-sm text-white">
+                                {`${character.appearance.gender} ${character.race} ${character.class}`}
+                            </h6>
+                        </div>
                     </div>
-                    <p className='text-sm text-gray-400'>{character.level}</p>
+                    <p className='text-sm text-gray-400'>{`Level ${character.level}`}</p>
                 </div>
             </div>
-            <div className='w-[300px] h-full flex flex-row justify-center items-center gap-4'>
+            <div className='w-[350px] h-full flex flex-row justify-center items-center gap-4'>
                 <div className='flex flex-row justify-center items-center border border-red-700 rounded-sm hover:border-red-600 cursor-pointer px-3 py-1'>
                     <CampfireSvg className="w-[25px]" />
                     <h6 className='text-white ml-2'>SHORT REST</h6>

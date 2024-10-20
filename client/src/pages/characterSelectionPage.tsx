@@ -3,7 +3,7 @@ import { BACKEND_URL } from "../const";
 import { useQuery } from "@tanstack/react-query";
 import { useJwtToken } from "../hooks/useJwtToken";
 import axios from "axios";
-import { ICharacterApiResponse } from "../Interfaces/apiRespose";
+import { ICharacterCurrentStateApiResponse } from "../Interfaces/apiRespose";
 import { toast } from "react-toastify";
 
 const CharacterSelection: React.FC = () => {
@@ -31,7 +31,7 @@ const CharacterSelection: React.FC = () => {
                     },
                     url: `${BACKEND_URL}/char/all-my-characters`,
                 });
-                return response.data.data as ICharacterApiResponse[];
+                return response.data.data as ICharacterCurrentStateApiResponse[];
             } catch (err) {
                 console.error("Failed to fetch characters:", err);
                 return [];

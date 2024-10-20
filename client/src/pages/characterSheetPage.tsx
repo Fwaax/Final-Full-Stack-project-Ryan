@@ -8,7 +8,7 @@ import axios from "axios";
 import { useJwtToken } from "../hooks/useJwtToken";
 import { BACKEND_URL } from "../const";
 import { toast } from "react-toastify";
-import { ICharacterApiResponse } from "../Interfaces/apiRespose";
+import { ICharacterCurrentStateApiResponse } from "../Interfaces/apiRespose";
 import { CharacterProvider } from "../hooks/characterCotextProvider";
 
 const CharacterSheetPage = () => {
@@ -36,7 +36,7 @@ const CharacterSheetPage = () => {
                     },
                     url: `${BACKEND_URL}/char/my-character/${characterIdFromUrl}`,
                 });
-                return response.data.data as ICharacterApiResponse;
+                return response.data.data as ICharacterCurrentStateApiResponse;
             } catch (err) {
                 console.error("Failed to fetch character:", err);
                 return null;

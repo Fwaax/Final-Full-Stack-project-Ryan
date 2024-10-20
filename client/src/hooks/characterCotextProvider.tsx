@@ -1,11 +1,11 @@
 // src/context/CharacterContext.tsx
 
 import React, { createContext, useContext, ReactNode } from "react";
-import { ICharacterApiResponse } from "../Interfaces/apiRespose";
+import { ICharacterCurrentStateApiResponse } from "../Interfaces/apiRespose";
 
 // Define the shape of the context
 interface CharacterContextType {
-    character: ICharacterApiResponse;
+    character: ICharacterCurrentStateApiResponse;
 }
 
 // Create the context
@@ -26,7 +26,7 @@ export const CharacterProvider = ({
     character,
 }: {
     children: ReactNode;
-    character: ICharacterApiResponse;
+    character: ICharacterCurrentStateApiResponse;
 }) => {
     return <CharacterContext.Provider value={{ character }}> {children} </CharacterContext.Provider>;
 }

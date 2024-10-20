@@ -1,4 +1,4 @@
-export interface ICharacterApiResponse {
+export interface ICharacterCurrentStateApiResponse {
     appearance: {
         alignment: string;
         gender: string;
