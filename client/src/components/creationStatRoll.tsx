@@ -32,7 +32,7 @@ const CreationStatRoll: React.FC = () => {
 
     return (
         <div>
-            <button className='border border-black border-solid h-[50px] w-[50px]' onClick={() => setStatRoll(generateStats())}>Roll</button>
+            <button className='border border-[#bfbfba] border-solid h-[50px] w-[50px]' onClick={() => setStatRoll(generateStats())}>Roll</button>
             {statRoll.map((roll, index) => (
                 <div key={index}>Stat Roll {index + 1}: {roll}</div>
             ))}

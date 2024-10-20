@@ -54,15 +54,15 @@ function CharacterTabsPanel() {
     return (
         <div className="flex flex-col w-full">
             {/* Tabs Navigation */}
-            <div className="flex justify-around bg-gray-800 p-2 rounded-t-lg">
+            <div className="flex justify-around bg-[#1d1e2a] p-2 rounded-t-lg">
                 {tabs.map((tab) => (
                     <button
                         key={tab.label}
                         className={clsx(
                             'px-4 py-2 transition-colors duration-300',
                             activeTab === tab.label
-                                ? 'bg-red-700 text-white'
-                                : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
+                                ? 'bg-[#556b82] text-[#bfbfba]'
+                                : 'bg-[#1a1b26] text-[#bfbfba] hover:bg-[#14151f]'
                         )}
                         onClick={() => setActiveTab(tab.label)}
                     >
@@ -72,7 +72,7 @@ function CharacterTabsPanel() {
             </div>
 
             {/* Tab Content */}
-            <div className="tab-content mt-4 p-4 bg-gray-700 text-white">
+            <div className="tab-content mt-4 p-4 bg-[#14151f] text-[#bfbfba]">
                 {renderTabContent()}
             </div>
         </div>

@@ -11,7 +11,7 @@ function Header() {
     };
 
     return (
-        <header className="bg-gray-800 text-white p-4">
+        <header className="bg-[#14151f] text-[#bfbfba] p-4">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Navigation links */}
                 <nav className="flex space-x-4">
@@ -29,7 +29,7 @@ function Header() {
                             <span className="text-sm">Welcome, {user.nickname}</span>
                             <button
                                 onClick={handleLogout}
-                                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                                className="bg-[#1a1b26] hover:bg-[#556b82] text-[#bfbfba] px-3 py-1 rounded"
                             >
                                 Logout
                             </button>
@@ -37,7 +37,7 @@ function Header() {
                     ) : (
                         <Link
                             to="/login"
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                            className="bg-[#1a1b26] hover:bg-[#556b82] text-[#bfbfba] px-3 py-1 rounded"
                         >
                             Login
                         </Link>

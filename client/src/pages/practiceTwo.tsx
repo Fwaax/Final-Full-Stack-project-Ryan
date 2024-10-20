@@ -48,7 +48,7 @@ const PracticeTwo = () => {
             {hasRolled &&
                 <div id="roll-results">
                     <p>You rolled {numberOfRolls}D{diceSize}+{mod}</p>
-                    <p className='text-3xl border border-red-700 p-2 rounded-md'>{dmgRoll}</p>
+                    <p className='text-3xl border border-[#bfbfba] p-2 rounded-md'>{dmgRoll}</p>
                 </div>
             }
         </div>

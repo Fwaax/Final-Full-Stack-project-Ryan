@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-sm font-medium text-white">
+                        <label htmlFor="email" className="block text-sm font-medium text-[#bfbfba]">
                             Email:
                         </label>
                         <input
@@ -57,7 +57,7 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <div className="mb-6">
-                        <label htmlFor="password" className="block text-sm font-medium text-white">
+                        <label htmlFor="password" className="block text-sm font-medium text-[#bfbfba]">
                             Password:
                         </label>
                         <input
@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
 
                     <button
                         type="submit"
-                        className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${loading ? "opacity-50 cursor-not-allowed" : ""
+                        className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#bfbfba] bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${loading ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                         disabled={loading}
                     >

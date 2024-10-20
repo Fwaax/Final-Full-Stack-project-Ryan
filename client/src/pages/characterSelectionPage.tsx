@@ -76,7 +76,7 @@ const CharacterSelection: React.FC = () => {
                 <p>No characters found. Please create one.</p>
                 <button
                     onClick={handleAddCharacter}
-                    className="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                    className="mt-4 bg-green-600 text-[#bfbfba] py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
                 >
                     Create Character
                 </button>
@@ -92,7 +92,7 @@ const CharacterSelection: React.FC = () => {
                 <div className="text-right mb-4">
                     <button
                         onClick={handleAddCharacter}
-                        className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                        className="bg-green-600 text-[#bfbfba] py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
                     >
                         Add Character
                     </button>
@@ -108,12 +108,12 @@ const CharacterSelection: React.FC = () => {
                             <p className="text-gray-600">Class: {character.class}</p>
                             <p className="text-gray-600">Level: {character.level}</p>
                             <button
-                                className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300"
+                                className="mt-4 w-full bg-indigo-600 text-[#bfbfba] py-2 rounded-md hover:bg-indigo-700 transition duration-300"
                                 onClick={() => handleSelectCharacter(character._id)}
                             >
                                 Select
                             </button>
-                            <button className="mt-4 w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition duration-300"
+                            <button className="mt-4 w-full bg-red-600 text-[#bfbfba] py-2 rounded-md hover:bg-red-700 transition duration-300"
                                 onClick={() => handleDeleteCharacter(character._id)}>Delete</button>
                         </div>
                     ))}
