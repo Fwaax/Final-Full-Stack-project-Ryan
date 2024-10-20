@@ -134,4 +134,28 @@ characterRouter.delete("/delete-character", userGaurd, async (req: AuthorizedReq
     }
 });
 
+// edit character
+characterRouter.put("/edit-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
+    try {
+        const requesterId = req.jwtDecodedUser.id;
+        const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: false });
+        if (validationResult.error) {
+            console.log(`validationResult.error`);
+            return res.status(400).send({ message: validationResult.error.message });
+        }
+        const foundCharacter = await CharacterModel.findById(req.body.characterId);
+        if (!foundCharacter) {
+            return res.status(404).send({ message: "Trying to edit a non-existent character." });
+        }
+        const characterOwnerId = foundCharacter.userId;
+        if (characterOwnerId.toString() !== requesterId) {
+            return res.status(403).send({ message: "You are not authorized to edit this character." });
+        }
+        const updatedCharacter = await CharacterModel.findByIdAndUpdate(req.body.characterId, req.body, { new: true });
+        res.status(200).send({ message: "Character updated successfully.", data: updatedCharacter });
+    } catch (error) {
+        res.status(500).send({ message: "Error updating character.", error });
+    }
+});
+
 export default characterRouter
