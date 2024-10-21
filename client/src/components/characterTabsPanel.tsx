@@ -54,7 +54,7 @@ function CharacterTabsPanel() {
     return (
         <div className="flex flex-col w-full">
             {/* Tabs Navigation */}
-            <div className="flex justify-around bg-[#1d1e2a] p-2 rounded-t-lg">
+            <div className="flex justify-around bg-[#1d1e2a] m-2 border border-[#bfbfba] border-solid">
                 {tabs.map((tab) => (
                     <button
                         key={tab.label}
@@ -72,7 +72,7 @@ function CharacterTabsPanel() {
             </div>
 
             {/* Tab Content */}
-            <div className="tab-content mt-4 p-4 bg-[#14151f] text-[#bfbfba]">
+            <div className="tab-content mt-4 p-4 bg-[#14151f] text-[#bfbfba] border border-[#bfbfba] border-solid">
                 {renderTabContent()}
             </div>
         </div>

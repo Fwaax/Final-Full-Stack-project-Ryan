@@ -132,8 +132,8 @@ function MiddleSection() {
     return (
         <div className="bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col border-4 border-[#14151f] border-solid">
             {/* Header Table */}
-            <div className='bg-[#14151f] p-2'>
-                <div className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center underline mb-4 text-[#bfbfba] font-semibold">
+            <div className='bg-[#14151f] p-2 border border-[#bfbfba] border-solid'>
+                <div className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center underline mb-4 text-[#bfbfba] font-semibold ">
                     <div>PROF</div>
                     <div>SKILL</div>
                     <div>MOD</div>
