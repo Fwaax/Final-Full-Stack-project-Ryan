@@ -61,7 +61,6 @@ const CharacterSheetPage = () => {
     useEffect(() => {
         const fetchCharacter = async () => {
             if (!token) {
-                toast("Please log in first");
                 setError("Unauthorized, Token is missing");
                 return;
             }
@@ -97,6 +96,7 @@ const CharacterSheetPage = () => {
                 setOther(data.other);
                 setError(null);
                 setIsFetched(true);
+                toast("Character fetched successfully");
             } catch (err) {
                 console.error("Failed to fetch character:", err);
                 setError("Failed to fetch character");
