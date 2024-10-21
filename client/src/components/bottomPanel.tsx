@@ -1,7 +1,8 @@
 import React from 'react'
 import CharacterTabsPanel from './characterTabsPanel'
-import { useCharacterContext } from '../hooks/characterCotextProvider';
 import { Skill } from '../Interfaces/apiRespose';
+import { useAtom } from 'jotai';
+import { coreAttributesAtom, skillsAtom } from '../atoms';
 
 const BottomPanel = () => {
     return (
@@ -16,7 +17,7 @@ const BottomPanel = () => {
 }
 
 function LeftSection() {
-    const { character } = useCharacterContext();
+    const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
     return (
         <div className='bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col gap-y-7 text-[#bfbfba] border-4 border-[#14151f] border-solid'>
 
@@ -25,30 +26,30 @@ function LeftSection() {
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>STR</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['STR']}</p>
+                            <p className='flex-[2_2_0%] text-center'>{coreAttributes['STR']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>DEX</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['DEX']}</p>
+                            <p className='flex-[2_2_0%] text-center'>{coreAttributes['DEX']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>CON</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['CON']}</p>
+                            <p className='flex-[2_2_0%] text-center'>{coreAttributes['CON']}</p>
                         </div>
                     </div>
 
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>INT</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['INT']}</p>
+                            <p className='flex-[2_2_0%] text-center'>{coreAttributes['INT']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>WIS</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['WIS']}</p>
+                            <p className='flex-[2_2_0%] text-center'>{coreAttributes['WIS']}</p>
                         </div>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>CHA</p>
-                            <p className='flex-[2_2_0%] text-center'>{character.coreAttributes['CHA']}</p>
+                            <p className='flex-[2_2_0%] text-center'>{coreAttributes['CHA']}</p>
                         </div>
                     </div>
                 </div>
@@ -70,15 +71,15 @@ function LeftSection() {
                 <div className='flex flex-col gap-y-2 bg-[#14151f] py-3'>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSTIVE PRECEPTION</p>
-                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.coreAttributes['WIS']) - 10) / 2)})</p>
+                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((coreAttributes['WIS']) - 10) / 2)})</p>
                     </div>
                     <div className='flex flex-row  justify-around'>
                         <p className='text-center w-[11rem]'>PASSIVE INVESTIGATION</p>
-                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((character.coreAttributes['INT']) - 10) / 2)})</p>
+                        <p className='text-center w-[2rem]'>({Math.floor(10 + ((coreAttributes['INT']) - 10) / 2)})</p>
                     </div>
                     <div className='flex flex-row justify-around'>
                         <p className='text-center w-[11rem]'>PASSIVE INSIGHT</p>
-                        <p className='text-center w-[2rem]'>({(Math.floor(10 + ((character.coreAttributes['WIS']) - 10) / 2))})</p>
+                        <p className='text-center w-[2rem]'>({(Math.floor(10 + ((coreAttributes['WIS']) - 10) / 2))})</p>
                     </div>
                     <div className='flex justify-center'>
                         <p>Darkvision { } ft.</p>
@@ -127,7 +128,7 @@ function formatSkillName(skillKey: string) {
 }
 
 function MiddleSection() {
-    const { character } = useCharacterContext();
+    const [skill, setSkill] = useAtom(skillsAtom);
 
     return (
         <div className="bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col border-4 border-[#14151f] border-solid">
@@ -142,7 +143,7 @@ function MiddleSection() {
 
                 {/* Content Table */}
                 <div className="flex flex-col gap-y-3">
-                    {Object.entries(character.skills).map(([skillKey, skillObj], index) => (
+                    {Object.entries(skill).map(([skillKey, skillObj], index) => (
                         <div
                             className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center items-center text-[#bfbfba]"
                             key={index}
@@ -161,8 +162,9 @@ function MiddleSection() {
 
 
 function RightSection() {
-    const { character } = useCharacterContext();
-    const calcInitiative = Math.floor(0 + ((character.coreAttributes['DEX'] - 10) / 2));
+    const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
+
+    const calcInitiative = Math.floor(0 + ((coreAttributes['DEX'] - 10) / 2));
     const displayInitiative = calcInitiative >= 0 ? `+${calcInitiative}` : `${calcInitiative}`;
     return (
         <div className='bg-[#1d1e2a] h-[800px] w-full flex-[4_4_0%] p-4 rounded-lg border-4 border-[#14151f] border-solid'>

@@ -1,21 +1,24 @@
 import CoreStatCard from "./coreStatCard";
 import DragonSvg from "./svg/dragonSvg";
-import { useCharacterContext } from "../hooks/characterCotextProvider";
 import { useState } from "react";
 import clsx from "clsx";
+import { coreAttributesAtom, levelAtom } from "../atoms";
+import { useAtom } from "jotai";
 
 export default function StatsPanel() {
-    const { character } = useCharacterContext();
+    const [level, setLevel] = useAtom(levelAtom);
+    const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
+
     const invisibleSpace = "\u200B";
     const [isInspired, setIsInspired] = useState(false);
-    const proficiency = Math.ceil((character.level / 4) + 1);
+    const proficiency = Math.ceil((level / 4) + 1);
     const displayProficiency = proficiency >= 0 ? `+${proficiency}` : `${proficiency}`
 
     return (
         <div className='flex flex-row bg-[#1d1e2a] p-4 shadow-lg border-4 border-[#14151f] border-solid'>
             <div className="flex flex-row gap-4 items-center flex-[4_4_0%] justify-center">
                 <div className='h-full flex flex-row gap-4 items-center flex-[4_4_0%] justify-center text-[#bfbfba]'>
-                    {Object.entries(character.coreAttributes).map((stat) => {
+                    {Object.entries(coreAttributes).map((stat) => {
                         const [attrKey, attrValue] = stat;
                         const calcModifier = Math.floor((attrValue - 10) / 2);
                         const displayModifier = calcModifier >= 0 ? `+${calcModifier}` : `${calcModifier}`;
@@ -35,7 +38,7 @@ export default function StatsPanel() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-row flex-[3_3_0%] justify-center  gap-4'>
+                <div className='flex flex-row flex-[6_6_0%] justify-center  gap-4'>
                     <div className="flex flex-col gap-2 justify-center items-center border border-[#bfbfba] px-2 rounded-md bg-[#14151f]" onClick={() => setIsInspired(!isInspired)}>
                         <button className="h-[30px] w-[30px] flex justify-center items-center" >
                             <DragonSvg className={clsx("w-[30px] h-[30px]", isInspired ? "visible" : "hidden")} />

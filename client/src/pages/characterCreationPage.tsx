@@ -324,6 +324,13 @@ const CharacterCreationPage: React.FC = () => {
                         onChange={(e) => setCharacter({ ...character, personalityTraits: e.target.value })} placeholder="Personality Traits" type="text" name='personality_traits' />
                 </div>
             </div>
+            <div className=' w-3/5 mx-auto'>
+                <div className='flex flex-col'>
+                    <label htmlFor="characteristics">Characteristics</label>
+                    <input className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.characteristics}
+                        onChange={(e) => setCharacter({ ...character, characteristics: e.target.value })} placeholder="Characteristics" type="text" name='characteristics' />
+                </div>
+            </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
