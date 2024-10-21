@@ -2,17 +2,26 @@ import CoreStatCard from "./coreStatCard";
 import DragonSvg from "./svg/dragonSvg";
 import { useState } from "react";
 import clsx from "clsx";
-import { coreAttributesAtom, levelAtom } from "../atoms";
+import { coreAttributesAtom, hitPointsAtom, levelAtom } from "../atoms";
 import { useAtom } from "jotai";
 
 export default function StatsPanel() {
     const [level, setLevel] = useAtom(levelAtom);
-    const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
+    const [hp, setHp] = useAtom(hitPointsAtom);
 
+    const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
+    const [inputValue, setInputValue] = useState(0);
     const invisibleSpace = "\u200B";
     const [isInspired, setIsInspired] = useState(false);
     const proficiency = Math.ceil((level / 4) + 1);
     const displayProficiency = proficiency >= 0 ? `+${proficiency}` : `${proficiency}`
+
+    function healHandler() {
+        setHp({ ...hp, current: hp.current + inputValue });
+    }
+    function damageHandler() {
+        setHp({ ...hp, current: hp.current - inputValue });
+    }
 
     return (
         <div className='flex flex-row bg-[#1d1e2a] p-4 shadow-lg border-4 border-[#14151f] border-solid'>
@@ -49,9 +58,9 @@ export default function StatsPanel() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 items-center">
-                        <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]">HEAL</button>
-                        <input type="number" className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f]" />
-                        <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]">DAMAGE</button>
+                        <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={healHandler}>HEAL</button>
+                        <input type="number" className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f]" value={inputValue} onChange={(e) => setInputValue(parseInt(e.target.value))} />
+                        <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={damageHandler}>DAMAGE</button>
                     </div>
                     <div className="flex flex-col flex-[6_6_0%]  border border-[#bfbfba] rounded-md p-2 text-[#bfbfba] gap-4 items-center bg-[#14151f]">
                         <div>
@@ -60,7 +69,7 @@ export default function StatsPanel() {
                         <div className="flex flex-row justify-center gap-3 ">
                             <div className="flex flex-col items-center">
                                 <p>Current</p>
-                                <p>1</p>
+                                <p>{hp.current}</p>
                             </div>
                             <div className="flex flex-col items-center">
                                 <p>{invisibleSpace}</p>
@@ -68,11 +77,11 @@ export default function StatsPanel() {
                             </div>
                             <div className="flex flex-col items-center">
                                 <p>Max</p>
-                                <p>2</p>
+                                <p>{hp.max}</p>
                             </div>
                             <div className="flex flex-col items-center">
                                 <p>Temp</p>
-                                <p>3</p>
+                                <p>{hp.temp}</p>
                             </div>
                         </div>
 

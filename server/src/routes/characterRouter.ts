@@ -139,31 +139,47 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
     try {
         const sentCharacterId = req.params.id;
         const requesterId = req.jwtDecodedUser.id;
-        const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: false });
+
+        // Validate the request body with Joi
+        const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: true });
         if (validationResult.error) {
-            console.log(`validationResult.error`);
+            console.log("Validation error:", validationResult.error);
             return res.status(400).send({ message: validationResult.error.message });
         }
+
+        // Check if the character exists
         const oldCharacterState = await CharacterModel.findById(sentCharacterId);
         if (!oldCharacterState) {
             return res.status(404).send({ message: "Trying to edit a non-existent character." });
         }
-        const characterOwnerId = oldCharacterState.userId;
-        if (characterOwnerId.toString() !== requesterId) {
+
+        // Verify the requester is the owner of the character
+        if (oldCharacterState.userId.toString() !== requesterId) {
             return res.status(403).send({ message: "You are not authorized to edit this character." });
         }
+
+        // Create the updated character data object
         const updatedChar: ICharacter = {
             ...req.body,
+            updatedAt: new Date(),
             userId: oldCharacterState.userId,
             createdAt: oldCharacterState.createdAt,
-            _id: oldCharacterState._id,
-            updatedAt: Date.now(),
+            _id: oldCharacterState._id
+            // Use Date object
+        };
+
+        // Update the character in the database
+        const result = await CharacterModel.findByIdAndUpdate(sentCharacterId, updatedChar, { new: true });
+        if (!result) {
+            return res.status(404).send({ message: "Failed to update character." });
         }
-        const updatedCharacter = await CharacterModel.findByIdAndUpdate(req.body.characterId, updatedChar, { new: true });
-        res.status(200).send({ message: "Character updated successfully.", data: updatedCharacter });
+
+        res.status(200).send({ message: "Character updated successfully.", data: result });
     } catch (error) {
+        console.error("Error updating character:", error);
         res.status(500).send({ message: "Error updating character.", error });
     }
 });
+
 
 export default characterRouter
