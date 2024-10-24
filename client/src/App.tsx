@@ -13,7 +13,7 @@ import { useJwtToken } from "./hooks/useJwtToken"; // Assuming this is your cust
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Practice from "./pages/practice";
-import PracticeTwo from "./pages/practiceTwo";
+import DiceComponent from "./components/diceComponent";
 // Create a QueryClient instance for react-query
 const queryClient = new QueryClient();
 
@@ -77,7 +77,7 @@ function App() {
             <Route index element={<HomePage />} /> {/* Default route for "/" */}
             <Route path="debug" element={<DebugPage />} />
             <Route path="practice" element={<Practice />} />
-            <Route path="practiceTwo" element={<PracticeTwo />} />
+            <Route path="dice" element={<DiceComponent />} />
             <Route path="character-creation" element={<CharacterCreationPage />} />
             <Route path="character-selection" element={<CharacterSelectionPage />} />
             <Route path="character-sheet/:characterId" element={<CharacterSheetPage />} />

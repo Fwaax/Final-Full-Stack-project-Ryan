@@ -21,7 +21,7 @@ const Dice = () => {
         <div className='flex flex-col gap-2'>
             <div className='flex flex-row gap-3'>
                 {DICE_VALUES.map((value, index) => {
-                    return <button key={index} onClick={() => handleDimension(value, Number(modifier))} className='px-4 py-2 bg-blue-400 rounded-md border border-solid border-[#bfbfba] hover:bg-blue-400/80'>D{value}</button>
+                    return <button key={index} onClick={() => handleDimension(value, Number(modifier))} className='px-4 py-2 bg-[#556b82] text-[#bfbfba] rounded-md border border-solid border-[#bfbfba] hover:bg-blue-400/80'>D{value}</button>
                 })}
                 <div>
                     <label htmlFor="modifier">Modifier:</label>

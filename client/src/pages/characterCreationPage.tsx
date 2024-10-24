@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import { toast } from 'react-toastify';
 import { AbilityScore, Alignment, INewCharacterToSendToBackend, CharacterAppearance, Faith, Gender, Size } from '../Interfaces';
+import CreationStatRoll from '../components/creationStatRoll';
 
 
 // Updating the currect state for the character to update on the webpage
@@ -116,26 +117,26 @@ const CharacterCreationPage: React.FC = () => {
 
 
     return (
-        <div className="container mx-auto p-4 bg-gray-700">
+        <div className="container mx-auto p-4 bg-[#1d1e2a]">
             <h1 className="text-3xl font-bold mb-4">Create Your D&D Character</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="block">
+                <label className="block font-semibold">
                     Name:
                     <input
                         type="text"
                         name="name"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.name}
                         onChange={(e) => setCharacter({ ...character, name: e.target.value })}
                     />
                 </label>
 
-                <label className="block">
+                <label className="block font-semibold">
                     Race:
                     <select
                         name="race"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.race}
                         onChange={(e) => setCharacter({ ...character, race: e.target.value })}
                     >
@@ -149,11 +150,11 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </label>
 
-                <label className="block">
+                <label className="block font-semibold">
                     Class:
                     <select
                         name="class"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.class}
                         onChange={(e) => setCharacter({ ...character, class: e.target.value })}
                     >
@@ -167,11 +168,11 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </label>
 
-                <label className="block">
+                <label className="block font-semibold">
                     Background:
                     <select
                         name="background"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.background}
                         onChange={(e) => setCharacter({ ...character, background: e.target.value })}
                     >
@@ -191,11 +192,11 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </label>
 
-                <label className="block">
+                <label className="block font-semibold">
                     Gender:
                     <select
                         name="gender"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.appearance.gender}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, gender: e.target.value as Gender } })}
                     >
@@ -205,11 +206,11 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </label>
 
-                <label className="block">
+                <label className="block font-semibold">
                     Alignment:
                     <select
                         name="alignment"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.appearance.alignment}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, alignment: e.target.value as Alignment } })}
                     >
@@ -224,11 +225,11 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </label>
 
-                <label className='block'>
+                <label className='block font-semibold'>
                     Size:
                     <select
                         name="size"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.appearance.size}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, size: e.target.value as Size } })}
                     >
@@ -239,11 +240,11 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </label>
 
-                <label className="block">
+                <label className="block font-semibold">
                     Faith:
                     <select
                         name="faith"
-                        className="mt-1 block w-full p-2 border border-gray-900 rounded-md bg-slate-600"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.appearance.faith}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, faith: e.target.value as Faith } })}
                     >
@@ -281,69 +282,78 @@ const CharacterCreationPage: React.FC = () => {
 
             <div className="flex flex-row flex-wrap justify-between">
                 <div>
-                    <label htmlFor="hair">Hair</label>
-                    <input type="text" name="hair" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.hair}
+                    <label htmlFor="hair" className='font-semibold'>Hair</label>
+                    <input type="text" name="hair" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.appearance.hair}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, hair: e.target.value } })} placeholder="Hair" />
                 </div>
 
                 <div>
-                    <label htmlFor="skin">Skin</label>
-                    <input type="text" name="skin" className="mt-1 flex  p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.skin}
+                    <label htmlFor="skin" className='font-semibold'>Skin</label>
+                    <input type="text" name="skin" className="mt-1 flex  p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.appearance.skin}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, skin: e.target.value } })} placeholder="Skin" />
                 </div>
 
                 <div>
-                    <label htmlFor="eyes">Eyes</label>
-                    <input type="text" name="eyes" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.eyes}
+                    <label htmlFor="eyes" className='font-semibold'>Eyes</label>
+                    <input type="text" name="eyes" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.appearance.eyes}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, eyes: e.target.value } })} placeholder="Eyes" />
                 </div>
 
                 <div>
-                    <label htmlFor="age">Age</label>
-                    <input type="text" name="age" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.age}
+                    <label htmlFor="age" className='font-semibold'>Age</label>
+                    <input type="text" name="age" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.appearance.age}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, age: e.target.value } })} placeholder="Age" />
                 </div>
 
                 <div>
-                    <label htmlFor="weight">Weight</label>
-                    <input type="text" name="weight" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.weight}
+                    <label htmlFor="weight" className='font-semibold'>Weight</label>
+                    <input type="text" name="weight" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.appearance.weight}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, weight: e.target.value } })} placeholder="Weight" />
                 </div>
 
                 <div>
-                    <label htmlFor="height">Height</label>
-                    <input type="text" name="height" className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.appearance.height}
+                    <label htmlFor="height" className='font-semibold'>Height</label>
+                    <input type="text" name="height" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.appearance.height}
                         onChange={(e) => setCharacter({ ...character, appearance: { ...character.appearance, height: e.target.value } })} placeholder="Height" />
                 </div>
             </div>
 
             <div className=' w-3/5 mx-auto'>
                 <div className='flex flex-col'>
-                    <label htmlFor="personality_traits">Personality Traits</label>
-                    <input className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.personalityTraits}
+                    <label htmlFor="personality_traits" className='font-semibold'>Personality Traits</label>
+                    <input className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md font-semibold" value={character.personalityTraits}
                         onChange={(e) => setCharacter({ ...character, personalityTraits: e.target.value })} placeholder="Personality Traits" type="text" name='personality_traits' />
                 </div>
             </div>
             <div className=' w-3/5 mx-auto'>
                 <div className='flex flex-col'>
-                    <label htmlFor="characteristics">Characteristics</label>
-                    <input className="mt-1 flex p-2 border border-gray-900 bg-slate-600 rounded-md" value={character.characteristics}
+                    <label htmlFor="characteristics" className='font-semibold'>Characteristics</label>
+                    <input className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md font-semibold" value={character.characteristics}
                         onChange={(e) => setCharacter({ ...character, characteristics: e.target.value })} placeholder="Characteristics" type="text" name='characteristics' />
                 </div>
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
+            <div className="m-8">
+                <CreationStatRoll />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] as AbilityScore[]).map((ability) => (
-                    <label key={ability} className="block">
-                        {ability.charAt(0).toUpperCase() + ability.slice(1)}:
-                        <NumericInputWithNumberValue className='' value={character[ability]} setValue={(num: number) => handleAbilityChange(ability, num)} />
-                    </label>
+                    <div key={ability} className="flex flex-col items-start">
+                        <label className="text-lg font-semibold text-gray-300 mb-1">
+                            {ability.charAt(0).toUpperCase() + ability.slice(1)}:
+                        </label>
+                        <NumericInputWithNumberValue
+                            className="w-full bg-[#1d1e2a] border border-[#bfbfba] text-[#bfbfba] p-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={character[ability]}
+                            setValue={(num: number) => handleAbilityChange(ability, num)}
+                        />
+                    </div>
                 ))}
             </div>
 
             <h3 className="text-xl font-semibold mt-6">Character Summary</h3>
-            <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
+            <div className="bg-[#2a2b3c] p-4 rounded-lg shadow-lg">
                 <p><strong>Name:</strong> {character.name}</p>
                 <p><strong>Race:</strong> {character.race}</p>
                 <p><strong>Class:</strong> {character.class}</p>
@@ -364,8 +374,10 @@ const CharacterCreationPage: React.FC = () => {
                 <p><strong>Wisdom:</strong> {character.wisdom}</p>
                 <p><strong>Charisma:</strong> {character.charisma}</p>
             </div>
-            <div><button className='bg-gray-800 p-4 rounded-lg shadow-lg' onClick={sendToServerNewCharacter}>Create Character</button></div>
-            <div><button className='bg-gray-800 p-4 rounded-lg shadow-lg' onClick={randomizeCharacter}>Random Character</button></div>
+            <div className='flex flex-row justify-between mt-2'>
+                <div><button className='bg-[#2a2b3c] p-4 rounded-lg shadow-lg font-semibold' onClick={sendToServerNewCharacter}>Create Character</button></div>
+                <div><button className='bg-[#2a2b3c] p-4 rounded-lg shadow-lg font-semibold' onClick={randomizeCharacter}>Random Character</button></div>
+            </div>
         </div>
     );
 };

@@ -31,11 +31,17 @@ const CreationStatRoll: React.FC = () => {
     }, []); // Empty dependency array ensures this runs only once on component mount
 
     return (
-        <div>
-            <button className='border border-[#bfbfba] border-solid h-[50px] w-[50px]' onClick={() => setStatRoll(generateStats())}>Roll</button>
-            {statRoll.map((roll, index) => (
-                <div key={index}>Stat Roll {index + 1}: {roll}</div>
-            ))}
+        <div className='flex flex-col gap-2 items-center'>
+            <div>
+                <button className='border border-[#bfbfba] border-solid h-[50px] w-[150px] rounded-md text-[#bfbfba]' onClick={() => setStatRoll(generateStats())}>Roll</button>
+            </div>
+            <div className='flex flex-row gap-3'>
+                {statRoll.map((roll, index) => (
+                    <div className=' inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full' key={index}><span className="font-semibold">Stat Roll {index + 1}:</span>
+                        <span className="font-bold text-green-700">{roll}</span></div>
+
+                ))}
+            </div>
         </div>
     );
 };

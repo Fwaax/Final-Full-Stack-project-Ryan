@@ -11,6 +11,15 @@ const CharacterSelection: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const handleDelete = (characterId: string) => {
+        const confirmed = window.confirm(
+            "Are you sure? Deleted characters can't be recovered!"
+        );
+        if (confirmed) {
+            handleDeleteCharacter(characterId);
+        }
+    };
+
     // Check for state passed when navigating
     const shouldRefetch = location.state?.refetch ?? false;
 
@@ -76,7 +85,7 @@ const CharacterSelection: React.FC = () => {
                 <p>No characters found. Please create one.</p>
                 <button
                     onClick={handleAddCharacter}
-                    className="mt-4 bg-green-600 text-[#bfbfba] py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                    className="mt-4 bg-[#556b82] text-[#bfbfba] py-2 px-4 rounded-md hover:bg-[#415468] transition duration-300"
                 >
                     Create Character
                 </button>
@@ -85,14 +94,14 @@ const CharacterSelection: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-[#1d1e2a]">
             <main className="container mx-auto py-12 px-4">
-                <h2 className="text-3xl font-semibold text-center mb-8 text-gray-700">Select Your Character</h2>
+                <h2 className="text-3xl font-semibold text-center mb-8 text-[#bfbfba]">Select Your Character</h2>
 
                 <div className="text-right mb-4">
                     <button
                         onClick={handleAddCharacter}
-                        className="bg-green-600 text-[#bfbfba] py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                        className="bg-[#556b82] text-[#bfbfba] py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
                     >
                         Add Character
                     </button>
@@ -114,7 +123,7 @@ const CharacterSelection: React.FC = () => {
                                 Select
                             </button>
                             <button className="mt-4 w-full bg-red-600 text-[#bfbfba] py-2 rounded-md hover:bg-red-700 transition duration-300"
-                                onClick={() => handleDeleteCharacter(character._id)}>Delete</button>
+                                onClick={() => handleDelete(character._id)}>Delete</button>
                         </div>
                     ))}
                 </div>

@@ -4,7 +4,7 @@ import CreationStatRoll from '../components/creationStatRoll'
 
 const DebugPage = () => {
     return (
-        <div>
+        <div className='flex flex-col bg-[#1a1b26]'>
             <button>Roll Dice</button>
             <Dice />
             <CreationStatRoll />
