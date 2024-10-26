@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NumericInputWithNumberValue } from '../components/numberInput';
 import axios from 'axios';
 import { useJwtToken } from '../hooks/useJwtToken';
@@ -40,12 +40,12 @@ const CharacterCreationPage: React.FC = () => {
         enemies: '',
         backstory: '',
         other: '',
-        strength: 10,
-        dexterity: 10,
-        constitution: 10,
-        intelligence: 10,
-        wisdom: 10,
-        charisma: 10,
+        STR: 10,
+        DEX: 10,
+        CON: 10,
+        INT: 10,
+        WIS: 10,
+        CHA: 10,
     });
 
     const { token } = useJwtToken();
@@ -57,6 +57,7 @@ const CharacterCreationPage: React.FC = () => {
                 toast(`Please log in first`);
                 return;
             }
+
             await axios.post('http://localhost:6969/char/new-character', character, { headers: { 'Authorization': token } });
             console.log("Character created successfully");
             navigate("/character-selection", { state: { refetch: true } });
@@ -98,12 +99,12 @@ const CharacterCreationPage: React.FC = () => {
             enemies: faker.person.firstName(),
             backstory: faker.lorem.paragraph(),
             other: faker.lorem.sentence(),
-            strength: faker.number.int({ min: 1, max: 20 }),
-            dexterity: faker.number.int({ min: 1, max: 20 }),
-            constitution: faker.number.int({ min: 1, max: 20 }),
-            intelligence: faker.number.int({ min: 1, max: 20 }),
-            wisdom: faker.number.int({ min: 1, max: 20 }),
-            charisma: faker.number.int({ min: 1, max: 20 }),
+            STR: faker.number.int({ min: 1, max: 20 }),
+            DEX: faker.number.int({ min: 1, max: 20 }),
+            CON: faker.number.int({ min: 1, max: 20 }),
+            INT: faker.number.int({ min: 1, max: 20 }),
+            WIS: faker.number.int({ min: 1, max: 20 }),
+            CHA: faker.number.int({ min: 1, max: 20 }),
         });
     };
 
@@ -338,13 +339,13 @@ const CharacterCreationPage: React.FC = () => {
                 <CreationStatRoll />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {(['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] as AbilityScore[]).map((ability) => (
+                {(['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'] as AbilityScore[]).map((ability) => (
                     <div key={ability} className="flex flex-col items-start">
                         <label className="text-lg font-semibold text-gray-300 mb-1">
                             {ability.charAt(0).toUpperCase() + ability.slice(1)}:
                         </label>
                         <NumericInputWithNumberValue
-                            className="w-full bg-[#1d1e2a] border border-[#bfbfba] text-[#bfbfba] p-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full bg-[#1d1e2a] border border-[#bfbfba] text-[#bfbfba] p-2 rounded-sm"
                             value={character[ability]}
                             setValue={(num: number) => handleAbilityChange(ability, num)}
                         />
@@ -367,12 +368,12 @@ const CharacterCreationPage: React.FC = () => {
                 <p><strong>Enemies:</strong> {character.enemies}</p>
                 <p><strong>Backstory:</strong> {character.backstory}</p>
                 <p><strong>Other:</strong> {character.other}</p>
-                <p><strong>Strength:</strong> {character.strength}</p>
-                <p><strong>Dexterity:</strong> {character.dexterity}</p>
-                <p><strong>Constitution:</strong> {character.constitution}</p>
-                <p><strong>Intelligence:</strong> {character.intelligence}</p>
-                <p><strong>Wisdom:</strong> {character.wisdom}</p>
-                <p><strong>Charisma:</strong> {character.charisma}</p>
+                <p><strong>Strength:</strong> {character.STR}</p>
+                <p><strong>Dexterity:</strong> {character.DEX}</p>
+                <p><strong>Constitution:</strong> {character.CON}</p>
+                <p><strong>Intelligence:</strong> {character.INT}</p>
+                <p><strong>Wisdom:</strong> {character.WIS}</p>
+                <p><strong>Charisma:</strong> {character.CHA}</p>
             </div>
             <div className='flex flex-row justify-between mt-2'>
                 <div><button className='bg-[#2a2b3c] p-4 rounded-lg shadow-lg font-semibold' onClick={sendToServerNewCharacter}>Create Character</button></div>

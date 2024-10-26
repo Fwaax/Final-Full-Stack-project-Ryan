@@ -6,7 +6,7 @@ import { findUserByEmail } from "../logic";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
 import { CharacterModel, ICharacter, INewCharacterToSentFromFrontend } from "../schema/character";
-import { newCharacterValidationJoi } from "../validation/characterValidationJoi";
+import { editCharacterValidationJoi, newCharacterValidationJoi } from "../validation/characterValidationJoi";
 import { log } from "node:console";
 import mongoose from "mongoose";
 
@@ -88,12 +88,12 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
                 survival: { modifier: "WIS", proficiency: false },
             },
             coreAttributes: {
-                STR: charFromFrontend.strength,
-                DEX: charFromFrontend.dexterity,
-                CON: charFromFrontend.constitution,
-                INT: charFromFrontend.intelligence,
-                WIS: charFromFrontend.wisdom,
-                CHA: charFromFrontend.charisma
+                STR: charFromFrontend.STR,
+                DEX: charFromFrontend.DEX,
+                CON: charFromFrontend.CON,
+                INT: charFromFrontend.INT,
+                WIS: charFromFrontend.WIS,
+                CHA: charFromFrontend.CHA
             }
         }
 
@@ -141,7 +141,7 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
         const requesterId = req.jwtDecodedUser.id;
 
         // Validate the request body with Joi
-        const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: true });
+        const validationResult = editCharacterValidationJoi.validate(req.body, { allowUnknown: true });
         if (validationResult.error) {
             console.log("Validation error:", validationResult.error);
             return res.status(400).send({ message: validationResult.error.message });

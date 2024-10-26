@@ -11,12 +11,12 @@ export interface INewCharacterToSendToBackend {
     enemies: string;
     backstory: string;
     other: string;
-    strength: number;
-    dexterity: number;
-    constitution: number;
-    intelligence: number;
-    wisdom: number;
-    charisma: number;
+    STR: number;
+    DEX: number;
+    CON: number;
+    INT: number;
+    WIS: number;
+    CHA: number;
 }
 
 export type Gender = "Male" | "Female" | "";
@@ -38,4 +38,4 @@ export interface CharacterAppearance {
 }
 
 // Create a type for the ability score keys
-export type AbilityScore = 'strength' | 'dexterity' | 'constitution' | 'intelligence' | 'wisdom' | 'charisma';
+export type AbilityScore = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
