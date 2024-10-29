@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreationStatRoll from '../components/creationStatRoll';
+import CreationStatRoll from './creationStatRoll';
 
 function rollDieForDamage(die_size: number, die_num: number, mod: number) {
     let finalDmg = 0;
@@ -17,7 +17,7 @@ function rollDieForDamage(die_size: number, die_num: number, mod: number) {
 
 const DICE_SIDES = [4, 6, 8, 10, 12, 20];
 
-const NumberDNumer = () => {
+const NumberDNumber = () => {
     const [diceSize, setDiceSize] = useState(0);
     const [mod, setMod] = useState(0);
     const [currentNumberOfRolls, setCurrentNumberOfRolls] = useState(0);
@@ -94,4 +94,4 @@ const NumberDNumer = () => {
     );
 };
 
-export default NumberDNumer;
+export default NumberDNumber;

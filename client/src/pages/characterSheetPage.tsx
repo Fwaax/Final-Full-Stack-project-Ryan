@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TopPanel from "../components/topPanel";
 import StatsPanel from "../components/statsPanel";
 import BottomPanel from "../components/bottomPanel";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useJwtToken } from "../hooks/useJwtToken";
 import { BACKEND_URL } from "../const";
@@ -17,6 +17,8 @@ import {
     otherAtom
 } from "../atoms";
 import { ICharacterCurrentStateApiResponse } from "../Interfaces/apiRespose";
+import D20 from "../components/svg/d20";
+
 
 const CharacterSheetPage = () => {
     const { token } = useJwtToken();
@@ -155,6 +157,11 @@ const CharacterSheetPage = () => {
         return () => clearInterval(interval);
     }, [appearance, name, characterClass, race, level, background, coreAttributes, skills, hitPoints, allies, enemies, backstory]);
 
+    const handleDiceClick = () => {
+        const url = "/dice";  // Adjust path as needed
+        window.open(url, "_blank", "noopener,noreferrer");
+    };
+
     if (error) return <div>Error: {error}</div>;
 
     return isFetched ? (
@@ -163,6 +170,7 @@ const CharacterSheetPage = () => {
                 <TopPanel />
                 <StatsPanel />
                 <BottomPanel />
+                <D20 className="fixed bottom-6 left-2" onClick={handleDiceClick} />
             </div>
         </div>
     ) : (

@@ -5,10 +5,11 @@ import { UserModel } from "../schema/user";
 import { findUserByEmail } from "../logic";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
-import { CharacterModel, ICharacter, INewCharacterToSentFromFrontend } from "../schema/character";
+import { CharacterModel, ICharacterInDB, INewCharacterToSentFromFrontend } from "../schema/character";
 import { editCharacterValidationJoi, newCharacterValidationJoi } from "../validation/characterValidationJoi";
 import { log } from "node:console";
 import mongoose from "mongoose";
+import { initChar } from "../const/initChar";
 
 const characterRouter: Router = express.Router();
 
@@ -57,45 +58,7 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         }
         const charFromFrontend: INewCharacterToSentFromFrontend = req.body;
         // Directly create and save a new character using CharacterModel.create()
-        const newCharacterWeAreStoringToDB: ICharacter = {
-            ...charFromFrontend,
-            level: 1,
-            proficiencyBonus: 2,
-            userId: new mongoose.Types.ObjectId(requesterId),
-            hitPoints: {
-                current: 0,
-                max: 0,
-                temp: 0
-            },
-            skills: {
-                acrobatics: { modifier: "DEX", proficiency: false },
-                animalHandling: { modifier: "WIS", proficiency: false },
-                arcana: { modifier: "INT", proficiency: false },
-                athletics: { modifier: "STR", proficiency: false },
-                deception: { modifier: "CHA", proficiency: false },
-                history: { modifier: "INT", proficiency: false },
-                insight: { modifier: "WIS", proficiency: false },
-                intimidation: { modifier: "CHA", proficiency: false },
-                investigation: { modifier: "INT", proficiency: false },
-                medicine: { modifier: "WIS", proficiency: false },
-                nature: { modifier: "INT", proficiency: false },
-                perception: { modifier: "WIS", proficiency: false },
-                performance: { modifier: "CHA", proficiency: false },
-                persuasion: { modifier: "CHA", proficiency: false },
-                religion: { modifier: "INT", proficiency: false },
-                sleightOfHand: { modifier: "DEX", proficiency: false },
-                stealth: { modifier: "DEX", proficiency: false },
-                survival: { modifier: "WIS", proficiency: false },
-            },
-            coreAttributes: {
-                STR: charFromFrontend.STR,
-                DEX: charFromFrontend.DEX,
-                CON: charFromFrontend.CON,
-                INT: charFromFrontend.INT,
-                WIS: charFromFrontend.WIS,
-                CHA: charFromFrontend.CHA
-            }
-        }
+        const newCharacterWeAreStoringToDB: ICharacterInDB = initChar(charFromFrontend, requesterId);
 
         const savedCharacter = await CharacterModel.create(
             newCharacterWeAreStoringToDB
@@ -159,7 +122,7 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
         }
 
         // Create the updated character data object
-        const updatedChar: ICharacter = {
+        const updatedChar: ICharacterInDB = {
             ...req.body,
             updatedAt: new Date(),
             userId: oldCharacterState.userId,

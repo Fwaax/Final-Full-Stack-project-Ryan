@@ -1,10 +1,10 @@
 import React from 'react'
-import NumberDNumer from '../pages/numberDNumber'
+import NumberDNumber from './numberDNumber'
 
 const DiceComponent = () => {
     return (
         <div>
-            <NumberDNumer />
+            <NumberDNumber />
         </div>
     )
 }

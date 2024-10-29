@@ -78,7 +78,7 @@ const CharacterCreationPage: React.FC = () => {
         setCharacter({
             name: faker.person.firstName(),
             race: faker.helpers.arrayElement(['Human', 'Elf', 'Dwarf', 'Halfling', 'Tiefling', 'Orc']),
-            class: faker.helpers.arrayElement(['Fighter', 'Wizard', 'Rogue', 'Cleric', 'Bard', 'Ranger']),
+            class: faker.helpers.arrayElement(['Fighter', 'Wizard', 'Rogue', 'Cleric', 'Bard', 'Ranger', 'Druid', 'Monk', 'Paladin', 'Barbarian', 'Sorcerer', 'Warlock']),
             background: faker.helpers.arrayElement(['Acolyte', 'Charlatan', 'Criminal', 'Entertainer', 'Guild Artisan', 'Hermit', 'Noble', 'Outlander', 'Sage', 'Sailor', 'Soldier', 'Urchin']),
             characteristics: faker.lorem.sentence(),
             personalityTraits: faker.lorem.sentence(),
@@ -160,12 +160,18 @@ const CharacterCreationPage: React.FC = () => {
                         onChange={(e) => setCharacter({ ...character, class: e.target.value })}
                     >
                         <option value="">Select Class</option>
-                        <option value="Fighter">Fighter</option>
-                        <option value="Wizard">Wizard</option>
-                        <option value="Rogue">Rogue</option>
-                        <option value="Cleric">Cleric</option>
+                        <option value="Barbarian">Barbarian</option>
                         <option value="Bard">Bard</option>
+                        <option value="Cleric">Cleric</option>
+                        <option value="Druid">Druid</option>
+                        <option value="Fighter">Fighter</option>
+                        <option value="Monk">Monk</option>
+                        <option value="Rogue">Rogue</option>
                         <option value="Ranger">Ranger</option>
+                        <option value="Paladin">Paladin</option>
+                        <option value="Sorcerer">Sorcerer</option>
+                        <option value="Warlock">Warlock</option>
+                        <option value="Wizard">Wizard</option>
                     </select>
                 </label>
 
@@ -331,6 +337,22 @@ const CharacterCreationPage: React.FC = () => {
                     <label htmlFor="characteristics" className='font-semibold'>Characteristics</label>
                     <input className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md font-semibold" value={character.characteristics}
                         onChange={(e) => setCharacter({ ...character, characteristics: e.target.value })} placeholder="Characteristics" type="text" name='characteristics' />
+                </div>
+            </div>
+            <div>
+                {/* picking 2 skills for the class */}
+                <h6>Choose 2 skills</h6>
+                <div>
+                    <label htmlFor="skill1" className='font-semibold'>Skill</label>
+                    <select name="" id="">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="skill2" className='font-semibold'>Skill</label>
+                    <select name="" id="">
+                        <option value=""></option>
+                    </select>
                 </div>
             </div>
 
