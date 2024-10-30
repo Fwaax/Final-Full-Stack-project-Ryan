@@ -55,7 +55,7 @@ export type Size = "Small" | "Medium" | "Large" | "";
 export type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune" | "Tempus" | "Kelemvor" | "Bane" | "Bhaal" | "Shar" | "Lolth" | "Pelor" | "Heironeous" | "Rao" | "St. Cuthbert" | "Nerull" | "Vecna" | "Erythnul" | "Iuz" | "Arawai" | "Balinor" | "Boldrei" | "The Devourer" | "The Mockery" | "Nature" | "Philosophies" | "";
 export type Item = { name: string, weight: number, description: string, cost: string, isActivatable: boolean, numberOfCharges: number, dmgDice?: string, armorClass?: number, attackBonus?: number, armorBonus?: number, range?: string };
 export type AttributeKey = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
-export type Profs = { armor: string, weapon: string, tool: string, savingThrows: string };
+export type Profs = { armor: string, weapons: string, tools: string, savingThrows: string };
 export type ItemSlotInInventory = { item: Item, quantity: number };
 
 export interface CharacterAppearance {
@@ -175,6 +175,8 @@ const CharacterSchema: Schema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    inventory: [],
+    proficiencies: []
 });
 
 export const CharacterModel = mongoose.model<ICharacterDocument>('Character', CharacterSchema);

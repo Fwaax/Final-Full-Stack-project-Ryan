@@ -3,16 +3,15 @@ import { ICharacterInDB, INewCharacterToSentFromFrontend, Item, Profs } from "..
 import { func } from "joi";
 import * as ItemConst from "./items";
 
+type AdditionalParams = {
+    inventory: Item[],
+    baseHp: number,
+    proficiencies: Profs[]
+}
+
 export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFrontend, requesterId: string) {
     const charClass = charInitalParamsFromFrontend.class
-    let additionalParamsToAddToCharacter;
-    let profs: Profs = {
-        armor: "",
-        weapon: "",
-        tool: "",
-        savingThrows: ""
-    }
-
+    let additionalParamsToAddToCharacter: AdditionalParams;
     switch (charClass) {
         case "Barbarian":
             additionalParamsToAddToCharacter = getInitBarbarianParams();
@@ -53,7 +52,8 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
         default:
             throw new Error("Invalid character class");
     }
-    const calcMaxHp = additionalParamsToAddToCharacter.maxHP + (Math.floor((charInitalParamsFromFrontend.CON) - 10) / 2);
+    const calcMaxHp = additionalParamsToAddToCharacter.baseHp + (Math.floor(((charInitalParamsFromFrontend.CON) - 10) / 2));
+    // const calcMaxHp = additionalParamsToAddToCharacter.hitPoints
     const newCharacterWeAreStoringToDB: ICharacterInDB = {
         ...charInitalParamsFromFrontend,
         level: 1,
@@ -93,7 +93,7 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
             CHA: charInitalParamsFromFrontend.CHA
         },
         inventory: additionalParamsToAddToCharacter.inventory,
-        proficiencies: additionalParamsToAddToCharacter.profs
+        proficiencies: additionalParamsToAddToCharacter.proficiencies
 
     } // End of character object
 
@@ -115,7 +115,7 @@ function getInitBarbarianParams() {
         tools: "none",
         savingThrows: "STR, CON",
     }
-    ]
+    ] as Profs[]
     return {
         inventory: initInventory,
         baseHp: baseHp,
