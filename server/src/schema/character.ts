@@ -53,9 +53,10 @@ export type Gender = "Male" | "Female" | "";
 export type Alignment = "Lawful Good" | "Neutral Good" | "Chaotic Good" | "Lawful Neutral" | "True Neutral" | "Chaotic Neutral" | "Lawful Evil" | "Neutral Evil" | "Chaotic Evil" | "";
 export type Size = "Small" | "Medium" | "Large" | "";
 export type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune" | "Tempus" | "Kelemvor" | "Bane" | "Bhaal" | "Shar" | "Lolth" | "Pelor" | "Heironeous" | "Rao" | "St. Cuthbert" | "Nerull" | "Vecna" | "Erythnul" | "Iuz" | "Arawai" | "Balinor" | "Boldrei" | "The Devourer" | "The Mockery" | "Nature" | "Philosophies" | "";
-export type Item = { name: string, quantity: number, weight: number, description: string, cost: number, isActivatable: boolean, numberOfCharges: number, dmgDice?: string, armorClass?: number, attackBonus?: number, armorBonus?: number, range?: string };
+export type Item = { name: string, weight: number, description: string, cost: string, isActivatable: boolean, numberOfCharges: number, dmgDice?: string, armorClass?: number, attackBonus?: number, armorBonus?: number, range?: string };
 export type AttributeKey = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
 export type Profs = { armor: string, weapon: string, tool: string, savingThrows: string };
+export type ItemSlotInInventory = { item: Item, quantity: number };
 
 export interface CharacterAppearance {
     alignment: Alignment;
@@ -95,7 +96,7 @@ export interface ICharacterInDB {
     userId: Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
-    inventory: Item[];
+    inventory: ItemSlotInInventory[];
     proficiencies: Profs[];
 }
 
