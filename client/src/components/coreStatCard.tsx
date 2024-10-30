@@ -1,5 +1,5 @@
 interface CoreStatCardProps {
-    name: string;
+    quantity: 1, name: string;
     modifier: string;
     currentStat: number;
 }

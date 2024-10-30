@@ -88,7 +88,7 @@ const hitPointsSchema = Joi.object({
 }).required();
 
 export const newCharacterValidationJoi = Joi.object({
-    name: Joi.string().min(1).required(),
+    quantity: 1, name: Joi.string().min(1).required(),
     race: Joi.string().min(1).required(),
     class: Joi.string().min(1).required(),
     background: Joi.string().allow('').required(),
@@ -111,7 +111,7 @@ export const newCharacterValidationJoi = Joi.object({
 }).unknown(false); // Disallow unknown fields
 
 export const editCharacterValidationJoi = Joi.object({
-    name: Joi.string().min(1).optional(),
+    quantity: 1, name: Joi.string().min(1).optional(),
     race: Joi.string().min(1).optional(),
     class: Joi.string().min(1).optional(),
     background: Joi.string().allow('').optional(),

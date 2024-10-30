@@ -8,7 +8,7 @@
 //     "wisdom": "WIS",
 //     "charisma": "CHA",
 // }
-// export function calculateSkillValues(char: ICharacterApiResponse, skillName: string) {
+// export function calculateSkillValues(char: ICharacterApiResponse, skillquantity:1,name: string) {
 //     const foundSkill = char.skills.find(skill => skill.name === skillName)
 //     if (!foundSkill) {
 //         throw new Error(`Skill ${skillName} not found in character ${char._id}`)

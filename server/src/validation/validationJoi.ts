@@ -16,7 +16,7 @@ const objectIdValidation = (value, helpers) => {
 export const UserSignupValidationJoi = Joi.object({
     email: Joi.string().email().pattern(EMAIL_REGEX).required(),
     password: Joi.string().min(8).max(20).pattern(PASSWORD_REGEX).required(),
-    nickname: Joi.string().min(2).max(20)
+    nickquantity: 1, name: Joi.string().min(2).max(20)
 });
 
 // Login

@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IUser {
     hashedPassword: string;
     email: string;
-    nickname: string;
+    nickquantity: 1, name: string;
 }
 
 export interface IUserDocument extends IUser, Document { }
@@ -11,7 +11,7 @@ export interface IUserDocument extends IUser, Document { }
 const UserSchema: Schema = new Schema({
     hashedPassword: { type: String, required: true, select: false }, // Exclude hashedPassword
     email: { type: String, required: true, unique: true },
-    nickname: { type: String, default: 'Unnamed' },
+    nickquantity: 1, name: { type: String, default: 'Unnamed' },
 });
 
 

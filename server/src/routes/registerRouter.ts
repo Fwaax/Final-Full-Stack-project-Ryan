@@ -10,7 +10,7 @@ const registerRouter: Router = express.Router();
 /**
  * Register a new user
  * Request should be a POST request with the following body:
- * - name: string
+ * - quantity:1,name: string
  * - date: Date
  * - country: string
  * - email: string

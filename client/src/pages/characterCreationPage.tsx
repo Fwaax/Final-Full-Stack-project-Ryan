@@ -15,7 +15,7 @@ import CreationStatRoll from '../components/creationStatRoll';
 
 const CharacterCreationPage: React.FC = () => {
     const [character, setCharacter] = useState<INewCharacterToSendToBackend>({
-        name: '',
+        quantity: 1, name: '',
         race: '',
         class: '',
         background: '',
@@ -76,7 +76,7 @@ const CharacterCreationPage: React.FC = () => {
     }
     const randomizeCharacter = () => {
         setCharacter({
-            name: faker.person.firstName(),
+            quantity: 1, name: faker.person.firstName(),
             race: faker.helpers.arrayElement(['Human', 'Elf', 'Dwarf', 'Halfling', 'Tiefling', 'Orc']),
             class: faker.helpers.arrayElement(['Fighter', 'Wizard', 'Rogue', 'Cleric', 'Bard', 'Ranger', 'Druid', 'Monk', 'Paladin', 'Barbarian', 'Sorcerer', 'Warlock']),
             background: faker.helpers.arrayElement(['Acolyte', 'Charlatan', 'Criminal', 'Entertainer', 'Guild Artisan', 'Hermit', 'Noble', 'Outlander', 'Sage', 'Sailor', 'Soldier', 'Urchin']),
@@ -123,13 +123,13 @@ const CharacterCreationPage: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <label className="block font-semibold">
-                    Name:
+                    quantity:1,name:
                     <input
                         type="text"
                         name="name"
                         className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={character.name}
-                        onChange={(e) => setCharacter({ ...character, name: e.target.value })}
+                        onChange={(e) => setCharacter({ ...character, quantity: 1, name: e.target.value })}
                     />
                 </label>
 
@@ -377,7 +377,7 @@ const CharacterCreationPage: React.FC = () => {
 
             <h3 className="text-xl font-semibold mt-6">Character Summary</h3>
             <div className="bg-[#2a2b3c] p-4 rounded-lg shadow-lg">
-                <p><strong>Name:</strong> {character.name}</p>
+                <p><strong>quantity:1,name:</strong> {character.name}</p>
                 <p><strong>Race:</strong> {character.race}</p>
                 <p><strong>Class:</strong> {character.class}</p>
                 <p><strong>Background:</strong> {character.background}</p>

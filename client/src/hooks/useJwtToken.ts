@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 interface User {
     email: string;
-    nickname: string;
+    nickquantity: 1, name: string;
 }
 
 interface TokenPayload extends User {

@@ -9,7 +9,7 @@ const authRouter: Router = express.Router();
 /**
  * Login
  * Request should be a POST request with the following body:
- * - name: string
+ * - quantity:1,name: string
  * - password: string
  * e.g. {
  *  "name": "John",

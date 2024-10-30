@@ -104,8 +104,8 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
 function getInitBarbarianParams() {
     const initInventory: Item[] = [
         ItemConst.itemGreatAxe,
-        ItemConst.itemHandaxe, // 2 <----
-        ItemConst.itemJavelin, // 4 <----
+        { ...ItemConst.itemHandaxe, quantity: 2 }, // 2 <----
+        { ...ItemConst.itemJavelin, quantity: 4 }, // 4 <----
         ItemConst.itemExplorerPack,
     ]
     const baseHp = 12
@@ -193,7 +193,7 @@ function getInitRogueParams() {
         ItemConst.itemShortsword,
         ItemConst.itemShortbow,
         ItemConst.itemBurglarsPack,
-        ItemConst.itemDagger,
+        { ...ItemConst.itemDagger, quantity: 2 },
         ItemConst.itemLeatherArmor,
         ItemConst.itemThievesTools
     ]
@@ -214,7 +214,7 @@ function getInitRogueParams() {
 function getInitRangerParams() {
     const initInventory: Item[] = [
         ItemConst.itemScaleMail,
-        ItemConst.itemShortsword,
+        { ...ItemConst.itemShortsword, quantity: 2 },
         ItemConst.itemLongbow,
         ItemConst.itemExplorerPack,
     ]
@@ -257,7 +257,7 @@ function getInitMonkParams() {
     const initInventory: Item[] = [
         ItemConst.itemShortsword,
         ItemConst.itemDungeoneersPack,
-        ItemConst.itemDart
+        { ...ItemConst.itemDart, quantity: 10 },
     ]
     const baseHp = 8
     const proficiencies = [{
@@ -276,7 +276,7 @@ function getInitMonkParams() {
 function getInitPaladinParams() {
     const initInventory: Item[] = [
         ItemConst.itemGreatsWord,
-        ItemConst.itemJavelin,
+        { ...ItemConst.itemJavelin, quantity: 5 },
         ItemConst.itemPriestsPack,
         ItemConst.itemChainMail
     ]

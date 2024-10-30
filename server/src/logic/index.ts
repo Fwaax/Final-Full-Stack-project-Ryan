@@ -68,7 +68,7 @@ export async function getLoginTokenByEmailValidation(
     // Return user data without the hashedPassword
     const userToReturn = {
         email: foundUserByEmail.email,
-        nickname: foundUserByEmail.nickname,
+        nickquantity: 1, name: foundUserByEmail.nickname,
     };
 
     return { token, user: userToReturn };
