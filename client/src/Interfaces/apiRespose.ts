@@ -12,7 +12,7 @@ export interface ICharacterCurrentStateApiResponse {
         weight: string;
     };
     _id: string;
-    quantity: 1, name: string;
+    name: string;
     class: string;
     race: string;
     level: number;

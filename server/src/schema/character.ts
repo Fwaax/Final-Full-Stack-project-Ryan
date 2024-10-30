@@ -22,7 +22,7 @@ export const SKILL_MODIFIER: { [key: string]: string } = {
 };
 
 export interface INewCharacterToSentFromFrontend {
-    quantity: 1, name: string;
+    name: string;
     race: string;
     class: string;
     background: string;
@@ -71,7 +71,7 @@ export interface CharacterAppearance {
 }
 
 export interface ICharacterInDB {
-    quantity: 1, name: string;
+    name: string;
     class: string;
     race: string;
     level: number;

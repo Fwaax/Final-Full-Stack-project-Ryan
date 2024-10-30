@@ -1,5 +1,5 @@
 export interface INewCharacterToSendToBackend {
-    quantity: 1, name: string;
+    name: string;
     race: string;
     class: string;
     background: string;
