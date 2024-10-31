@@ -115,6 +115,20 @@ const CharacterCreationPage: React.FC = () => {
         setCharacter({ ...character, [ability]: value });
     };
 
+    const classSkills = {
+        "Barbarian": ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"],
+        "Cleric": ["History", "Insight", "Medicine", "Persuasion", "Religion"],
+        "Druid": ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"],
+        "Fighter": ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"],
+        "Monk": ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
+        "Paladin": ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Protection", "Religion"],
+        "Ranger": ["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"],
+        "Rogue": ["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Persuasion", "Performance", "Sleight of Hand", "Stealth"],
+        "Sorcerer": ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"],
+        "Warlock": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
+        "Wizard": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+    }
+
 
 
     return (
@@ -341,16 +355,16 @@ const CharacterCreationPage: React.FC = () => {
             </div>
             <div>
                 {/* picking 2 skills for the class */}
-                <h6>Choose 2 skills</h6>
+                <h6>Choose 2 skills for your {character.class}</h6>
                 <div>
                     <label htmlFor="skill1" className='font-semibold'>Skill</label>
-                    <select name="" id="">
+                    <select name="skill1" id="">
                         <option value=""></option>
                     </select>
                 </div>
                 <div>
                     <label htmlFor="skill2" className='font-semibold'>Skill</label>
-                    <select name="" id="">
+                    <select name="skill2" id="">
                         <option value=""></option>
                     </select>
                 </div>

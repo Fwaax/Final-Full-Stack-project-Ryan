@@ -56,6 +56,8 @@ export type Faith = "Torm" | "Tyr" | "Lathander" | "Mystra" | "Selûne" | "Sune"
 export type Item = { name: string, quantity: number, weight: number, description: string, cost: string, isActivatable: boolean, numberOfCharges: number, dmgDice?: string, armorClass?: number, attackBonus?: number, armorBonus?: number, range?: string };
 export type AttributeKey = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
 export type Profs = { armor: string, weapons: string, tools: string, savingThrows: string };
+export type Spells = { name: string, damageRoll?: string, damageType?: string, savingThrow?: string, hitRoll?: string, shape?: string, size?: string, damageInstances?: number, spellSlot?: number, discription: string, range?: string, duration?: string, effect?: string, action: string, classAvailability: string, school: string, castingTime?: string, concentration?: boolean, ritual?: boolean, verbalComponents?: boolean, somaticComponents?: boolean, materialComponents?: boolean, higherLevelScaling?: boolean };
+
 
 export interface CharacterAppearance {
     alignment: Alignment;
