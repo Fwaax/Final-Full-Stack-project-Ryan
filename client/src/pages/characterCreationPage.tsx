@@ -7,14 +7,10 @@ import { faker } from '@faker-js/faker';
 import { toast } from 'react-toastify';
 import { AbilityScore, Alignment, INewCharacterToSendToBackend, CharacterAppearance, Faith, Gender, Size } from '../Interfaces';
 import CreationStatRoll from '../components/creationStatRoll';
-
-
-// Updating the currect state for the character to update on the webpage
-
+import { SkillKey } from '../Interfaces/apiRespose';
 
 
 const CharacterCreationPage: React.FC = () => {
-    const [selectedSkills, setSelectedSkills] = useState<{ [key: string]: string }>({});
     const [character, setCharacter] = useState<INewCharacterToSendToBackend>({
         name: '',
         race: '',
@@ -47,6 +43,8 @@ const CharacterCreationPage: React.FC = () => {
         INT: 10,
         WIS: 10,
         CHA: 10,
+        firstSelectedSkill: '',
+        secondSelectedSkill: '',
     });
 
     const { token } = useJwtToken();
@@ -106,6 +104,8 @@ const CharacterCreationPage: React.FC = () => {
             INT: faker.number.int({ min: 1, max: 20 }),
             WIS: faker.number.int({ min: 1, max: 20 }),
             CHA: faker.number.int({ min: 1, max: 20 }),
+            firstSelectedSkill: '',
+            secondSelectedSkill: '',
         });
     };
 
@@ -116,41 +116,49 @@ const CharacterCreationPage: React.FC = () => {
         setCharacter({ ...character, [ability]: value });
     };
 
-    const classSkills: { [key: string]: string[] } = {
-        "Barbarian": ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"],
-        "Cleric": ["History", "Insight", "Medicine", "Persuasion", "Religion"],
-        "Druid": ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"],
-        "Fighter": ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"],
-        "Monk": ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
-        "Paladin": ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Protection", "Religion"],
-        "Ranger": ["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"],
-        "Rogue": ["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Persuasion", "Performance", "Sleight of Hand", "Stealth"],
-        "Sorcerer": ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"],
-        "Warlock": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
-        "Wizard": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
-        "Bard": ["Acrobatics", "Animal Handling", "Athletics", "Deception", "Insight", "Intimidation", "Performance", "Persuasion", "Sleight of Hand"],
+    const classSkills: { [key: string]: SkillKey[] } = {
+        "Barbarian": ["animalHandling", "athletics", "intimidation", "nature", "perception", "survival"],
+        "Cleric": ["history", "insight", "medicine", "persuasion", "religion"],
+        "Druid": ["arcana", "animalHandling", "insight", "medicine", "nature", "perception", "religion", "survival"],
+        "Fighter": ["acrobatics", "animalHandling", "athletics", "history", "insight", "intimidation", "perception", "survival"],
+        "Monk": ["acrobatics", "athletics", "history", "insight", "religion", "stealth"],
+        "Paladin": ["athletics", "insight", "intimidation", "medicine", "persuasion", "religion"],
+        "Ranger": ["animalHandling", "athletics", "insight", "investigation", "nature", "perception", "stealth", "survival"],
+        "Rogue": ["acrobatics", "athletics", "deception", "insight", "intimidation", "investigation", "perception", "persuasion", "performance", "sleightOfHand", "stealth"],
+        "Sorcerer": ["arcana", "deception", "insight", "intimidation", "persuasion", "religion"],
+        "Warlock": ["arcana", "deception", "history", "intimidation", "investigation", "nature", "religion"],
+        "Wizard": ["arcana", "history", "insight", "investigation", "medicine", "religion"],
+        "Bard": ["acrobatics", "animalHandling", "athletics", "deception", "insight", "intimidation", "performance", "persuasion", "sleightOfHand"],
     }
 
-    // Watch selectedSkills changes
-    useEffect(() => {
-        console.log("selectedSkills updated:", selectedSkills);
-    }, [selectedSkills]);
-
-    const handleSkillSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const skillName = event.target.name;
-        setSelectedSkills((prevSkills) => ({
-            ...prevSkills,
-            [skillName]: event.target.value
+    const handleSkillSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setCharacter(prev => ({
+            ...prev,
+            [name]: value
         }));
     };
 
-    // const handleSkillSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //     const skillName = event.target.name; // Or use e.target.id
-    //     let tempSelectedSkills = { ...selectedSkills };
-    //     tempSelectedSkills[skillName] = event.target.value;
-    //     setSelectedSkills(tempSelectedSkills);
-    //     console.log(`selectedSkills`, selectedSkills);
-    // }
+    const handleClassChange = (selectedClass: string) => {
+        setCharacter(prev => ({
+            ...prev,
+            class: selectedClass,
+            firstSelectedSkill: classSkills[selectedClass]?.[0] || '',
+            secondSelectedSkill: classSkills[selectedClass]?.[1] || ''
+        }));
+    };
+
+    useEffect(() => {
+        if (character.class) {
+            setCharacter(prev => ({
+                ...prev,
+                firstSelectedSkill: classSkills[character.class]?.[0] || '',
+                secondSelectedSkill: classSkills[character.class]?.[1] || ''
+            }));
+        }
+    }, [character.class]);
+
+    // const classCantrips: { [key: string]:  } = {}
 
 
     return (
@@ -379,43 +387,34 @@ const CharacterCreationPage: React.FC = () => {
                 {/* picking 2 skills for the class */}
                 <h6>Choose 2 skills for your {character.class}</h6>
                 <div>
-                    <label htmlFor="skill1" className="font-semibold">Skill</label>
+                    <label htmlFor="firstSelectedSkill" className="font-semibold">Skill 1</label>
                     <select
-                        name="skill1"
-                        id="skill1"
+                        name="firstSelectedSkill"
+                        id="firstSelectedSkill"
                         onChange={handleSkillSelect}
-                        value={selectedSkills.skill1 || ""} // Set the value here
+                        value={character.firstSelectedSkill}
                         className="bg-[#2a2b3c]"
                     >
-                        {character.class && classSkills[character.class].map((skill) => (
-                            !Object.values(selectedSkills).includes(skill) ? (
-                                <option className="text-green-500" key={skill} value={skill}>
-                                    {skill}
-                                </option>
-                            ) : null
-                        ))}
+                        {character.class && classSkills[character.class].map(skill => (
+                            skill !== character.secondSelectedSkill ? (
+                                <option className="text-green-500" key={skill} value={skill}>{skill}</option>) : null))}
                     </select>
                 </div>
 
                 <div>
-                    <label htmlFor="skill2" className="font-semibold">Skill</label>
+                    <label htmlFor="secondSelectedSkill" className="font-semibold">Skill 2</label>
                     <select
-                        name="skill2"
-                        id="skill2"
+                        name="secondSelectedSkill"
+                        id="secondSelectedSkill"
                         onChange={handleSkillSelect}
-                        value={selectedSkills.skill2 || ""} // Set the value here
+                        value={character.secondSelectedSkill}
                         className="bg-[#2a2b3c]"
                     >
-                        {character.class && classSkills[character.class].map((skill) => (
-                            !Object.values(selectedSkills).includes(skill) ? (
-                                <option className="text-red-500" key={skill} value={skill}>
-                                    {skill}
-                                </option>
-                            ) : null
-                        ))}
+                        {character.class && classSkills[character.class].map(skill => (
+                            skill !== character.firstSelectedSkill ? (
+                                <option className="text-red-500" key={skill} value={skill}>{skill}</option>) : null))}
                     </select>
                 </div>
-
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>

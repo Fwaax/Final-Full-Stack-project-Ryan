@@ -1,3 +1,5 @@
+import { SkillKey } from "./apiRespose";
+
 export interface INewCharacterToSendToBackend {
     name: string;
     race: string;
@@ -17,6 +19,8 @@ export interface INewCharacterToSendToBackend {
     INT: number;
     WIS: number;
     CHA: number;
+    firstSelectedSkill: SkillKey;
+    secondSelectedSkill: SkillKey;
 }
 
 export type Gender = "Male" | "Female" | "";
