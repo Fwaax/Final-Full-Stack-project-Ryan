@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
-import { ICharacterInDB, INewCharacterToSentFromFrontend, Item, Profs } from "../schema/character";
+import { ICharacterInDB, INewCharacterToSentFromFrontend, Item, Profs, Spells } from "../schema/character";
 import { func } from "joi";
 import * as ItemConst from "./items";
+import * as SpellsConst from "./spells";
 
 type AdditionalParams = {
     inventory: Item[],
     baseHp: number,
     proficiencies: Profs[]
+    spells: Spells[]
 }
 
 export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFrontend, requesterId: string) {
@@ -53,7 +55,6 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
             throw new Error("Invalid character class");
     }
     const calcMaxHp = additionalParamsToAddToCharacter.baseHp + (Math.floor(((charInitalParamsFromFrontend.CON) - 10) / 2));
-    // const calcMaxHp = additionalParamsToAddToCharacter.hitPoints
     const newCharacterWeAreStoringToDB: ICharacterInDB = {
         ...charInitalParamsFromFrontend,
         level: 1,
@@ -93,7 +94,8 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
             CHA: charInitalParamsFromFrontend.CHA
         },
         inventory: additionalParamsToAddToCharacter.inventory,
-        proficiencies: additionalParamsToAddToCharacter.proficiencies
+        proficiencies: additionalParamsToAddToCharacter.proficiencies,
+        spells: additionalParamsToAddToCharacter.spells
 
     } // End of character object
 
@@ -116,10 +118,12 @@ function getInitBarbarianParams() {
         savingThrows: "STR, CON",
     }
     ] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 function getInitClericParams() {
@@ -137,11 +141,13 @@ function getInitClericParams() {
         weapons: "simple weapons",
         tools: "none",
         savingThrows: "WIS, CHA",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 function getInitDruidParams() {
@@ -158,11 +164,13 @@ function getInitDruidParams() {
         weapons: " clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, sickles, slings, spears",
         tools: "Herbalism Kit",
         savingThrows: "WIS, INT",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -180,11 +188,13 @@ function getInitFighterParams() {
         weapons: "simple weapons, martial weapons",
         tools: "none",
         savingThrows: "STR, CON",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -203,11 +213,13 @@ function getInitRogueParams() {
         weapons: "simple weapons, hand crossbows, longswords, rapier, shortswords,",
         tools: "Thieves' Tools",
         savingThrows: "DEX, INT",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -224,11 +236,13 @@ function getInitRangerParams() {
         weapons: "simple weapons, martial weapons",
         tools: "none",
         savingThrows: "DEX, STR",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -245,11 +259,13 @@ function getInitWizardParams() {
         weapons: "daggers, darts, slings, quarterstaffs, light crossbows",
         tools: "none",
         savingThrows: "INT, WIS",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -265,11 +281,13 @@ function getInitMonkParams() {
         weapons: "simple weapons, shortswords",
         tools: "any one type of artisan's tools or any one musical instrument of your choice",
         savingThrows: "DEX, STR",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -286,11 +304,13 @@ function getInitPaladinParams() {
         weapons: "simple weapons, martial weapons",
         tools: "none",
         savingThrows: "WIS, CHA",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -308,11 +328,13 @@ function getInitBardParams() {
         weapons: "simple weapons, hand crossbows, longswords, rapier, shortswords,",
         tools: "musical instruments of your choice",
         savingThrows: "DEX, CHA",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -330,11 +352,13 @@ function getInitWarlockParams() {
         weapons: "simple weapons",
         tools: "none",
         savingThrows: "WIS, CHA",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }
 
@@ -351,10 +375,12 @@ function getInitSorcererParams() {
         weapons: "daggers, darts, slings, quarterstaffs, light crossbows",
         tools: "none",
         savingThrows: "CON, CHA",
-    }]
+    }] as Profs[]
+    const spells: Spells[] = []
     return {
         inventory: initInventory,
         baseHp: baseHp,
-        proficiencies: proficiencies
+        proficiencies: proficiencies,
+        spells: spells
     }
 }

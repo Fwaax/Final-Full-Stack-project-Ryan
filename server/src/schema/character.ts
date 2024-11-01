@@ -99,6 +99,7 @@ export interface ICharacterInDB {
     updatedAt?: Date;
     inventory: Item[];
     proficiencies: Profs[];
+    spells: Spells[];
 }
 
 export interface ICharacterDocument extends ICharacterInDB, Document { }
@@ -177,7 +178,8 @@ const CharacterSchema: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     inventory: [],
-    proficiencies: []
+    proficiencies: [],
+    spells: [],
 });
 
 export const CharacterModel = mongoose.model<ICharacterDocument>('Character', CharacterSchema);

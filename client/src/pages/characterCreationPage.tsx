@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NumericInputWithNumberValue } from '../components/numberInput';
 import axios from 'axios';
 import { useJwtToken } from '../hooks/useJwtToken';
@@ -14,6 +14,7 @@ import CreationStatRoll from '../components/creationStatRoll';
 
 
 const CharacterCreationPage: React.FC = () => {
+    const [selectedSkills, setSelectedSkills] = useState<{ [key: string]: string }>({});
     const [character, setCharacter] = useState<INewCharacterToSendToBackend>({
         name: '',
         race: '',
@@ -115,7 +116,7 @@ const CharacterCreationPage: React.FC = () => {
         setCharacter({ ...character, [ability]: value });
     };
 
-    const classSkills = {
+    const classSkills: { [key: string]: string[] } = {
         "Barbarian": ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"],
         "Cleric": ["History", "Insight", "Medicine", "Persuasion", "Religion"],
         "Druid": ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"],
@@ -127,8 +128,29 @@ const CharacterCreationPage: React.FC = () => {
         "Sorcerer": ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"],
         "Warlock": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
         "Wizard": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+        "Bard": ["Acrobatics", "Animal Handling", "Athletics", "Deception", "Insight", "Intimidation", "Performance", "Persuasion", "Sleight of Hand"],
     }
 
+    // Watch selectedSkills changes
+    useEffect(() => {
+        console.log("selectedSkills updated:", selectedSkills);
+    }, [selectedSkills]);
+
+    const handleSkillSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const skillName = event.target.name;
+        setSelectedSkills((prevSkills) => ({
+            ...prevSkills,
+            [skillName]: event.target.value
+        }));
+    };
+
+    // const handleSkillSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const skillName = event.target.name; // Or use e.target.id
+    //     let tempSelectedSkills = { ...selectedSkills };
+    //     tempSelectedSkills[skillName] = event.target.value;
+    //     setSelectedSkills(tempSelectedSkills);
+    //     console.log(`selectedSkills`, selectedSkills);
+    // }
 
 
     return (
@@ -357,17 +379,43 @@ const CharacterCreationPage: React.FC = () => {
                 {/* picking 2 skills for the class */}
                 <h6>Choose 2 skills for your {character.class}</h6>
                 <div>
-                    <label htmlFor="skill1" className='font-semibold'>Skill</label>
-                    <select name="skill1" id="">
-                        <option value=""></option>
+                    <label htmlFor="skill1" className="font-semibold">Skill</label>
+                    <select
+                        name="skill1"
+                        id="skill1"
+                        onChange={handleSkillSelect}
+                        value={selectedSkills.skill1 || ""} // Set the value here
+                        className="bg-[#2a2b3c]"
+                    >
+                        {character.class && classSkills[character.class].map((skill) => (
+                            !Object.values(selectedSkills).includes(skill) ? (
+                                <option className="text-green-500" key={skill} value={skill}>
+                                    {skill}
+                                </option>
+                            ) : null
+                        ))}
                     </select>
                 </div>
+
                 <div>
-                    <label htmlFor="skill2" className='font-semibold'>Skill</label>
-                    <select name="skill2" id="">
-                        <option value=""></option>
+                    <label htmlFor="skill2" className="font-semibold">Skill</label>
+                    <select
+                        name="skill2"
+                        id="skill2"
+                        onChange={handleSkillSelect}
+                        value={selectedSkills.skill2 || ""} // Set the value here
+                        className="bg-[#2a2b3c]"
+                    >
+                        {character.class && classSkills[character.class].map((skill) => (
+                            !Object.values(selectedSkills).includes(skill) ? (
+                                <option className="text-red-500" key={skill} value={skill}>
+                                    {skill}
+                                </option>
+                            ) : null
+                        ))}
                     </select>
                 </div>
+
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
