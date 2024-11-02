@@ -21,6 +21,7 @@ export interface INewCharacterToSendToBackend {
     CHA: number;
     firstSelectedSkill: SkillKey;
     secondSelectedSkill: SkillKey;
+    thirdSelectedSkillHuman: SkillKey;
 }
 
 export type Gender = "Male" | "Female" | "";

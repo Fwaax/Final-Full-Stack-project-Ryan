@@ -45,7 +45,9 @@ const CharacterCreationPage: React.FC = () => {
         CHA: 10,
         firstSelectedSkill: '',
         secondSelectedSkill: '',
+        thirdSelectedSkillHuman: '',
     });
+    const isHuman = character.race === 'Human';
 
     const { token } = useJwtToken();
     const navigate = useNavigate();
@@ -106,6 +108,7 @@ const CharacterCreationPage: React.FC = () => {
             CHA: faker.number.int({ min: 1, max: 20 }),
             firstSelectedSkill: '',
             secondSelectedSkill: '',
+            thirdSelectedSkillHuman: '',
         });
     };
 
@@ -158,7 +161,21 @@ const CharacterCreationPage: React.FC = () => {
         }
     }, [character.class]);
 
-    // const classCantrips: { [key: string]:  } = {}
+    // const classCantrips: { [key: string]: Cantrips } = {
+    //     "Barbarian": ["cantripsKnown"],
+    //     "Cleric": ["cantripsKnown"],
+    //     "Druid": ["cantripsKnown"],
+    //     "Fighter": ["cantripsKnown"],
+    //     "Monk": ["cantripsKnown"],
+    //     "Paladin": ["cantripsKnown"],
+    //     "Ranger": ["cantripsKnown"],
+    //     "Rogue": ["cantripsKnown"],
+    //     "Sorcerer": ["cantripsKnown"],
+    //     "Warlock": ["cantripsKnown"],
+    //     "Wizard": ["cantripsKnown"],
+    //     "Bard": ["cantripsKnown"],
+    // };
+
 
 
     return (
@@ -189,6 +206,7 @@ const CharacterCreationPage: React.FC = () => {
                         <option value="Human">Human</option>
                         <option value="Elf">Elf</option>
                         <option value="Dwarf">Dwarf</option>
+                        <option value="Drow">Drow</option>
                         <option value="Halfling">Halfling</option>
                         <option value="Tiefling">Tiefling</option>
                         <option value="Orc">Orc</option>
@@ -415,6 +433,21 @@ const CharacterCreationPage: React.FC = () => {
                                 <option className="text-red-500" key={skill} value={skill}>{skill}</option>) : null))}
                     </select>
                 </div>
+                {isHuman && (<div>
+                    <label htmlFor="thirdSelectedSkillHuman" className="font-semibold">Skill Human</label>
+                    <select
+                        name="thirdSelectedSkillHuman"
+                        id="thirdSelectedSkillHuman"
+                        onChange={handleSkillSelect}
+                        value={character.thirdSelectedSkillHuman}
+                        className="bg-[#2a2b3c]"
+                    >
+                        {character.class && classSkills[character.class].map(skill => (
+                            skill !== character.firstSelectedSkill && skill !== character.secondSelectedSkill ? (
+                                <option className="text-red-500" key={skill} value={skill}>{skill}</option>) : null))}
+                    </select>
+                </div>)
+                }
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
