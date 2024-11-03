@@ -46,6 +46,7 @@ const CharacterCreationPage: React.FC = () => {
         firstSelectedSkill: '',
         secondSelectedSkill: '',
         thirdSelectedSkillHuman: '',
+        inventory: [],
     });
     const isHuman = character.race === 'Human';
 
@@ -109,6 +110,7 @@ const CharacterCreationPage: React.FC = () => {
             firstSelectedSkill: '',
             secondSelectedSkill: '',
             thirdSelectedSkillHuman: '',
+            inventory: [],
         });
     };
 
@@ -147,7 +149,8 @@ const CharacterCreationPage: React.FC = () => {
             ...prev,
             class: selectedClass,
             firstSelectedSkill: classSkills[selectedClass]?.[0] || '',
-            secondSelectedSkill: classSkills[selectedClass]?.[1] || ''
+            secondSelectedSkill: classSkills[selectedClass]?.[1] || '',
+            thirdSelectedSkillHuman: classSkills[selectedClass]?.[2] || '',
         }));
     };
 
@@ -156,7 +159,8 @@ const CharacterCreationPage: React.FC = () => {
             setCharacter(prev => ({
                 ...prev,
                 firstSelectedSkill: classSkills[character.class]?.[0] || '',
-                secondSelectedSkill: classSkills[character.class]?.[1] || ''
+                secondSelectedSkill: classSkills[character.class]?.[1] || '',
+                thirdSelectedSkillHuman: classSkills[character.class]?.[2] || '',
             }));
         }
     }, [character.class]);

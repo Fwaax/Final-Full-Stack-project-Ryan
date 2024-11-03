@@ -1,3 +1,5 @@
+import { Item } from "../atoms";
+
 export interface ICharacterCurrentStateApiResponse {
     appearance: {
         alignment: string;
@@ -27,6 +29,7 @@ export interface ICharacterCurrentStateApiResponse {
     skills: Record<SkillKey, Skill>;
     proficiencyBonus: number;
     coreAttributes: Record<AttributeKey, number>;
+    inventory: Item[];
     hitPoints: {
         max: number;
         current: number;

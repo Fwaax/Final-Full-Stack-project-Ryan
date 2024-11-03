@@ -14,7 +14,8 @@ import {
     backgroundAtom, classAtom, levelAtom, nameAtom, raceAtom, appearanceAtom,
     coreAttributesAtom, skillsAtom, hitPointsAtom, alliesAtom, enemiesAtom,
     backstoryAtom, userIdAtom, createdAtAtom, updatedAtAtom,
-    otherAtom
+    otherAtom,
+    inventoryAtom
 } from "../atoms";
 import { ICharacterCurrentStateApiResponse } from "../Interfaces/apiRespose";
 import D20 from "../components/svg/d20";
@@ -43,6 +44,7 @@ const CharacterSheetPage = () => {
     const setCreatedAt = useSetAtom(createdAtAtom);
     const setUpdatedAt = useSetAtom(updatedAtAtom);
     const setOther = useSetAtom(otherAtom);
+    const setInventory = useSetAtom(inventoryAtom);
 
     // Atom values
     const name = useAtomValue(nameAtom);
@@ -58,6 +60,11 @@ const CharacterSheetPage = () => {
     const enemies = useAtomValue(enemiesAtom);
     const backstory = useAtomValue(backstoryAtom);
     const other = useAtomValue(otherAtom);
+    const userId = useAtomValue(userIdAtom);
+    const createdAt = useAtomValue(createdAtAtom);
+    const updatedAt = useAtomValue(updatedAtAtom);
+    const inventory = useAtomValue(inventoryAtom);
+
 
     // Fetch character data with useEffect
     useEffect(() => {
@@ -78,6 +85,7 @@ const CharacterSheetPage = () => {
                     { headers: { Authorization: token } }
                 );
                 const data = response.data.data as ICharacterCurrentStateApiResponse;
+                console.log(`Chracter fetched from backend`, data);
 
                 // Populate atoms with character data
                 setName(data.name);
@@ -98,6 +106,7 @@ const CharacterSheetPage = () => {
                 setOther(data.other);
                 setError(null);
                 setIsFetched(true);
+                setInventory(data.inventory);
                 toast("Character fetched successfully");
             } catch (err) {
                 console.error("Failed to fetch character:", err);
@@ -123,6 +132,7 @@ const CharacterSheetPage = () => {
             enemies,
             backstory,
             other,
+            inventory,
             userId: "", // Populate as needed
             createdAt: "", // Populate as needed
             updatedAt: "", // Populate as needed

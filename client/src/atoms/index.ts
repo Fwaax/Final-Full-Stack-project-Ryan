@@ -31,7 +31,6 @@ export const coreAttributesAtom = atom<Record<AttributeKey, number>>({
     CHA: 10,
 });
 
-// Skills
 export const skillsAtom = atom<Record<SkillKey, Skill>>({
     acrobatics: { modifier: "DEX", proficiency: false },
     animalHandling: { modifier: "WIS", proficiency: false },
@@ -51,7 +50,29 @@ export const skillsAtom = atom<Record<SkillKey, Skill>>({
     sleightOfHand: { modifier: "DEX", proficiency: false },
     stealth: { modifier: "DEX", proficiency: false },
     survival: { modifier: "WIS", proficiency: false },
-});
+} as Record<SkillKey, Skill>);
+
+// Skills
+// export const skillsAtom = atom<Record<SkillKey, Skill>>({
+//     acrobatics: { modifier: "DEX", proficiency: false },
+//     animalHandling: { modifier: "WIS", proficiency: false },
+//     arcana: { modifier: "INT", proficiency: false },
+//     athletics: { modifier: "STR", proficiency: false },
+//     deception: { modifier: "CHA", proficiency: false },
+//     history: { modifier: "INT", proficiency: false },
+//     insight: { modifier: "WIS", proficiency: false },
+//     intimidation: { modifier: "CHA", proficiency: false },
+//     investigation: { modifier: "INT", proficiency: false },
+//     medicine: { modifier: "WIS", proficiency: false },
+//     nature: { modifier: "INT", proficiency: false },
+//     perception: { modifier: "WIS", proficiency: false },
+//     performance: { modifier: "CHA", proficiency: false },
+//     persuasion: { modifier: "CHA", proficiency: false },
+//     religion: { modifier: "INT", proficiency: false },
+//     sleightOfHand: { modifier: "DEX", proficiency: false },
+//     stealth: { modifier: "DEX", proficiency: false },
+//     survival: { modifier: "WIS", proficiency: false },
+// });
 
 // Hit points
 export const hitPointsAtom = atom({
@@ -59,6 +80,8 @@ export const hitPointsAtom = atom({
     current: 10,
     temp: 0,
 });
+
+export type Item = { name: string, quantity: number, weight: number, description: string, cost: string, isActivatable: boolean, numberOfCharges: number, dmgDice?: string, armorClass?: number, attackBonus?: number, armorBonus?: number, range?: string };
 
 // Other character details
 export const alliesAtom = atom<string>('');
@@ -68,3 +91,4 @@ export const otherAtom = atom<string>('');
 export const userIdAtom = atom<string | null>(null);
 export const createdAtAtom = atom<string | null>(null);
 export const updatedAtAtom = atom<string | null>(null);
+export const inventoryAtom = atom<Item[]>([]);

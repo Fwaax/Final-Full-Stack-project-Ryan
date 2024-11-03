@@ -40,6 +40,12 @@ export interface INewCharacterToSentFromFrontend {
     INT: number;
     WIS: number;
     CHA: number;
+    firstSelectedSkill: SkillKey;
+    secondSelectedSkill: SkillKey;
+    thirdSelectedSkillHuman: SkillKey;
+    inventory: Item[];
+    proficiencies: Profs;
+    spells: Spells[];
 }
 
 export type SkillKey = 'acrobatics' | 'animalHandling' | 'arcana' | 'athletics' | 'deception' | 'history' | 'insight' | 'intimidation' | 'investigation' | 'medicine' | 'nature' | 'perception' | 'performance' | 'persuasion' | 'religion' | 'sleightOfHand' | 'stealth' | 'survival';

@@ -3,6 +3,7 @@ import { ICharacterInDB, INewCharacterToSentFromFrontend, Item, Profs, Spells } 
 import { func } from "joi";
 import * as ItemConst from "./items";
 import * as SpellsConst from "./spells";
+import { log } from "node:console";
 
 type AdditionalParams = {
     inventory: Item[],
@@ -12,6 +13,11 @@ type AdditionalParams = {
 }
 
 export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFrontend, requesterId: string) {
+    // const s1: boolean = charInitalParamsFromFrontend.firstSelectedSkill
+    // const s2: boolean = charInitalParamsFromFrontend.secondSelectedSkill
+    // const s3: boolean = charInitalParamsFromFrontend.thirdSelectedSkillHuman
+
+
     const charClass = charInitalParamsFromFrontend.class
     let additionalParamsToAddToCharacter: AdditionalParams;
     switch (charClass) {
@@ -95,7 +101,7 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
         },
         inventory: additionalParamsToAddToCharacter.inventory,
         proficiencies: additionalParamsToAddToCharacter.proficiencies,
-        spells: additionalParamsToAddToCharacter.spells
+        spells: additionalParamsToAddToCharacter.spells,
 
     } // End of character object
 

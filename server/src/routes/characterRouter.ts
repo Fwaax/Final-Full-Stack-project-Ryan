@@ -53,7 +53,6 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         const foundUser = await UserModel.findById(requesterId);
         if (!foundUser) {
             console.log(`foundUser`);
-
             return res.status(404).send({ message: "User not found." });
         }
         const charFromFrontend: INewCharacterToSentFromFrontend = req.body;

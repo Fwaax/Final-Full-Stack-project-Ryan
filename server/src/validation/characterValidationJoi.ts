@@ -108,6 +108,9 @@ export const newCharacterValidationJoi = Joi.object({
     INT: Joi.number().integer().min(0).required(),
     WIS: Joi.number().integer().min(0).required(),
     CHA: Joi.number().integer().min(0).required(),
+    firstSelectedSkill: Joi.string().valid(...skillKeys).required(),
+    secondSelectedSkill: Joi.string().valid(...skillKeys).required(),
+    thirdSelectedSkillHuman: Joi.string().valid(...skillKeys).required(),
 }).unknown(false); // Disallow unknown fields
 
 export const editCharacterValidationJoi = Joi.object({
