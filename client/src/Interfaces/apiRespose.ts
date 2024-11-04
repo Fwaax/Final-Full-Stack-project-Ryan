@@ -1,4 +1,4 @@
-import { Item } from "../atoms";
+import { Item, Profs, Spells } from "../atoms";
 
 export interface ICharacterCurrentStateApiResponse {
     appearance: {
@@ -27,9 +27,11 @@ export interface ICharacterCurrentStateApiResponse {
     backstory: string;
     other: string;
     skills: Record<SkillKey, Skill>;
+    proficiencies: Profs[];
     proficiencyBonus: number;
     coreAttributes: Record<AttributeKey, number>;
     inventory: Item[];
+    spells: Spells[];
     hitPoints: {
         max: number;
         current: number;

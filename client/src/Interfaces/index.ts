@@ -1,4 +1,4 @@
-import { Item } from "../atoms";
+import { Item, Spells } from "../atoms";
 import { SkillKey } from "./apiRespose";
 
 export interface INewCharacterToSendToBackend {
@@ -23,7 +23,11 @@ export interface INewCharacterToSendToBackend {
     firstSelectedSkill: SkillKey;
     secondSelectedSkill: SkillKey;
     thirdSelectedSkillHuman: SkillKey;
+    firstSelectedCantrip: string;
+    secondSelectedCantrip: string;
+    thirdSelectedCantripSpecial: string;
     inventory: Item[];
+    spells: Spells[];
 }
 
 export type Gender = "Male" | "Female" | "";

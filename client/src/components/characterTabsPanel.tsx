@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 import { useAtom } from 'jotai';
-import { backgroundAtom, classAtom, levelAtom, nameAtom, raceAtom, inventoryAtom, backstoryAtom, alliesAtom, enemiesAtom, appearanceAtom, otherAtom } from '../atoms';
+import { backgroundAtom, classAtom, levelAtom, nameAtom, raceAtom, inventoryAtom, backstoryAtom, alliesAtom, enemiesAtom, appearanceAtom, otherAtom, spellsAtom } from '../atoms';
 
 // Placeholder components for each tab's content
 
@@ -11,14 +11,29 @@ function ActionsTab() {
 }
 
 function SpellsTab() {
-    return <div>Spells content goes here</div>;
+    const [spells] = useAtom(spellsAtom); // Destructure to get the spells array
+    return (
+        <div>
+            <h2>Spells</h2>
+            <ul>
+                {spells.map((item, index) => (
+                    <li key={index}>
+                        {/* Adjust to display relevant item properties */}
+                        <strong>{item.name}</strong> - {item.discription}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 function InventoryTab() {
     const [inventory] = useAtom(inventoryAtom);  // Access the inventoryAtom
     return (
         <div>
-            <h2>Inventory</h2>
+            <div className="border-b-2 border-solid border-[#556b82]">
+                <strong className='text-[#556b82]'><h2>Inventory</h2></strong>
+            </div>
             <ul>
                 {inventory.map((item, index) => (
                     <li key={index}>
@@ -44,21 +59,27 @@ function BackgroundTab() {
     return (
         <div className='flex flex-col'>
             <div className='flex flex-col'>
-                <div className="border border-b border-solid border-white" >
-                    <strong className='text-decoration-line: underline text-[#556b82]'><h2>Background</h2></strong>
+                <div className="border-b-2 border-solid border-[#556b82]" >
+                    <strong className='text-[#556b82]'><h2>Background</h2></strong>
                 </div>
                 <p>{background}</p>
             </div>
             <div>
-                <strong className='text-decoration-line: underline text-[#556b82]'><h2>Allies</h2></strong>
+                <div className="border-b-2 border-solid border-[#556b82]" >
+                    <strong className='text-[#556b82]'><h2>Allies</h2></strong>
+                </div>
                 <p>{allies}</p>
             </div>
             <div>
-                <strong className='text-decoration-line: underline text-[#556b82]'><h2>Enemies</h2></strong>
+                <div className="border-b-2 border-solid border-[#556b82]" >
+                    <strong className='text-[#556b82]'><h2>Enemies</h2></strong>
+                </div>
                 <p>{enemies}</p>
             </div>
             <div>
-                <strong className='text-decoration-line: underline text-[#556b82]'><h2>Appearance</h2></strong>
+                <div className="border-b-2 border-solid border-[#556b82]">
+                    <strong className='text-[#556b82]'><h2>Appearance</h2></strong>
+                </div>
                 <p><ul className='flex flex-row'>
                     {Object.entries(appearance).map(([key, item]) => (
                         <li key={key}>
@@ -69,7 +90,9 @@ function BackgroundTab() {
                 </ul></p>
             </div>
             <div>
-                <strong className='text-decoration-line: underline text-[#556b82]'><h2>Other</h2></strong>
+                <div className="border-b-2 border-solid border-[#556b82]">
+                    <strong className='text-[#556b82]'><h2>Other</h2></strong>
+                </div>
                 <p>{other}</p>
             </div>
         </div>
@@ -80,7 +103,9 @@ function NotesTab() {
     const [backstory] = useAtom(backstoryAtom);
     return (
         <div>
-            <h2>Background</h2>
+            <div className="border-b-2 border-solid border-[#556b82]">
+                <strong className='text-[#556b82]'><h2>background</h2></strong>
+            </div>
             <p>{backstory}</p>
         </div>
     )

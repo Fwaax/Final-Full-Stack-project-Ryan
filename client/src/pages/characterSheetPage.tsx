@@ -15,7 +15,9 @@ import {
     coreAttributesAtom, skillsAtom, hitPointsAtom, alliesAtom, enemiesAtom,
     backstoryAtom, userIdAtom, createdAtAtom, updatedAtAtom,
     otherAtom,
-    inventoryAtom
+    inventoryAtom,
+    spellsAtom,
+    proficienciesAtom,
 } from "../atoms";
 import { ICharacterCurrentStateApiResponse } from "../Interfaces/apiRespose";
 import D20 from "../components/svg/d20";
@@ -45,6 +47,8 @@ const CharacterSheetPage = () => {
     const setUpdatedAt = useSetAtom(updatedAtAtom);
     const setOther = useSetAtom(otherAtom);
     const setInventory = useSetAtom(inventoryAtom);
+    const setSpells = useSetAtom(spellsAtom);
+    const setProficiencies = useSetAtom(proficienciesAtom);
 
     // Atom values
     const name = useAtomValue(nameAtom);
@@ -64,7 +68,8 @@ const CharacterSheetPage = () => {
     const createdAt = useAtomValue(createdAtAtom);
     const updatedAt = useAtomValue(updatedAtAtom);
     const inventory = useAtomValue(inventoryAtom);
-
+    const spells = useAtomValue(spellsAtom);
+    const proficiencies = useAtomValue(proficienciesAtom);
 
     // Fetch character data with useEffect
     useEffect(() => {
@@ -107,13 +112,14 @@ const CharacterSheetPage = () => {
                 setError(null);
                 setIsFetched(true);
                 setInventory(data.inventory);
+                setSpells(data.spells);
+                setProficiencies(data.proficiencies);
                 toast("Character fetched successfully");
             } catch (err) {
                 console.error("Failed to fetch character:", err);
                 setError("Failed to fetch character");
             }
         };
-
         fetchCharacter();
     }, [characterIdFromUrl, token]);
 
@@ -131,6 +137,7 @@ const CharacterSheetPage = () => {
             allies,
             enemies,
             backstory,
+            spells,
             other,
             inventory,
             userId: "", // Populate as needed
@@ -138,6 +145,7 @@ const CharacterSheetPage = () => {
             updatedAt: "", // Populate as needed
             _id: "", // Populate as needed
             proficiencyBonus: 0,
+            proficiencies,
             characteristics: "",
             personalityTraits: "",
             organizations: "",

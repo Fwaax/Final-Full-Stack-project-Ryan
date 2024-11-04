@@ -83,6 +83,9 @@ export const hitPointsAtom = atom({
 
 export type Item = { name: string, quantity: number, weight: number, description: string, cost: string, isActivatable: boolean, numberOfCharges: number, dmgDice?: string, armorClass?: number, attackBonus?: number, armorBonus?: number, range?: string };
 
+export type Spells = { name: string, damageRoll?: string, damageType?: string, savingThrow?: string, hitRoll?: string, shape?: string, size?: string, damageInstances?: number, spellSlot?: number, discription: string, range?: string, duration?: string, effect?: string, action: string, classAvailability: string, school: string, castingTime?: string, concentration?: boolean, ritual?: boolean, verbalComponents?: boolean, somaticComponents?: boolean, materialComponents?: boolean, higherLevelScaling?: boolean };
+
+export type Profs = { armor: string, weapons: string, tools: string, savingThrows: string };
 // Other character details
 export const alliesAtom = atom<string>('');
 export const enemiesAtom = atom<string>('');
@@ -92,3 +95,6 @@ export const userIdAtom = atom<string | null>(null);
 export const createdAtAtom = atom<string | null>(null);
 export const updatedAtAtom = atom<string | null>(null);
 export const inventoryAtom = atom<Item[]>([]);
+export const goldAtom = atom<number>(0);
+export const spellsAtom = atom<Spells[]>([]);
+export const proficienciesAtom = atom<Profs[]>([]);

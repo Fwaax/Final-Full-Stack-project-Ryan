@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { AbilityScore, Alignment, INewCharacterToSendToBackend, CharacterAppearance, Faith, Gender, Size } from '../Interfaces';
 import CreationStatRoll from '../components/creationStatRoll';
 import { SkillKey } from '../Interfaces/apiRespose';
+import { spellsAtom } from '../atoms';
 
 
 const CharacterCreationPage: React.FC = () => {
@@ -47,6 +48,10 @@ const CharacterCreationPage: React.FC = () => {
         secondSelectedSkill: '',
         thirdSelectedSkillHuman: '',
         inventory: [],
+        spells: [],
+        firstSelectedCantrip: '',
+        secondSelectedCantrip: '',
+        thirdSelectedCantripSpecial: '',
     });
     const isHuman = character.race === 'Human';
 
@@ -111,6 +116,10 @@ const CharacterCreationPage: React.FC = () => {
             secondSelectedSkill: '',
             thirdSelectedSkillHuman: '',
             inventory: [],
+            spells: [],
+            firstSelectedCantrip: '',
+            secondSelectedCantrip: '',
+            thirdSelectedCantripSpecial: '',
         });
     };
 
@@ -165,20 +174,40 @@ const CharacterCreationPage: React.FC = () => {
         }
     }, [character.class]);
 
-    // const classCantrips: { [key: string]: Cantrips } = {
-    //     "Barbarian": ["cantripsKnown"],
-    //     "Cleric": ["cantripsKnown"],
-    //     "Druid": ["cantripsKnown"],
-    //     "Fighter": ["cantripsKnown"],
-    //     "Monk": ["cantripsKnown"],
-    //     "Paladin": ["cantripsKnown"],
-    //     "Ranger": ["cantripsKnown"],
-    //     "Rogue": ["cantripsKnown"],
-    //     "Sorcerer": ["cantripsKnown"],
-    //     "Warlock": ["cantripsKnown"],
-    //     "Wizard": ["cantripsKnown"],
-    //     "Bard": ["cantripsKnown"],
-    // };
+    const classCantrips: { [key: string]: string[] } = {
+        "Barbarian": [],
+        "Cleric": ["Thaumaturgy", "Sacred Flame", "Guidance", "Resistance", "Blade Ward", "Produce Flame"],
+        "Druid": ["Guidance", "Poison Spray", "Produce Flame", "Resistance", "Shillelagh", "Thorn Whip"],
+        "Fighter": [],
+        "Monk": [],
+        "Paladin": [],
+        "Ranger": [],
+        "Rogue": [],
+        "Sorcerer": ["Acid Splash", "Bone Chill", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
+        "Warlock": ["Eldritch Blast", "Blade Ward", "Booming Blade", "Chill Touch", "Create Bonfire", "Friends", "Frostbite", "Mage Hand", "Poison Spray", "True Strike"],
+        "Wizard": ["Acid Splash", "Bone Chill", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
+        "Bard": ["Visious Mockery", "Blade Ward", "Mage Hand", "True Strike", "Friends", "Dancing Lights", "Light", "Minor Illusion"],
+    };
+
+    const handleCantripSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setCharacter(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    };
+
+    // Auto-select initial cantrips based on class
+    useEffect(() => {
+        if (character.class) {
+            setCharacter(prev => ({
+                ...prev,
+                firstSelectedCantrip: classCantrips[character.class]?.[0] || '',
+                secondSelectedCantrip: classCantrips[character.class]?.[1] || '',
+                thirdSelectedCantripSpecial: classCantrips[character.class]?.[2] || '',
+            }));
+        }
+    }, [character.class]);
 
 
 
@@ -452,6 +481,58 @@ const CharacterCreationPage: React.FC = () => {
                     </select>
                 </div>)
                 }
+            </div>
+
+            <div>
+                {/* Picking 2 cantrips for the class */}
+                <h6>Choose 2 cantrips for your {character.class}</h6>
+                <div>
+                    <label htmlFor="firstSelectedCantrip" className="font-semibold">Cantrip 1</label>
+                    <select
+                        name="firstSelectedCantrip"
+                        id="firstSelectedCantrip"
+                        onChange={handleCantripSelect}
+                        value={character.firstSelectedCantrip}
+                        className="bg-[#2a2b3c]"
+                    >
+                        {character.class && classCantrips[character.class].map(cantrip => (
+                            cantrip !== character.secondSelectedCantrip ? (
+                                <option className="text-green-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
+                    </select>
+                </div>
+
+                <div>
+                    <label htmlFor="secondSelectedCantrip" className="font-semibold">Cantrip 2</label>
+                    <select
+                        name="secondSelectedCantrip"
+                        id="secondSelectedCantrip"
+                        onChange={handleCantripSelect}
+                        value={character.secondSelectedCantrip}
+                        className="bg-[#2a2b3c]"
+                    >
+                        {character.class && classCantrips[character.class].map(cantrip => (
+                            cantrip !== character.firstSelectedCantrip ? (
+                                <option className="text-red-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
+                    </select>
+                </div>
+
+                {/* Special cantrip selection for specific character types */}
+                {/* {isSpecialClass && (
+                    <div>
+                        <label htmlFor="thirdSelectedCantripSpecial" className="font-semibold">Special Cantrip</label>
+                        <select
+                            name="thirdSelectedCantripSpecial"
+                            id="thirdSelectedCantripSpecial"
+                            onChange={handleCantripSelect}
+                            value={character.thirdSelectedCantripSpecial}
+                            className="bg-[#2a2b3c]"
+                        >
+                            {character.class && classCantrips[character.class].map(cantrip => (
+                                cantrip !== character.firstSelectedCantrip && cantrip !== character.secondSelectedCantrip ? (
+                                    <option className="text-red-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
+                        </select>
+                    </div>
+                )} */}
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>

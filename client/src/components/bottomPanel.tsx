@@ -2,7 +2,7 @@ import React from 'react'
 import CharacterTabsPanel from './characterTabsPanel'
 import { Skill } from '../Interfaces/apiRespose';
 import { useAtom } from 'jotai';
-import { coreAttributesAtom, skillsAtom } from '../atoms';
+import { coreAttributesAtom, proficienciesAtom, skillsAtom } from '../atoms';
 
 const BottomPanel = () => {
     return (
@@ -18,6 +18,18 @@ const BottomPanel = () => {
 
 function LeftSection() {
     const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
+    const [proficiencies, setProficiencies] = useAtom(proficienciesAtom);
+    console.log(`proficiencies`, proficiencies);
+
+    if (proficiencies) {
+        console.log('proficiencies armor', proficiencies[0].armor);
+        console.log('proficiencies weapons', proficiencies[0].weapons);
+        console.log('proficiencies tools', proficiencies[0].tools);
+        console.log('proficiencies savingThrows', proficiencies[0].savingThrows);
+    } else {
+        console.log('No proficiencies available');
+    }
+
     return (
         <div className='bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col gap-y-7 text-[#bfbfba] border-4 border-[#14151f] border-solid'>
 
@@ -94,28 +106,23 @@ function LeftSection() {
 
             <div className='border border-[#bfbfba] border-solid'>
                 <div className='flex flex-col py-2 gap-y-2 bg-[#14151f]'>
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center text-center'>
                         <h6>ARMOR</h6>
-                        <p>PH</p>
+                        <p>{proficiencies[0].armor}</p>
                     </div>
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center text-center'>
                         <h6>WEAPONS</h6>
-                        <p>PH</p>
+                        <p>{proficiencies[0].weapons}</p>
                     </div>
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center text-center'>
                         <h6>TOOLS</h6>
-                        <p>PH</p>
+                        <p>{proficiencies[0].tools}</p>
                     </div>
-                    <div className='flex flex-col items-center'>
-                        <h6>LANGUAGES</h6>
-                        <p>PH</p>
-                    </div>
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center text-center'>
                         <h6>PROFICIENIES & TRAINING</h6>
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
