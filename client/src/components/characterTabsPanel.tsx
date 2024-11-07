@@ -11,14 +11,13 @@ function ActionsTab() {
 }
 
 function SpellsTab() {
-    const [spells] = useAtom(spellsAtom); // Destructure to get the spells array
+    const [spells] = useAtom(spellsAtom); // assuming spells is an object
     return (
         <div>
             <h2>Spells</h2>
             <ul>
-                {spells.map((item, index) => (
-                    <li key={index}>
-                        {/* Adjust to display relevant item properties */}
+                {Object.entries(spells).map(([key, item]) => (
+                    <li key={key}>
                         <strong>{item.name}</strong> - {item.discription}
                     </li>
                 ))}

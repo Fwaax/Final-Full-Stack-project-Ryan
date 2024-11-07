@@ -204,7 +204,7 @@ const CharacterCreationPage: React.FC = () => {
                 ...prev,
                 firstSelectedCantrip: classCantrips[character.class]?.[0] || '',
                 secondSelectedCantrip: classCantrips[character.class]?.[1] || '',
-                thirdSelectedCantripSpecial: classCantrips[character.class]?.[2] || '',
+                // thirdSelectedCantripSpecial: classCantrips[character.class]?.[2] || '',
             }));
         }
     }, [character.class]);
