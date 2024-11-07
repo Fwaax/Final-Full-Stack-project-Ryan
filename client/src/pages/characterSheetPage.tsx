@@ -185,7 +185,7 @@ const CharacterSheetPage = () => {
     return isFetched ? (
         <div className="w-full h-full bg-[#292929]">
             <div className="w-11/12 2xl:w-9/12 mx-auto flex flex-col gap-2">
-                <TopPanel />
+                <TopPanel characterId={characterIdFromUrl} />
                 <StatsPanel />
                 <BottomPanel />
                 <D20 className="fixed bottom-6 left-2" onClick={handleDiceClick} />

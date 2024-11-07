@@ -13,10 +13,26 @@ type AdditionalParams = {
 }
 
 export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFrontend, requesterId: string) {
-    // const s1: boolean = charInitalParamsFromFrontend.firstSelectedSkill
-    // const s2: boolean = charInitalParamsFromFrontend.secondSelectedSkill
-    // const s3: boolean = charInitalParamsFromFrontend.thirdSelectedSkillHuman
+    console.log("initChar", charInitalParamsFromFrontend);
 
+    const s1name: string = charInitalParamsFromFrontend.firstSelectedCantrip
+    const s2name: string = charInitalParamsFromFrontend.secondSelectedCantrip
+    const s3name: string = charInitalParamsFromFrontend.thirdSelectedCantripSpecial
+
+    const spell1 = SpellsConst.findSpellByName(s1name)
+    const spell2 = SpellsConst.findSpellByName(s2name)
+    const spell3 = SpellsConst.findSpellByName(s3name)
+    const spellsArray: Spells[] = []
+
+    if (spell1) {
+        spellsArray.push(spell1)
+    }
+    if (spell2) {
+        spellsArray.push(spell2)
+    }
+    if (spell3) {
+        spellsArray.push(spell3)
+    }
 
     const charClass = charInitalParamsFromFrontend.class
     let additionalParamsToAddToCharacter: AdditionalParams;
@@ -101,7 +117,7 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
         },
         inventory: additionalParamsToAddToCharacter.inventory,
         proficiencies: additionalParamsToAddToCharacter.proficiencies,
-        spells: additionalParamsToAddToCharacter.spells,
+        spells: spellsArray,
 
     } // End of character object
 

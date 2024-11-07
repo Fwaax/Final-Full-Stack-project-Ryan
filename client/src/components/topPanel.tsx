@@ -3,8 +3,9 @@ import CampfireSvg from "./svg/campfireSvg";
 import MoonSvg from "./svg/moonSvg";
 import { appearanceAtom, classAtom, hitPointsAtom, levelAtom, nameAtom, raceAtom } from "../atoms";
 import { useAtom } from "jotai";
+import { useNavigate } from 'react-router-dom';
 
-export default function TopPanel() {
+export default function TopPanel(props: { characterId: string | undefined }) {
 
     const [appearance, setAppearance] = useAtom(appearanceAtom);
     const [name, setName] = useAtom(nameAtom);
@@ -12,6 +13,11 @@ export default function TopPanel() {
     const [race, setRace] = useAtom(raceAtom);
     const [level, setLevel] = useAtom(levelAtom);
     const [hitPoints, setHitPoints] = useAtom(hitPointsAtom);
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/character-edit/${props.characterId}`);  // Navigate to the CharacterEditPage
+    };
 
     return (
         <div className='h-[100px] flex flex-row justify-between items-center bg-[#1d1e2a] p-4 rounded-sm shadow-lg border-4 border-[#14151f] border-solid'>
@@ -42,7 +48,7 @@ export default function TopPanel() {
                     <MoonSvg className="w-[25px] h-[15px]" />
                     <h6 className='text-[#bfbfba] ml-2' onClick={() => { setHitPoints({ ...hitPoints, current: hitPoints.max }) }}>LONG REST</h6>
                 </div>
-                <div>
+                <div onClick={handleClick} className="cursor-pointer">
                     <AnvilSvg className="w-[25px] cursor-pointer" />
                 </div>
             </div>

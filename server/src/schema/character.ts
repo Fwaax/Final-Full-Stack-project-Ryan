@@ -43,6 +43,9 @@ export interface INewCharacterToSentFromFrontend {
     firstSelectedSkill: SkillKey;
     secondSelectedSkill: SkillKey;
     thirdSelectedSkillHuman: SkillKey;
+    firstSelectedCantrip: string;
+    secondSelectedCantrip: string;
+    thirdSelectedCantripSpecial: string;
     inventory: Item[];
     proficiencies: Profs;
     spells: Spells[];

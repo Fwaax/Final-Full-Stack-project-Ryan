@@ -52,28 +52,6 @@ export const skillsAtom = atom<Record<SkillKey, Skill>>({
     survival: { modifier: "WIS", proficiency: false },
 } as Record<SkillKey, Skill>);
 
-// Skills
-// export const skillsAtom = atom<Record<SkillKey, Skill>>({
-//     acrobatics: { modifier: "DEX", proficiency: false },
-//     animalHandling: { modifier: "WIS", proficiency: false },
-//     arcana: { modifier: "INT", proficiency: false },
-//     athletics: { modifier: "STR", proficiency: false },
-//     deception: { modifier: "CHA", proficiency: false },
-//     history: { modifier: "INT", proficiency: false },
-//     insight: { modifier: "WIS", proficiency: false },
-//     intimidation: { modifier: "CHA", proficiency: false },
-//     investigation: { modifier: "INT", proficiency: false },
-//     medicine: { modifier: "WIS", proficiency: false },
-//     nature: { modifier: "INT", proficiency: false },
-//     perception: { modifier: "WIS", proficiency: false },
-//     performance: { modifier: "CHA", proficiency: false },
-//     persuasion: { modifier: "CHA", proficiency: false },
-//     religion: { modifier: "INT", proficiency: false },
-//     sleightOfHand: { modifier: "DEX", proficiency: false },
-//     stealth: { modifier: "DEX", proficiency: false },
-//     survival: { modifier: "WIS", proficiency: false },
-// });
-
 // Hit points
 export const hitPointsAtom = atom({
     max: 10,

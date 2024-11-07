@@ -33,3 +33,46 @@ export const spellShapeWater: Spells = { name: "Shape Water", spellSlot: 0, rang
 export const spellSwordBurst: Spells = { name: "Sword Burst", damageRoll: "1d6", damageType: "force", spellSlot: 0, discription: "You create a momentary circle of spectral blades that sweep around you. Each creature within range, other than you, must succeed on a Dexterity saving throw or take force damage. This spell’s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).", range: "Self (5-foot radius)", action: "action", classAvailability: "Sorcerer, Warlock, Wizard", school: "Conjuration", higherLevelScaling: true, verbalComponents: true, somaticComponents: true };
 export const spellThunderclap: Spells = { name: "Thunderclap", damageRoll: "1d6", damageType: "thunder", spellSlot: 0, discription: "You create a burst of thunderous sound that can be heard up to 100 feet away. Each creature other than you within range must succeed on a Constitution saving throw or take thunder damage. This spell’s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).", range: "Self (5-foot radius)", action: "action", classAvailability: "Bard, Druid, Sorcerer, Warlock, Wizard", school: "Evocation", higherLevelScaling: true, verbalComponents: true, somaticComponents: true };
 export const spellTollTheDead: Spells = { name: "Toll the Dead", damageRoll: "1d8", damageType: "necrotic", savingThrow: "WIS", spellSlot: 0, discription: "You point at one creature you can see within range, and the sound of a dolorous bell fills the air around it. If the target is missing any hit points, it instead takes 1d12 necrotic damage. The spell’s damage increases by 1d8 or 1d12 when you reach 5th level (2d8/2d12), 11th level (3d8/3d12), and 17th level (4d8/4d12).", range: "60ft.", action: "action", classAvailability: "Cleric, Warlock, Wizard", school: "Necromancy", higherLevelScaling: true, verbalComponents: true };
+
+const ALL_SPELLS: Spells[] = [
+    spellAcidSplash,
+    spellBladeWard,
+    spellChillTouch,
+    spellBoomingBlade,
+    spellControlFlames,
+    spellCreateBonfire,
+    spellDancingLights,
+    spellDruidCraft,
+    spellEldritchBlast,
+    spellFireBolt,
+    spellFrostbite,
+    spellGuidance,
+    spellLight,
+    spellMageHand,
+    spellMagicStone,
+    spellMoldEarth,
+    spellShapeWater,
+    spellSwordBurst,
+    spellThunderclap,
+    spellMending,
+    spellMessage,
+    spellMinorIllusion,
+    spellPoisonSpray,
+    spellPrestidigitation,
+    spellSpareTheDying,
+    spellThornWhip,
+    spellTrueStrike,
+    spellViciousMockery,
+    spellTollTheDead,
+    spellSacredFlame,
+    spellShockingGrasp,
+    spellChillTouch,
+    spellProduceFlame,
+    spellResistance,
+    spellWordOfRadiance
+];
+
+
+export function findSpellByName(spellName: string): Spells | undefined {
+    return ALL_SPELLS.find(spell => spell.name === spellName);
+}
