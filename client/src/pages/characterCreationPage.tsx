@@ -51,7 +51,6 @@ const CharacterCreationPage: React.FC = () => {
         spells: [],
         firstSelectedCantrip: '',
         secondSelectedCantrip: '',
-        thirdSelectedCantripSpecial: '',
     });
     const isHuman = character.race === 'Human';
 
@@ -119,7 +118,6 @@ const CharacterCreationPage: React.FC = () => {
             spells: [],
             firstSelectedCantrip: '',
             secondSelectedCantrip: '',
-            thirdSelectedCantripSpecial: '',
         });
     };
 
@@ -183,10 +181,10 @@ const CharacterCreationPage: React.FC = () => {
         "Paladin": [],
         "Ranger": [],
         "Rogue": [],
-        "Sorcerer": ["Acid Splash", "Bone Chill", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
+        "Sorcerer": ["Acid Splash", "Chill Touch", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
         "Warlock": ["Eldritch Blast", "Blade Ward", "Booming Blade", "Chill Touch", "Create Bonfire", "Friends", "Frostbite", "Mage Hand", "Poison Spray", "True Strike"],
-        "Wizard": ["Acid Splash", "Bone Chill", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
-        "Bard": ["Visious Mockery", "Blade Ward", "Mage Hand", "True Strike", "Friends", "Dancing Lights", "Light", "Minor Illusion"],
+        "Wizard": ["Acid Splash", "Chill Touch", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
+        "Bard": ["Vicious mockery", "Blade Ward", "Mage Hand", "True Strike", "Friends", "Dancing Lights", "Light", "Minor Illusion"],
     };
 
     const handleCantripSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -204,7 +202,6 @@ const CharacterCreationPage: React.FC = () => {
                 ...prev,
                 firstSelectedCantrip: classCantrips[character.class]?.[0] || '',
                 secondSelectedCantrip: classCantrips[character.class]?.[1] || '',
-                // thirdSelectedCantripSpecial: classCantrips[character.class]?.[2] || '',
             }));
         }
     }, [character.class]);
@@ -515,24 +512,6 @@ const CharacterCreationPage: React.FC = () => {
                                 <option className="text-red-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
                     </select>
                 </div>
-
-                {/* Special cantrip selection for specific character types */}
-                {/* {isSpecialClass && (
-                    <div>
-                        <label htmlFor="thirdSelectedCantripSpecial" className="font-semibold">Special Cantrip</label>
-                        <select
-                            name="thirdSelectedCantripSpecial"
-                            id="thirdSelectedCantripSpecial"
-                            onChange={handleCantripSelect}
-                            value={character.thirdSelectedCantripSpecial}
-                            className="bg-[#2a2b3c]"
-                        >
-                            {character.class && classCantrips[character.class].map(cantrip => (
-                                cantrip !== character.firstSelectedCantrip && cantrip !== character.secondSelectedCantrip ? (
-                                    <option className="text-red-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
-                        </select>
-                    </div>
-                )} */}
             </div>
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>

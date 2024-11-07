@@ -17,11 +17,9 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
 
     const s1name: string = charInitalParamsFromFrontend.firstSelectedCantrip
     const s2name: string = charInitalParamsFromFrontend.secondSelectedCantrip
-    const s3name: string = charInitalParamsFromFrontend.thirdSelectedCantripSpecial
 
     const spell1 = SpellsConst.findSpellByName(s1name)
     const spell2 = SpellsConst.findSpellByName(s2name)
-    const spell3 = SpellsConst.findSpellByName(s3name)
     const spellsArray: Spells[] = []
 
     if (spell1) {
@@ -29,9 +27,6 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
     }
     if (spell2) {
         spellsArray.push(spell2)
-    }
-    if (spell3) {
-        spellsArray.push(spell3)
     }
 
     const charClass = charInitalParamsFromFrontend.class

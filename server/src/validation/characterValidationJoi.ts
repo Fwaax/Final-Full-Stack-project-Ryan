@@ -115,7 +115,6 @@ export const newCharacterValidationJoi = Joi.object({
     spells: Joi.array().items(Joi.string()).optional(),
     firstSelectedCantrip: Joi.string().optional(),
     secondSelectedCantrip: Joi.string().optional(),
-    thirdSelectedCantripSpecial: Joi.string().optional(),
 }).unknown(false); // Disallow unknown fields
 
 export const editCharacterValidationJoi = Joi.object({

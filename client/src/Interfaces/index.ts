@@ -25,7 +25,6 @@ export interface INewCharacterToSendToBackend {
     thirdSelectedSkillHuman: SkillKey;
     firstSelectedCantrip: string;
     secondSelectedCantrip: string;
-    thirdSelectedCantripSpecial: string;
     inventory: Item[];
     spells: Spells[];
 }
