@@ -47,7 +47,6 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: false });
         if (validationResult.error) {
             console.log(`validationResult.error`);
-
             return res.status(400).send(validationResult.error.details[0].message);
         }
         const foundUser = await UserModel.findById(requesterId);
@@ -58,11 +57,9 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         const charFromFrontend: INewCharacterToSentFromFrontend = req.body;
         // Directly create and save a new character using CharacterModel.create()
         const newCharacterWeAreStoringToDB: ICharacterInDB = initChar(charFromFrontend, requesterId);
-
         const savedCharacter = await CharacterModel.create(
             newCharacterWeAreStoringToDB
         );
-
         // Respond with a success message and the saved character data
         res.status(201).send({ message: "Character created successfully.", data: savedCharacter });
     } catch (error) {

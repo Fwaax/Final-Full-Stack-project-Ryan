@@ -53,7 +53,6 @@ const CharacterEditPage: React.FC = () => {
                 setError("Character not found");
                 return;
             }
-
             try {
                 const response = await axios.get(
                     `${BACKEND_URL}/char/my-character/${characterIdFromUrl}`,
@@ -106,9 +105,9 @@ const CharacterEditPage: React.FC = () => {
             enemies,
             other,
         };
-
         try {
-            await axios.put(`/api/characters-edit/${characterId}`, updatedCharacterData);
+            console.log(`updatedCharacterData`, updatedCharacterData);
+            await axios.put(`http://localhost:6969/char/characters-edit/${characterId}`, updatedCharacterData);
             alert('Character updated successfully!');
         } catch (error) {
             console.error("Error updating character:", error);

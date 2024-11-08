@@ -173,7 +173,7 @@ const CharacterSheetPage = () => {
     useEffect(() => {
         const interval = setInterval(saveCharacter, 5000);
         return () => clearInterval(interval);
-    }, [appearance, name, characterClass, race, level, background, coreAttributes, skills, hitPoints, allies, enemies, backstory]);
+    }, [appearance, name, characterClass, race, level, background, coreAttributes, skills, hitPoints, allies, enemies, backstory, spells, other, inventory, userId, createdAt, updatedAt, proficiencies]);
 
     const handleDiceClick = () => {
         const url = "/dice";  // Adjust path as needed

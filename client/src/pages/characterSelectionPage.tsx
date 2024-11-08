@@ -19,10 +19,8 @@ const CharacterSelection: React.FC = () => {
             handleDeleteCharacter(characterId);
         }
     };
-
     // Check for state passed when navigating
     const shouldRefetch = location.state?.refetch ?? false;
-
     // Fetch characters using React Query and the JWT token
     const { data: yourCharacters = [], isLoading, isError, refetch } = useQuery({
         staleTime: 0,   // Ensure query refetches fresh data
@@ -74,11 +72,9 @@ const CharacterSelection: React.FC = () => {
             toast(`Failed to delete character.`);
         }
     };
-
     if (isLoading) {
         return <div className="text-center mt-12">Loading characters...</div>;
     }
-
     if (isError || yourCharacters.length === 0) {
         return (
             <div className="text-center mt-12">

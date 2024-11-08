@@ -45,10 +45,6 @@ function InventoryTab() {
     );
 }
 
-function FeaturesTraitsTab() {
-    return <div>Features & Traits content goes here</div>;
-}
-
 function BackgroundTab() {
     const [background] = useAtom(backgroundAtom);
     const [allies] = useAtom(alliesAtom);
@@ -119,7 +115,6 @@ function CharacterTabsPanel() {
         { label: 'ACTIONS', component: <ActionsTab /> },
         { label: 'SPELLS', component: <SpellsTab /> },
         { label: 'INVENTORY', component: <InventoryTab /> },
-        { label: 'FEATURES & TRAITS', component: <FeaturesTraitsTab /> },
         { label: 'BACKGROUND', component: <BackgroundTab /> },
         { label: 'NOTES', component: <NotesTab /> },
     ];
@@ -151,7 +146,7 @@ function CharacterTabsPanel() {
             </div>
 
             {/* Tab Content */}
-            <div className="tab-content mt-4 p-4 bg-[#14151f] text-[#bfbfba] border border-[#bfbfba] border-solid">
+            <div className="tab-content mt-4 p-4 bg-[#14151f] text-[#bfbfba] border border-[#bfbfba] border-solid h-[550px]">
                 {renderTabContent()}
             </div>
         </div>

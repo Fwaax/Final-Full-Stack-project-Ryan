@@ -37,3 +37,12 @@ export const itemGreatsWord: Item = { quantity: 1, name: "Greatsword", weight: 6
 export const itemDeplomatsPack: Item = { quantity: 1, name: "Diplomat's Pack", weight: 39, description: "Contains a chest ,2 cases of maps and scrolls ,set of fine clothes ,bottle of ink ,ink pen ,lamp ,2 flasts of oil ,5 sheets of paper ,vial of perfume ,sealing wax ,soap", cost: "39gp", isActivatable: false, numberOfCharges: 0 }
 export const itemLute: Item = { quantity: 1, name: "Lute", weight: 2, description: "If you have proficiency with a given musical instrument, you can add your proficiency bonus to any ability checks you make to play music with the instrument. A bard can use a musical instrument as a spellcasting focus. Each type of musical instrument requires a separate proficiency.", cost: "35gp", isActivatable: false, numberOfCharges: 0, }
 export const itemArcaneFocus: Item = { quantity: 1, name: "Arcane Focus", weight: 0, description: "An arcane focus is a special item— an orb, a crystal, a rod, a specially constructed staff, a wand-like length of wood, or some similar item— designed to channel the power of arcane spells. A sorcerer, warlock, or wizard can use such an item as a spellcasting focus.", cost: "", isActivatable: false, numberOfCharges: 0 }
+
+export const ALL_AC_ITEMS: Item[] = [itemChainMail, itemScaleMail, itemLeatherArmor, itemWoodenShield, itemShield]
+
+export const filterByKey = (items: Item[], key: keyof Item) => {
+    return items.filter(item => item[key] !== undefined);
+};
+
+const armorItems = filterByKey(ALL_AC_ITEMS, "armorClass"); // Returns only items with `armorClass`
+const shieldItems = filterByKey(ALL_AC_ITEMS, "armorBonus"); // Returns only items with `armorBonus`
