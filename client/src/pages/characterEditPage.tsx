@@ -41,6 +41,21 @@ const CharacterEditPage: React.FC = () => {
     const enemies = useAtomValue(enemiesAtom);
     const other = useAtomValue(otherAtom);
 
+    const getOptionsForField = (field: keyof typeof appearance) => {
+        switch (field) {
+            case 'gender':
+                return ['Male', 'Female', 'Non-binary', 'Other'];
+            case 'alignment':
+                return ['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'True Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'];
+            case 'faith':
+                return ["Torm", "Tyr", "Lathander", "Mystra", "Selûne", "Sune", "Tempus", "Kelemvor", "Bane", "Bhaal", "Shar", "Lolth", "Pelor", "Heironeous", "Rao", "St. Cuthbert", "Nerull", "Vecna", "Erythnul", "Iuz", "Arawai", "Balinor", "Boldrei", "The Devourer", "The Mockery", "Nature", "Philosophies", ""];
+            case 'size':
+                return ['Small', 'Medium', 'Large'];
+            default:
+                return [];
+        }
+    };
+
     // Load character data on component mount
     useEffect(() => {
         const fetchCharacter = async () => {
@@ -125,7 +140,7 @@ const CharacterEditPage: React.FC = () => {
                 <label className="block font-semibold">
                     Name:
                     <input
-                        className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -134,21 +149,46 @@ const CharacterEditPage: React.FC = () => {
                 {/* Class */}
                 <label className="block font-semibold">
                     Class:
-                    <input
-                        className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300"
+                    <select
+                        name="class"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={characterClass}
                         onChange={(e) => setClass(e.target.value)}
-                    />
+                    >
+                        <option value="">Select Class</option>
+                        <option value="Barbarian">Barbarian</option>
+                        <option value="Bard">Bard</option>
+                        <option value="Cleric">Cleric</option>
+                        <option value="Druid">Druid</option>
+                        <option value="Fighter">Fighter</option>
+                        <option value="Monk">Monk</option>
+                        <option value="Rogue">Rogue</option>
+                        <option value="Ranger">Ranger</option>
+                        <option value="Paladin">Paladin</option>
+                        <option value="Sorcerer">Sorcerer</option>
+                        <option value="Warlock">Warlock</option>
+                        <option value="Wizard">Wizard</option>
+                    </select>
                 </label>
 
                 {/* Race */}
                 <label className="block font-semibold">
                     Race:
-                    <input
-                        className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300"
+                    <select
+                        name="race"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={race}
                         onChange={(e) => setRace(e.target.value)}
-                    />
+                    >
+                        <option value="">Select Race</option>
+                        <option value="Human">Human</option>
+                        <option value="Elf">Elf</option>
+                        <option value="Dwarf">Dwarf</option>
+                        <option value="Drow">Drow</option>
+                        <option value="Halfling">Halfling</option>
+                        <option value="Tiefling">Tiefling</option>
+                        <option value="Orc">Orc</option>
+                    </select>
                 </label>
 
                 {/* Level */}
@@ -156,7 +196,7 @@ const CharacterEditPage: React.FC = () => {
                     Level:
                     <input
                         type="number"
-                        className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300"
+                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                         value={level}
                         onChange={(e) => setLevel(parseInt(e.target.value))}
                     />
@@ -165,23 +205,37 @@ const CharacterEditPage: React.FC = () => {
                 {/* Appearance Section */}
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Appearance</h2>
-
-                    {/* Render Appearance fields only if data is available */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {appearance ? (
                             (['alignment', 'gender', 'eyes', 'size', 'height', 'faith', 'hair', 'skin', 'age', 'weight'] as (keyof typeof appearance)[]).map((field) => (
-                                <label className="block font-semibold" key={field}>
-                                    {field.charAt(0).toUpperCase() + field.slice(1)}:
-                                    <input
-                                        className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300"
-                                        type="text"
-                                        value={appearance[field] || ''}  // Ensure no undefined values
-                                        onChange={(e) => setAppearance({ ...appearance, [field]: e.target.value })}
-                                    />
-                                </label>
+                                <div key={field} className="block font-semibold">
+                                    <label className="mb-1 block">
+                                        {field.charAt(0).toUpperCase() + field.slice(1)}:
+                                    </label>
+                                    {/* Render select element for specific fields */}
+                                    {(field === 'alignment' || field === 'gender' || field === 'faith' || field === 'size') ? (
+                                        <select
+                                            className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
+                                            value={appearance[field] || ''}
+                                            onChange={(e) => setAppearance({ ...appearance, [field]: e.target.value })}
+                                        >
+                                            <option value="">Select {field.charAt(0).toUpperCase() + field.slice(1)}</option>
+                                            {getOptionsForField(field).map((option) => (
+                                                <option key={option} value={option}>{option}</option>
+                                            ))}
+                                        </select>
+                                    ) : (
+                                        <input
+                                            className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
+                                            type="text"
+                                            value={appearance[field] || ''}
+                                            onChange={(e) => setAppearance({ ...appearance, [field]: e.target.value })}
+                                        />
+                                    )}
+                                </div>
                             ))
                         ) : (
-                            <p>Loading appearance data...</p>  // Placeholder while loading
+                            <p>Loading appearance data...</p>
                         )}
                     </div>
                 </div>
@@ -197,7 +251,7 @@ const CharacterEditPage: React.FC = () => {
                                 <label className="block font-semibold" key={field}>
                                     {field.charAt(0).toUpperCase() + field.slice(1)} Hit Points:
                                     <input
-                                        className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300"
+                                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                                         type="number"
                                         value={hitPoints[field] || 0}  // Ensure no undefined values
                                         onChange={(e) => setHitPoints({ ...hitPoints, [field]: parseInt(e.target.value) || 0 })}
@@ -215,7 +269,7 @@ const CharacterEditPage: React.FC = () => {
                     <label className="block font-semibold col-span-2" key={field}>
                         {field}:
                         <textarea
-                            className="w-full mt-1 p-2 border border-gray-400 rounded bg-gray-800 text-gray-300 resize-none"
+                            className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c] resize-none"
                             value={field === 'Allies' ? allies : field === 'Enemies' ? enemies : other}
                             onChange={(e) => (field === 'Allies' ? setAllies(e.target.value) : field === 'Enemies' ? setEnemies(e.target.value) : setOther(e.target.value))}
                         />
@@ -225,7 +279,7 @@ const CharacterEditPage: React.FC = () => {
 
             <div className="flex justify-center mt-6">
                 <button
-                    className="p-3 rounded-md bg-blue-600 text-gray-300 hover:bg-blue-700 transition duration-200"
+                    className="p-4 rounded-md bg-blue-600 text-gray-300 hover:bg-blue-700 transition duration-200"
                     onClick={handleSubmit}
                 >
                     Save

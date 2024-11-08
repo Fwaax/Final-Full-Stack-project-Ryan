@@ -100,8 +100,6 @@ export const newCharacterValidationJoi = Joi.object({
     enemies: Joi.string().allow('').optional(),
     backstory: Joi.string().allow('').required(),
     other: Joi.string().allow('').optional(),
-
-    // Core attributes validation
     STR: Joi.number().integer().min(0).required(),
     DEX: Joi.number().integer().min(0).required(),
     CON: Joi.number().integer().min(0).required(),
@@ -113,8 +111,8 @@ export const newCharacterValidationJoi = Joi.object({
     thirdSelectedSkillHuman: Joi.string().valid(...skillKeys).required(),
     inventory: Joi.array().items(Joi.string()).optional(),
     spells: Joi.array().items(Joi.string()).optional(),
-    firstSelectedCantrip: Joi.string().optional(),
-    secondSelectedCantrip: Joi.string().optional(),
+    firstSelectedCantrip: Joi.string().allow('').optional(),
+    secondSelectedCantrip: Joi.string().allow('').optional(),
 }).unknown(false); // Disallow unknown fields
 
 export const editCharacterValidationJoi = Joi.object({
