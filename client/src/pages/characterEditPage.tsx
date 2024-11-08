@@ -44,7 +44,7 @@ const CharacterEditPage: React.FC = () => {
     const getOptionsForField = (field: keyof typeof appearance) => {
         switch (field) {
             case 'gender':
-                return ['Male', 'Female', 'Non-binary', 'Other'];
+                return ['Male', 'Female'];
             case 'alignment':
                 return ['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'True Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'];
             case 'faith':
@@ -122,7 +122,7 @@ const CharacterEditPage: React.FC = () => {
         };
         try {
             console.log(`updatedCharacterData`, updatedCharacterData);
-            await axios.put(`http://localhost:6969/char/characters-edit/${characterId}`, updatedCharacterData);
+            await axios.put(`${BACKEND_URL}/char/edit-character/${characterId}`, updatedCharacterData);
             alert('Character updated successfully!');
         } catch (error) {
             console.error("Error updating character:", error);
@@ -134,7 +134,6 @@ const CharacterEditPage: React.FC = () => {
     return (
         <div className="edit-character-page p-6 text-gray-300 flex flex-col items-center max-w-3xl mx-auto">
             <h1 className="text-2xl font-bold mb-6">Edit Character</h1>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                 {/* Name */}
                 <label className="block font-semibold">
@@ -145,7 +144,6 @@ const CharacterEditPage: React.FC = () => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </label>
-
                 {/* Class */}
                 <label className="block font-semibold">
                     Class:
@@ -170,7 +168,6 @@ const CharacterEditPage: React.FC = () => {
                         <option value="Wizard">Wizard</option>
                     </select>
                 </label>
-
                 {/* Race */}
                 <label className="block font-semibold">
                     Race:
@@ -190,7 +187,6 @@ const CharacterEditPage: React.FC = () => {
                         <option value="Orc">Orc</option>
                     </select>
                 </label>
-
                 {/* Level */}
                 <label className="block font-semibold">
                     Level:
@@ -201,7 +197,6 @@ const CharacterEditPage: React.FC = () => {
                         onChange={(e) => setLevel(parseInt(e.target.value))}
                     />
                 </label>
-
                 {/* Appearance Section */}
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Appearance</h2>
@@ -239,11 +234,9 @@ const CharacterEditPage: React.FC = () => {
                         )}
                     </div>
                 </div>
-
                 {/* Hit Points Section */}
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Hit Points</h2>
-
                     {/* Render Hit Points fields only if data is available */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {hitPoints ? (
@@ -263,7 +256,6 @@ const CharacterEditPage: React.FC = () => {
                         )}
                     </div>
                 </div>
-
                 {/* Allies, Enemies, Other */}
                 {['Allies', 'Enemies', 'Other'].map((field) => (
                     <label className="block font-semibold col-span-2" key={field}>
@@ -276,7 +268,6 @@ const CharacterEditPage: React.FC = () => {
                     </label>
                 ))}
             </div>
-
             <div className="flex justify-center mt-6">
                 <button
                     className="p-4 rounded-md bg-blue-600 text-gray-300 hover:bg-blue-700 transition duration-200"
@@ -287,11 +278,5 @@ const CharacterEditPage: React.FC = () => {
             </div>
         </div>
     );
-
 };
-
 export default CharacterEditPage;
-
-function setError(arg0: string) {
-    throw new Error('Function not implemented.');
-}

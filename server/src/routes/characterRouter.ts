@@ -98,25 +98,21 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
     try {
         const sentCharacterId = req.params.id;
         const requesterId = req.jwtDecodedUser.id;
-
         // Validate the request body with Joi
         const validationResult = editCharacterValidationJoi.validate(req.body, { allowUnknown: true });
         if (validationResult.error) {
             console.log("Validation error:", validationResult.error);
             return res.status(400).send({ message: validationResult.error.message });
         }
-
         // Check if the character exists
         const oldCharacterState = await CharacterModel.findById(sentCharacterId);
         if (!oldCharacterState) {
             return res.status(404).send({ message: "Trying to edit a non-existent character." });
         }
-
         // Verify the requester is the owner of the character
         if (oldCharacterState.userId.toString() !== requesterId) {
             return res.status(403).send({ message: "You are not authorized to edit this character." });
         }
-
         // Create the updated character data object
         const updatedChar: ICharacterInDB = {
             ...req.body,
@@ -127,7 +123,6 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
             // Use Date object
         };
 
-        // Update the character in the database
         const result = await CharacterModel.findByIdAndUpdate(sentCharacterId, updatedChar, { new: true });
         if (!result) {
             return res.status(404).send({ message: "Failed to update character." });
