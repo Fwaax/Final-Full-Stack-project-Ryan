@@ -5,7 +5,7 @@ import {
     hitPointsAtom, alliesAtom, enemiesAtom, otherAtom, coreAttributesAtom
 } from '../atoms';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BACKEND_URL } from '../const';
 import { toast } from 'react-toastify';
 import { ICharacterCurrentStateApiResponse } from '../Interfaces/apiRespose';
@@ -18,6 +18,7 @@ const CharacterEditPage: React.FC = () => {
     const [isFetched, setIsFetched] = useState(false);
     const { characterId } = useParams<{ characterId: string }>();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     // Setters for atoms
     const setName = useSetAtom(nameAtom);
@@ -108,6 +109,28 @@ const CharacterEditPage: React.FC = () => {
 
 
     // Function to handle saving character data
+    // const handleSubmit = async () => {
+    //     const updatedCharacterData = {
+    //         name,
+    //         class: characterClass,
+    //         race,
+    //         level,
+    //         appearance,
+    //         hitPoints,
+    //         allies,
+    //         enemies,
+    //         other,
+    //     };
+    //     try {
+    //         console.log(`updatedCharacterData`, updatedCharacterData);
+    //         await axios.put(`${BACKEND_URL}/char/edit-character/${characterId}`, updatedCharacterData);
+    //         alert('Character updated successfully!');
+    //     } catch (error) {
+    //         console.error("Error updating character:", error);
+    //         alert("Failed to update character.");
+    //     }
+    // };
+
     const handleSubmit = async () => {
         const updatedCharacterData = {
             name,
@@ -120,15 +143,30 @@ const CharacterEditPage: React.FC = () => {
             enemies,
             other,
         };
+
         try {
-            console.log(`updatedCharacterData`, updatedCharacterData);
-            await axios.put(`${BACKEND_URL}/char/edit-character/${characterId}`, updatedCharacterData);
+            const token = localStorage.getItem('token'); // Retrieve token from localStorage
+            if (!token) {
+                alert('User is not authenticated.');
+                return;
+            }
+
+            console.log('updatedCharacterData', updatedCharacterData);
+
+            await axios.put(`${BACKEND_URL}/char/edit-character/${characterId}`, updatedCharacterData, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                },
+            });
+
             alert('Character updated successfully!');
+            navigate(`/character-sheet/${characterId}`); // Navigate to the character-sheet page
         } catch (error) {
-            console.error("Error updating character:", error);
-            alert("Failed to update character.");
+            console.error('Error updating character:', error);
+            alert('Failed to update character.');
         }
     };
+
 
 
     return (

@@ -119,6 +119,7 @@ export const editCharacterValidationJoi = Joi.object({
     name: Joi.string().min(1).optional(),
     race: Joi.string().min(1).optional(),
     class: Joi.string().min(1).optional(),
+    level: Joi.number().integer().min(1).optional(),
     background: Joi.string().allow('').optional(),
     characteristics: Joi.string().allow('').optional(),
     personalityTraits: Joi.string().allow('').optional(),

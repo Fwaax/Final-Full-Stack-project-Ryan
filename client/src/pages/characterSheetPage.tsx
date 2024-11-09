@@ -144,7 +144,7 @@ const CharacterSheetPage = () => {
             createdAt: "", // Populate as needed
             updatedAt: "", // Populate as needed
             _id: "", // Populate as needed
-            proficiencyBonus: 0,
+            proficiencyBonus: 2,
             proficiencies,
             characteristics: "",
             personalityTraits: "",
