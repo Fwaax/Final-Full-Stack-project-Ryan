@@ -123,6 +123,51 @@ const CharacterSheetPage = () => {
         fetchCharacter();
     }, [characterIdFromUrl, token]);
 
+    // const saveCharacter = async () => {
+    //     const charStateToSendToBE: ICharacterCurrentStateApiResponse = {
+    //         appearance,
+    //         name,
+    //         class: characterClass,
+    //         race,
+    //         level,
+    //         background,
+    //         coreAttributes,
+    //         skills,
+    //         hitPoints,
+    //         allies,
+    //         enemies,
+    //         backstory,
+    //         spells,
+    //         other,
+    //         inventory,
+    //         userId: "",
+    //         createdAt: "",
+    //         updatedAt: "",
+    //         _id: "",
+    //         proficiencyBonus: 2,
+    //         proficiencies,
+    //         characteristics: "",
+    //         personalityTraits: "",
+    //         organizations: "",
+    //         __v: 0,
+    //     };
+
+    //     const { userId, createdAt, updatedAt, _id, __v, ...payload } = charStateToSendToBE;
+    //     if (!isFetched) {
+    //         console.log("Character not fetched yet", `Current Character State: ${JSON.stringify(payload)}`);
+    //         return;
+    //     }
+
+    //     try {
+    //         await axios.put(`${BACKEND_URL}/char/edit-character/${characterIdFromUrl}`, payload, {
+    //             headers: { Authorization: token },
+    //         });
+    //         console.log("Character state saved!");
+    //     } catch (err) {
+    //         console.error("Failed to save character:", err);
+    //     }
+    // };
+
     const saveCharacter = async () => {
         const charStateToSendToBE: ICharacterCurrentStateApiResponse = {
             appearance,
@@ -140,10 +185,10 @@ const CharacterSheetPage = () => {
             spells,
             other,
             inventory,
-            userId: "", // Populate as needed
-            createdAt: "", // Populate as needed
-            updatedAt: "", // Populate as needed
-            _id: "", // Populate as needed
+            userId: "",
+            createdAt: "",
+            updatedAt: "",
+            _id: "",
             proficiencyBonus: 2,
             proficiencies,
             characteristics: "",
@@ -160,14 +205,22 @@ const CharacterSheetPage = () => {
         }
 
         try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.warn("User is not authenticated.");
+                return;
+            }
+
             await axios.put(`${BACKEND_URL}/char/edit-character/${characterIdFromUrl}`, payload, {
-                headers: { Authorization: token },
+                headers: { Authorization: `Bearer ${token}` },
             });
+
             console.log("Character state saved!");
         } catch (err) {
             console.error("Failed to save character:", err);
         }
     };
+
 
     // Auto-save every 5 seconds
     useEffect(() => {
@@ -188,7 +241,7 @@ const CharacterSheetPage = () => {
                 <TopPanel characterId={characterIdFromUrl} />
                 <StatsPanel />
                 <BottomPanel />
-                <D20 className="fixed bottom-6 left-2" onClick={handleDiceClick} />
+                <D20 className="fixed bottom-6 left-2 cursor-pointer" onClick={handleDiceClick} />
             </div>
         </div>
     ) : (

@@ -66,7 +66,6 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         // Return a 500 error with a message
         console.log(`error`, error);
         res.status(500).send({ message: "Error creating character.", error });
-
     }
 });
 
@@ -102,7 +101,7 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
         const validationResult = editCharacterValidationJoi.validate(req.body, { allowUnknown: true });
         if (validationResult.error) {
             console.log("Validation error:", validationResult.error);
-            return res.status(400).send({ message: validationResult.error.message });
+            return res.status(400).send({ message: `Validation error: ${validationResult.error.message}` });
         }
         // Check if the character exists
         const oldCharacterState = await CharacterModel.findById(sentCharacterId);

@@ -133,7 +133,63 @@ export const editCharacterValidationJoi = Joi.object({
     skills: skillsSchema.optional(),
     proficiencyBonus: Joi.number().integer().min(1).optional(),
     hitPoints: hitPointsSchema.optional(),
-    inventory: Joi.array().items(Joi.string()).optional(),
-    spells: Joi.array().items(Joi.string()).optional(),
-}).unknown(false); // Strict validation, disallow unknown fields
+
+    // Inventory should be an array of valid Item objects
+    inventory: Joi.array().items(
+        Joi.object({
+            name: Joi.string().min(1).required(),
+            quantity: Joi.number().integer().min(1).required(),
+            weight: Joi.number().required(),
+            description: Joi.string().allow('').optional(),
+            cost: Joi.string().optional(),
+            isActivatable: Joi.boolean().required(),
+            numberOfCharges: Joi.number().integer().optional(),
+            dmgDice: Joi.string().optional(),
+            armorClass: Joi.number().optional(),
+            attackBonus: Joi.number().optional(),
+            armorBonus: Joi.number().optional(),
+            range: Joi.string().optional(),
+        })
+    ).optional(),
+
+    // Spells should be an array of valid spell objects
+    spells: Joi.array().items(
+        Joi.object({
+            name: Joi.string().min(1).required(),
+            damageRoll: Joi.string().optional(),
+            damageType: Joi.string().optional(),
+            savingThrow: Joi.string().optional(),
+            hitRoll: Joi.string().optional(),
+            shape: Joi.string().optional(),
+            size: Joi.string().optional(),
+            damageInstances: Joi.number().integer().optional(),
+            spellSlot: Joi.number().integer().optional(),
+            description: Joi.string().required(),
+            range: Joi.string().optional(),
+            duration: Joi.string().optional(),
+            effect: Joi.string().optional(),
+            action: Joi.string().optional(),
+            classAvailability: Joi.string().min(1).required(),
+            school: Joi.string().min(1).required(),
+            castingTime: Joi.string().optional(),
+            concentration: Joi.boolean().optional(),
+            ritual: Joi.boolean().optional(),
+            verbalComponents: Joi.boolean().optional(),
+            somaticComponents: Joi.boolean().optional(),
+            materialComponents: Joi.boolean().optional(),
+            higherLevelScaling: Joi.boolean().optional(),
+        })
+    ).optional(),
+
+    // Proficiencies should be an array of valid Profs objects
+    proficiencies: Joi.array().items(
+        Joi.object({
+            armor: Joi.string().required(),
+            weapons: Joi.string().required(),
+            tools: Joi.string().required(),
+            savingThrows: Joi.string().required(),
+        })
+    ).optional(),
+
+}).unknown(false);
 
