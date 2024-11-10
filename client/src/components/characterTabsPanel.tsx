@@ -14,7 +14,9 @@ function SpellsTab() {
     const [spells] = useAtom(spellsAtom); // assuming spells is an object
     return (
         <div>
-            <h2>Spells</h2>
+            <div className="border-b-2 border-solid border-[#556b82]">
+                <strong className='text-[#556b82]'><h2>Spells</h2></strong>
+            </div>
             <ul>
                 {Object.entries(spells).map(([key, item]) => (
                     <li key={key}>

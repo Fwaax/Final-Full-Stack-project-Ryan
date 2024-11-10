@@ -2,11 +2,11 @@ import React from 'react'
 import CharacterTabsPanel from './characterTabsPanel'
 import { Skill } from '../Interfaces/apiRespose';
 import { useAtom } from 'jotai';
-import { coreAttributesAtom, proficienciesAtom, skillsAtom } from '../atoms';
+import { coreAttributesAtom, inventoryAtom, proficienciesAtom, skillsAtom } from '../atoms';
 
 const BottomPanel = () => {
     return (
-        <div className='flex flex-row w-full h-[800px] gap-x-4 '>
+        <div className='flex flex-col xl:flex-row w-full h-[800px] xl:gap-x-4 gap-y-4'>
             <LeftSection />
 
             <MiddleSection />
@@ -169,10 +169,38 @@ function MiddleSection() {
 
 
 function RightSection() {
-    const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
+    const [inventory] = useAtom(inventoryAtom);
+    const [coreAttributes] = useAtom(coreAttributesAtom);
 
     const calcInitiative = Math.floor(0 + ((coreAttributes['DEX'] - 10) / 2));
     const displayInitiative = calcInitiative >= 0 ? `+${calcInitiative}` : `${calcInitiative}`;
+
+    // Base AC with no armor
+    let calcACNoArmor = Math.floor(10 + ((coreAttributes['DEX'] - 10) / 2));
+    if (calcACNoArmor < 10) {
+        calcACNoArmor = 10;
+    }
+
+    // Initialize totalAC with calcACNoArmor as the base AC
+    let totalAC = calcACNoArmor;
+
+    // Track if armor and/or shield were found
+    let armorClass = 0;
+    let shieldBonus = 0;
+
+    // Check inventory for items with armorClass or armorBonus
+    inventory.forEach(item => {
+        if (item.armorClass && item.armorClass > armorClass) {
+            armorClass = item.armorClass;  // Armor AC replaces the base AC
+        }
+        if (item.armorBonus) {
+            shieldBonus += item.armorBonus;  // Shield bonus adds to current total
+        }
+    });
+
+    // Set totalAC based on whether armor was found
+    totalAC = armorClass > 0 ? armorClass + shieldBonus : calcACNoArmor + shieldBonus;
+
     return (
         <div className='bg-[#1d1e2a] h-[800px] w-full flex-[4_4_0%] p-4 rounded-lg border-4 border-[#14151f] border-solid'>
             <div className='flex flex-row gap-x-4 text-center justify-around border border-[#bfbfba] border-solid h-[110px] text-[#bfbfba] bg-[#14151f]' id='initAcResistances'>
@@ -183,39 +211,19 @@ function RightSection() {
                     </div>
                     <div>
                         <h6>ARMOR CLASS</h6>
-                        <p>PH</p>
-                    </div>
-                </div>
-                <div className='flex flex-row items-start py-2 gap-x-10'>
-                    <div className='flex flex-col justify-center '>
-                        <h6>DEFENSES</h6>
-                        <div className='flex flex-row gap-x-4'>
-                            <p>Immunity to this</p>
-                        </div>
-                    </div>
-                    <div className='flex flex-col justify-center'>
-                        <h6>CONDITIONS</h6>
-                        <div>
-                            <p>Exhauntion</p>
-                        </div>
+                        <p>{totalAC}</p>
                     </div>
                 </div>
             </div>
 
-            {/* ------------------------ Actions and inventory  --------------------------
-             */}
-
+            {/* ------------------------ Actions and inventory -------------------------- */}
             <div className='flex flex-col gap-y-4'>
                 <CharacterTabsPanel />
-
-                <div>
-
-                </div>
             </div>
-
-
         </div>
-    )
+    );
 }
+
+
 
 export default BottomPanel
