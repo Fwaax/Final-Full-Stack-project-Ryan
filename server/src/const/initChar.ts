@@ -124,26 +124,48 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
             newCharacterWeAreStoringToDB.skills.religion.proficiency = true
             break;
         case "charlatan":
+            newCharacterWeAreStoringToDB.skills.deception.proficiency = true
+            newCharacterWeAreStoringToDB.skills.sleightOfHand.proficiency = true
             break;
         case "criminal":
+            newCharacterWeAreStoringToDB.skills.deception.proficiency = true
+            newCharacterWeAreStoringToDB.skills.stealth.proficiency = true
             break;
         case "entertainer":
+            newCharacterWeAreStoringToDB.skills.acrobatics.proficiency = true
+            newCharacterWeAreStoringToDB.skills.performance.proficiency = true
             break;
         case "guild artisan":
+            newCharacterWeAreStoringToDB.skills.insight.proficiency = true
+            newCharacterWeAreStoringToDB.skills.persuasion.proficiency = true
             break;
-        case "hermit":    // <----- 2
+        case "hermit":
+            newCharacterWeAreStoringToDB.skills.medicine.proficiency = true
+            newCharacterWeAreStoringToDB.skills.religion.proficiency = true
             break;
         case "noble":
+            newCharacterWeAreStoringToDB.skills.history.proficiency = true
+            newCharacterWeAreStoringToDB.skills.persuasion.proficiency = true
             break;
         case "outlander":
+            newCharacterWeAreStoringToDB.skills.survival.proficiency = true
+            newCharacterWeAreStoringToDB.skills.athletics.proficiency = true
             break;
         case "sage":
+            newCharacterWeAreStoringToDB.skills.arcana.proficiency = true
+            newCharacterWeAreStoringToDB.skills.history.proficiency = true
             break;
         case "sailor":
+            newCharacterWeAreStoringToDB.skills.athletics.proficiency = true
+            newCharacterWeAreStoringToDB.skills.perception.proficiency = true
             break;
         case "soldier":
+            newCharacterWeAreStoringToDB.skills.athletics.proficiency = true
+            newCharacterWeAreStoringToDB.skills.intimidation.proficiency = true
             break;
         case "urchin":
+            newCharacterWeAreStoringToDB.skills.sleightOfHand.proficiency = true
+            newCharacterWeAreStoringToDB.skills.stealth.proficiency = true
             break;
     }
 

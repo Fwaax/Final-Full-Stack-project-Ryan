@@ -123,51 +123,6 @@ const CharacterSheetPage = () => {
         fetchCharacter();
     }, [characterIdFromUrl, token]);
 
-    // const saveCharacter = async () => {
-    //     const charStateToSendToBE: ICharacterCurrentStateApiResponse = {
-    //         appearance,
-    //         name,
-    //         class: characterClass,
-    //         race,
-    //         level,
-    //         background,
-    //         coreAttributes,
-    //         skills,
-    //         hitPoints,
-    //         allies,
-    //         enemies,
-    //         backstory,
-    //         spells,
-    //         other,
-    //         inventory,
-    //         userId: "",
-    //         createdAt: "",
-    //         updatedAt: "",
-    //         _id: "",
-    //         proficiencyBonus: 2,
-    //         proficiencies,
-    //         characteristics: "",
-    //         personalityTraits: "",
-    //         organizations: "",
-    //         __v: 0,
-    //     };
-
-    //     const { userId, createdAt, updatedAt, _id, __v, ...payload } = charStateToSendToBE;
-    //     if (!isFetched) {
-    //         console.log("Character not fetched yet", `Current Character State: ${JSON.stringify(payload)}`);
-    //         return;
-    //     }
-
-    //     try {
-    //         await axios.put(`${BACKEND_URL}/char/edit-character/${characterIdFromUrl}`, payload, {
-    //             headers: { Authorization: token },
-    //         });
-    //         console.log("Character state saved!");
-    //     } catch (err) {
-    //         console.error("Failed to save character:", err);
-    //     }
-    // };
-
     const saveCharacter = async () => {
         const charStateToSendToBE: ICharacterCurrentStateApiResponse = {
             appearance,

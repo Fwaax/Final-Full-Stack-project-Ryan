@@ -164,7 +164,7 @@ export const editCharacterValidationJoi = Joi.object({
             size: Joi.string().optional(),
             damageInstances: Joi.number().integer().optional(),
             spellSlot: Joi.number().integer().optional(),
-            description: Joi.string().required(),
+            description: Joi.string().optional(),
             range: Joi.string().optional(),
             duration: Joi.string().optional(),
             effect: Joi.string().optional(),
