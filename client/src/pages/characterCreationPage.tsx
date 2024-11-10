@@ -11,10 +11,12 @@ import { SkillKey } from '../Interfaces/apiRespose';
 import { spellsAtom } from '../atoms';
 import CharacterCreationTop from '../components/characterCreationTop';
 import CharacterCreationApperance from '../components/chracterCreationApperance';
+import CharacterCreationOthers from '../components/characterCreationOthers';
+import CharacterCreationSkillsNCantrips from '../components/characterCreationSkillsNCantrips';
 
 
 const CharacterCreationPage: React.FC = () => {
-    const classesWithCantrips = ["Cleric", "Druid", "Sorcerer", "Warlock", "Wizard", "Bard"];
+
     const [character, setCharacter] = useState<INewCharacterToSendToBackend>({
         name: '',
         race: '',
@@ -55,7 +57,6 @@ const CharacterCreationPage: React.FC = () => {
         firstSelectedCantrip: '',
         secondSelectedCantrip: '',
     });
-    const isHuman = character.race === 'Human';
 
     const { token } = useJwtToken();
     const navigate = useNavigate();
@@ -122,93 +123,10 @@ const CharacterCreationPage: React.FC = () => {
             secondSelectedCantrip: '',
         });
     };
-
-
-
     // Helper function for handling ability score changes
     const handleAbilityChange = (ability: AbilityScore, value: number) => {
         setCharacter({ ...character, [ability]: value });
     };
-
-    const classSkills: { [key: string]: SkillKey[] } = {
-        "Barbarian": ["animalHandling", "athletics", "intimidation", "nature", "perception", "survival"],
-        "Cleric": ["history", "insight", "medicine", "persuasion", "religion"],
-        "Druid": ["arcana", "animalHandling", "insight", "medicine", "nature", "perception", "religion", "survival"],
-        "Fighter": ["acrobatics", "animalHandling", "athletics", "history", "insight", "intimidation", "perception", "survival"],
-        "Monk": ["acrobatics", "athletics", "history", "insight", "religion", "stealth"],
-        "Paladin": ["athletics", "insight", "intimidation", "medicine", "persuasion", "religion"],
-        "Ranger": ["animalHandling", "athletics", "insight", "investigation", "nature", "perception", "stealth", "survival"],
-        "Rogue": ["acrobatics", "athletics", "deception", "insight", "intimidation", "investigation", "perception", "persuasion", "performance", "sleightOfHand", "stealth"],
-        "Sorcerer": ["arcana", "deception", "insight", "intimidation", "persuasion", "religion"],
-        "Warlock": ["arcana", "deception", "history", "intimidation", "investigation", "nature", "religion"],
-        "Wizard": ["arcana", "history", "insight", "investigation", "medicine", "religion"],
-        "Bard": ["acrobatics", "animalHandling", "athletics", "deception", "insight", "intimidation", "performance", "persuasion", "sleightOfHand"],
-    }
-
-    const handleSkillSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setCharacter(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handleClassChange = (selectedClass: string) => {
-        setCharacter(prev => ({
-            ...prev,
-            class: selectedClass,
-            firstSelectedSkill: classSkills[selectedClass]?.[0] || '',
-            secondSelectedSkill: classSkills[selectedClass]?.[1] || '',
-            thirdSelectedSkillHuman: classSkills[selectedClass]?.[2] || '',
-        }));
-    };
-
-    useEffect(() => {
-        if (character.class) {
-            setCharacter(prev => ({
-                ...prev,
-                firstSelectedSkill: classSkills[character.class]?.[0] || '',
-                secondSelectedSkill: classSkills[character.class]?.[1] || '',
-                thirdSelectedSkillHuman: classSkills[character.class]?.[2] || '',
-            }));
-        }
-    }, [character.class]);
-
-    const classCantrips: { [key: string]: string[] } = {
-        "Barbarian": [],
-        "Cleric": ["Thaumaturgy", "Sacred Flame", "Guidance", "Resistance", "Blade Ward", "Produce Flame"],
-        "Druid": ["Guidance", "Poison Spray", "Produce Flame", "Resistance", "Shillelagh", "Thorn Whip"],
-        "Fighter": [],
-        "Monk": [],
-        "Paladin": [],
-        "Ranger": [],
-        "Rogue": [],
-        "Sorcerer": ["Acid Splash", "Chill Touch", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
-        "Warlock": ["Eldritch Blast", "Blade Ward", "Booming Blade", "Chill Touch", "Create Bonfire", "Friends", "Frostbite", "Mage Hand", "Poison Spray", "True Strike"],
-        "Wizard": ["Acid Splash", "Chill Touch", "Firebolt", "Poison Spray", "Ray of Frost", "Shocking Grasp", "Blade Ward", "Friends", "Dancing Lights", "Light", "Mage Hand", "Minor Illusion", "True Strike"],
-        "Bard": ["Vicious mockery", "Blade Ward", "Mage Hand", "True Strike", "Friends", "Dancing Lights", "Light", "Minor Illusion"],
-    };
-
-    const handleCantripSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setCharacter(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    };
-
-    // Auto-select initial cantrips based on class
-    useEffect(() => {
-        if (character.class) {
-            setCharacter(prev => ({
-                ...prev,
-                firstSelectedCantrip: classCantrips[character.class]?.[0] || '',
-                secondSelectedCantrip: classCantrips[character.class]?.[1] || '',
-            }));
-        }
-    }, [character.class]);
-
-
 
     return (
         <div className="container mx-auto p-4 bg-[#1d1e2a]">
@@ -218,147 +136,10 @@ const CharacterCreationPage: React.FC = () => {
 
             <CharacterCreationApperance character={character} setCharacter={setCharacter} />
 
-            <div className=' w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="personality_traits" className='font-semibold'>Personality Traits</label>
-                    <input className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md font-semibold" value={character.personalityTraits}
-                        onChange={(e) => setCharacter({ ...character, personalityTraits: e.target.value })} placeholder="Personality Traits" type="text" name='personality_traits' />
-                </div>
-            </div>
-            <div className='w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="characteristics" className='font-semibold'>Characteristics</label>
-                    <input className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md font-semibold" value={character.characteristics}
-                        onChange={(e) => setCharacter({ ...character, characteristics: e.target.value })} placeholder="Characteristics" type="text" name='characteristics' />
-                </div>
-            </div>
+            <CharacterCreationOthers character={character} setCharacter={setCharacter} />
 
-            <div className='w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="backstory" className='font-semibold'>Backstory</label>
-                    <textarea name="backstory" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.backstory}
-                        onChange={(e) => setCharacter({ ...character, backstory: e.target.value })} placeholder="Backstory" />
-                </div>
-            </div>
+            <CharacterCreationSkillsNCantrips character={character} setCharacter={setCharacter} />
 
-            <div className='w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="allies" className='font-semibold'>Allies</label>
-                    <textarea name="allies" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.allies}
-                        onChange={(e) => setCharacter({ ...character, allies: e.target.value })} placeholder="Allies" />
-                </div>
-            </div>
-
-            <div className='w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="enemies" className='font-semibold'>Enemies</label>
-                    <textarea name="enemies" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.enemies}
-                        onChange={(e) => setCharacter({ ...character, enemies: e.target.value })} placeholder="Enemies" />
-                </div>
-            </div>
-
-            <div className='w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="organizations" className='font-semibold'>Organizations</label>
-                    <textarea name="organizations" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.organizations}
-                        onChange={(e) => setCharacter({ ...character, organizations: e.target.value })} placeholder="Organizations" />
-                </div>
-            </div>
-
-            <div className='w-3/5 mx-auto'>
-                <div className='flex flex-col'>
-                    <label htmlFor="other" className='font-semibold'>Other</label>
-                    <textarea name="other" className="mt-1 flex p-2 border border-[#bfbfba] bg-[#2a2b3c] rounded-md " value={character.other}
-                        onChange={(e) => setCharacter({ ...character, other: e.target.value })} placeholder="Other" />
-                </div>
-            </div>
-
-
-            <div>
-                {/* picking 2 skills for the class */}
-                <h6>Choose 2 skills for your {character.class}</h6>
-                <div>
-                    <label htmlFor="firstSelectedSkill" className="font-semibold">Skill 1</label>
-                    <select
-                        name="firstSelectedSkill"
-                        id="firstSelectedSkill"
-                        onChange={handleSkillSelect}
-                        value={character.firstSelectedSkill}
-                        className="bg-[#2a2b3c]"
-                    >
-                        {character.class && classSkills[character.class].map(skill => (
-                            skill !== character.secondSelectedSkill ? (
-                                <option className="text-green-500" key={skill} value={skill}>{skill}</option>) : null))}
-                    </select>
-                </div>
-
-                <div>
-                    <label htmlFor="secondSelectedSkill" className="font-semibold">Skill 2</label>
-                    <select
-                        name="secondSelectedSkill"
-                        id="secondSelectedSkill"
-                        onChange={handleSkillSelect}
-                        value={character.secondSelectedSkill}
-                        className="bg-[#2a2b3c]"
-                    >
-                        {character.class && classSkills[character.class].map(skill => (
-                            skill !== character.firstSelectedSkill ? (
-                                <option className="text-red-500" key={skill} value={skill}>{skill}</option>) : null))}
-                    </select>
-                </div>
-                {isHuman && (<div>
-                    <label htmlFor="thirdSelectedSkillHuman" className="font-semibold">Skill Human</label>
-                    <select
-                        name="thirdSelectedSkillHuman"
-                        id="thirdSelectedSkillHuman"
-                        onChange={handleSkillSelect}
-                        value={character.thirdSelectedSkillHuman}
-                        className="bg-[#2a2b3c]"
-                    >
-                        {character.class && classSkills[character.class].map(skill => (
-                            skill !== character.firstSelectedSkill && skill !== character.secondSelectedSkill ? (
-                                <option className="text-red-500" key={skill} value={skill}>{skill}</option>) : null))}
-                    </select>
-                </div>)
-                }
-            </div>
-
-            {classesWithCantrips.includes(character.class) && (
-                <div>
-                    {/* Picking 2 cantrips for the class */}
-                    <h6>Choose 2 cantrips for your {character.class}</h6>
-                    <div>
-                        <label htmlFor="firstSelectedCantrip" className="font-semibold">Cantrip 1</label>
-                        <select
-                            name="firstSelectedCantrip"
-                            id="firstSelectedCantrip"
-                            onChange={handleCantripSelect}
-                            value={character.firstSelectedCantrip}
-                            className="bg-[#2a2b3c]"
-                        >
-                            {character.class && classCantrips[character.class].map(cantrip => (
-                                cantrip !== character.secondSelectedCantrip ? (
-                                    <option className="text-green-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label htmlFor="secondSelectedCantrip" className="font-semibold">Cantrip 2</label>
-                        <select
-                            name="secondSelectedCantrip"
-                            id="secondSelectedCantrip"
-                            onChange={handleCantripSelect}
-                            value={character.secondSelectedCantrip}
-                            className="bg-[#2a2b3c]"
-                        >
-                            {character.class && classCantrips[character.class].map(cantrip => (
-                                cantrip !== character.firstSelectedCantrip ? (
-                                    <option className="text-red-500" key={cantrip} value={cantrip}>{cantrip}</option>) : null))}
-                        </select>
-                    </div>
-                </div>
-            )
-            }
 
             <h2 className="text-2xl font-semibold mt-6">Ability Scores</h2>
             <div className="m-8">
