@@ -1,8 +1,8 @@
 import React from 'react'
 import CharacterTabsPanel from './characterTabsPanel'
 import { Skill } from '../Interfaces/apiRespose';
-import { useAtom } from 'jotai';
-import { coreAttributesAtom, inventoryAtom, proficienciesAtom, skillsAtom } from '../atoms';
+import { useAtom, useAtomValue } from 'jotai';
+import { coreAttributesAtom, inventoryAtom, levelAtom, proficienciesAtom, skillsAtom } from '../atoms';
 
 const BottomPanel = () => {
     return (
@@ -135,8 +135,10 @@ function formatSkillName(skillKey: string) {
 }
 
 function MiddleSection() {
-    const [skill, setSkill] = useAtom(skillsAtom);
-
+    const skill = useAtomValue(skillsAtom);
+    const level = useAtomValue(levelAtom);
+    const coreAttributes = useAtomValue(coreAttributesAtom);
+    const calcProficiency = Math.ceil((level / 4) + 1);
     return (
         <div className="bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col border-4 border-[#14151f] border-solid">
             {/* Header Table */}
@@ -150,17 +152,25 @@ function MiddleSection() {
 
                 {/* Content Table */}
                 <div className="flex flex-col gap-y-3">
-                    {Object.entries(skill).map(([skillKey, skillObj], index) => (
-                        <div
-                            className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center items-center text-[#bfbfba]"
-                            key={index}
-                        >
-                            <div>{skillObj.proficiency ? '✅' : '❌'}</div>
-                            <div>{formatSkillName(skillKey)}</div>
-                            <div>{skillObj.modifier}</div>
-                            <div>{/*Logic Later*/}</div>
-                        </div>
-                    ))}
+                    {Object.entries(skill).map(([skillKey, skillObj], index) => {
+                        const modifierValueOfCurrentSkill = coreAttributes[skillObj.modifier];
+                        const base = Math.floor((modifierValueOfCurrentSkill - 10) / 2);
+                        let bonus = base;
+                        if (skillObj.proficiency) {
+                            bonus += calcProficiency;
+                        }
+                        return (
+                            <div
+                                className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center items-center text-[#bfbfba]"
+                                key={index}
+                            >
+                                <div>{skillObj.proficiency ? '✅' : '❌'}</div>
+                                <div>{formatSkillName(skillKey)}</div>
+                                <div>{skillObj.modifier}</div>
+                                <div>{bonus}</div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

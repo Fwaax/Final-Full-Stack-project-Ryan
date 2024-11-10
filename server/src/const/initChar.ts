@@ -116,6 +116,37 @@ export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFr
 
     } // End of character object
 
+    // The Set proficiencies based on background
+    const background = charInitalParamsFromFrontend.background
+    switch (background.toLowerCase()) {
+        case "acolyte":
+            newCharacterWeAreStoringToDB.skills.insight.proficiency = true
+            newCharacterWeAreStoringToDB.skills.religion.proficiency = true
+            break;
+        case "charlatan":
+            break;
+        case "criminal":
+            break;
+        case "entertainer":
+            break;
+        case "guild artisan":
+            break;
+        case "hermit":    // <----- 2
+            break;
+        case "noble":
+            break;
+        case "outlander":
+            break;
+        case "sage":
+            break;
+        case "sailor":
+            break;
+        case "soldier":
+            break;
+        case "urchin":
+            break;
+    }
+
     return newCharacterWeAreStoringToDB
 }
 
