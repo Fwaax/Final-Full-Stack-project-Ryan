@@ -7,22 +7,16 @@ function Header() {
 
     const handleLogout = () => {
         clearData();
-        navigate("/login"); // Redirect to login page after logout
+        navigate("/login");
     };
 
     return (
         <header className="bg-[#14151f] text-[#bfbfba] p-4">
             <div className="container mx-auto flex justify-between items-center">
-                {/* Navigation links */}
                 <nav className="flex space-x-4">
-                    <Link to="/" className="hover:underline">Home</Link>
-                    <Link to="/debug" className="hover:underline">Debug</Link>
-                    <Link to="/character-sheet" className="hover:underline">Character Sheet</Link>
                     <Link to="/character-creation" className="hover:underline">Character Creation</Link>
                     <Link to="/character-selection" className="hover:underline">Character Selection</Link>
                 </nav>
-
-                {/* User info and login/logout buttons */}
                 <div className="flex items-center space-x-4">
                     {token && user ? (
                         <>

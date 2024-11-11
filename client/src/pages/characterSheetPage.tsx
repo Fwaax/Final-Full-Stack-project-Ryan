@@ -90,8 +90,6 @@ const CharacterSheetPage = () => {
                     { headers: { Authorization: token } }
                 );
                 const data = response.data.data as ICharacterCurrentStateApiResponse;
-                console.log(`Chracter fetched from backend`, data);
-
                 // Populate atoms with character data
                 setName(data.name);
                 setClass(data.class);
@@ -155,41 +153,30 @@ const CharacterSheetPage = () => {
         const { userId, createdAt, updatedAt, _id, __v, ...payload } = charStateToSendToBE;
 
         if (!isFetched) {
-            console.log("Character not fetched yet", `Current Character State: ${JSON.stringify(payload)}`);
             return;
         }
 
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                console.warn("User is not authenticated.");
                 return;
             }
-
             await axios.put(`${BACKEND_URL}/char/edit-character/${characterIdFromUrl}`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
-            console.log("Character state saved!");
         } catch (err) {
             console.error("Failed to save character:", err);
         }
     };
-
-
-    // Auto-save every 5 seconds
     useEffect(() => {
         const interval = setInterval(saveCharacter, 5000);
         return () => clearInterval(interval);
     }, [appearance, name, characterClass, race, level, background, coreAttributes, skills, hitPoints, allies, enemies, backstory, spells, other, inventory, userId, createdAt, updatedAt, proficiencies]);
-
     const handleDiceClick = () => {
-        const url = "/dice";  // Adjust path as needed
+        const url = "/dice";
         window.open(url, "_blank", "noopener,noreferrer");
     };
-
     if (error) return <div>Error: {error}</div>;
-
     return isFetched ? (
         <div className="w-full h-full bg-[#292929]">
             <div className="w-11/12 2xl:w-9/12 mx-auto flex flex-col gap-2">

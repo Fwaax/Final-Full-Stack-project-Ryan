@@ -1,7 +1,6 @@
 import express, { Request, Response, Router } from "express";
 
 import { UserModel } from "../schema/user";
-// import { CharacterCreationData } from "../interfaces";
 import { findUserByEmail } from "../logic";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
@@ -46,12 +45,10 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         const requesterId = req.jwtDecodedUser.id;
         const validationResult = newCharacterValidationJoi.validate(req.body, { allowUnknown: false });
         if (validationResult.error) {
-            console.log(`validationResult.error`);
             return res.status(400).send(validationResult.error.details[0].message);
         }
         const foundUser = await UserModel.findById(requesterId);
         if (!foundUser) {
-            console.log(`foundUser`);
             return res.status(404).send({ message: "User not found." });
         }
         const charFromFrontend: INewCharacterToSentFromFrontend = req.body;
@@ -64,14 +61,12 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
         res.status(201).send({ message: "Character created successfully.", data: savedCharacter });
     } catch (error) {
         // Return a 500 error with a message
-        console.log(`error`, error);
         res.status(500).send({ message: "Error creating character.", error });
     }
 });
 
 characterRouter.delete("/delete-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
-        console.log(`request the body`, req.body);
         const requesterId = req.jwtDecodedUser.id;
         if (!req.body.characterId) {
             return res.status(400).send({ message: "Character ID is required." });
@@ -97,29 +92,23 @@ characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequ
     try {
         const sentCharacterId = req.params.id;
         const requesterId = req.jwtDecodedUser.id;
-        // Validate the request body with Joi
         const validationResult = editCharacterValidationJoi.validate(req.body, { allowUnknown: true });
         if (validationResult.error) {
-            console.log("Validation error:", validationResult.error);
             return res.status(400).send({ message: `Validation error: ${validationResult.error.message}` });
         }
-        // Check if the character exists
         const oldCharacterState = await CharacterModel.findById(sentCharacterId);
         if (!oldCharacterState) {
             return res.status(404).send({ message: "Trying to edit a non-existent character." });
         }
-        // Verify the requester is the owner of the character
         if (oldCharacterState.userId.toString() !== requesterId) {
             return res.status(403).send({ message: "You are not authorized to edit this character." });
         }
-        // Create the updated character data object
         const updatedChar: ICharacterInDB = {
             ...req.body,
             updatedAt: new Date(),
             userId: oldCharacterState.userId,
             createdAt: oldCharacterState.createdAt,
             _id: oldCharacterState._id
-            // Use Date object
         };
 
         const result = await CharacterModel.findByIdAndUpdate(sentCharacterId, updatedChar, { new: true });

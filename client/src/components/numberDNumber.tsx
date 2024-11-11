@@ -8,8 +8,6 @@ function rollDieForDamage(die_size: number, die_num: number, mod: number) {
     for (let i = 0; i < die_num; i++) {
         dmgRoll = Math.floor(Math.random() * die_size) + 1;
         finalDmg = finalDmg + dmgRoll;
-        console.log(`dmgRoll`, dmgRoll);
-        console.log(`finalDmg`, finalDmg);
     }
     finalDmg = finalDmg + mod;
     return finalDmg;

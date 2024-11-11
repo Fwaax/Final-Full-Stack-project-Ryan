@@ -3,36 +3,20 @@ import CharacterTabsPanel from './characterTabsPanel'
 import { Skill } from '../Interfaces/apiRespose';
 import { useAtom, useAtomValue } from 'jotai';
 import { coreAttributesAtom, inventoryAtom, levelAtom, proficienciesAtom, skillsAtom } from '../atoms';
-
 const BottomPanel = () => {
     return (
         <div className='flex flex-col xl:flex-row w-full h-[800px] xl:gap-x-4 gap-y-4'>
             <LeftSection />
-
             <MiddleSection />
-
             <RightSection />
         </div>
     )
 }
-
 function LeftSection() {
     const [coreAttributes, setCoreAttributes] = useAtom(coreAttributesAtom);
     const [proficiencies, setProficiencies] = useAtom(proficienciesAtom);
-    console.log(`proficiencies`, proficiencies);
-
-    if (proficiencies) {
-        console.log('proficiencies armor', proficiencies[0].armor);
-        console.log('proficiencies weapons', proficiencies[0].weapons);
-        console.log('proficiencies tools', proficiencies[0].tools);
-        console.log('proficiencies savingThrows', proficiencies[0].savingThrows);
-    } else {
-        console.log('No proficiencies available');
-    }
-
     return (
         <div className='bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col gap-y-7 text-[#bfbfba] border-4 border-[#14151f] border-solid'>
-
             <div className='flex flex-col justify-around gap-2 border border-[#bfbfba] border-solid py-2 bg-[#14151f]' id='saving_throws'>
                 <div className='flex flex-row justify-around'>
                     <div className='flex flex-col flex-[1_1_0%]'>
@@ -49,7 +33,6 @@ function LeftSection() {
                             <p className='flex-[2_2_0%] text-center'>{coreAttributes['CON']}</p>
                         </div>
                     </div>
-
                     <div className='flex flex-col flex-[1_1_0%]'>
                         <div className='flex flex-row gap-x-3 justify-between'>
                             <p className='flex-[3_3_0%] text-center'>INT</p>
@@ -76,9 +59,6 @@ function LeftSection() {
                     </div>
                 </div>
             </div>
-
-            {/* --------------------------MUST ADD AND CHECK PROFICEINCY--------------------------------- */}
-
             <div className='border border-[#bfbfba] border-solid '>
                 <div className='flex flex-col gap-y-2 bg-[#14151f] py-3'>
                     <div className='flex flex-row justify-around'>
@@ -94,15 +74,13 @@ function LeftSection() {
                         <p className='text-center w-[2rem]'>({(Math.floor(10 + ((coreAttributes['WIS']) - 10) / 2))})</p>
                     </div>
                     <div className='flex justify-center'>
-                        <p>Darkvision { } ft.</p>
+                        <p>Darkvision 15 ft.</p>
                     </div>
                     <div className='flex justify-center'>
                         <p>SENSES</p>
                     </div>
                 </div>
             </div>
-
-            {/* ----------------------------------------------------------- */}
 
             <div className='border border-[#bfbfba] border-solid'>
                 <div className='flex flex-col py-2 gap-y-2 bg-[#14151f]'>
@@ -126,14 +104,11 @@ function LeftSection() {
         </div>
     )
 }
-
-
 function formatSkillName(skillKey: string) {
     return skillKey
         .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
         .toUpperCase(); // Convert to uppercase
 }
-
 function MiddleSection() {
     const skill = useAtomValue(skillsAtom);
     const level = useAtomValue(levelAtom);
@@ -149,7 +124,6 @@ function MiddleSection() {
                     <div>MOD</div>
                     <div>BONUS</div>
                 </div>
-
                 {/* Content Table */}
                 <div className="flex flex-col gap-y-3">
                     {Object.entries(skill).map(([skillKey, skillObj], index) => {
@@ -176,41 +150,27 @@ function MiddleSection() {
         </div>
     );
 }
-
-
 function RightSection() {
     const [inventory] = useAtom(inventoryAtom);
     const [coreAttributes] = useAtom(coreAttributesAtom);
-
     const calcInitiative = Math.floor(0 + ((coreAttributes['DEX'] - 10) / 2));
     const displayInitiative = calcInitiative >= 0 ? `+${calcInitiative}` : `${calcInitiative}`;
-
-    // Base AC with no armor
     let calcACNoArmor = Math.floor(10 + ((coreAttributes['DEX'] - 10) / 2));
     if (calcACNoArmor < 10) {
         calcACNoArmor = 10;
     }
-
-    // Initialize totalAC with calcACNoArmor as the base AC
     let totalAC = calcACNoArmor;
-
-    // Track if armor and/or shield were found
     let armorClass = 0;
     let shieldBonus = 0;
-
-    // Check inventory for items with armorClass or armorBonus
     inventory.forEach(item => {
         if (item.armorClass && item.armorClass > armorClass) {
-            armorClass = item.armorClass;  // Armor AC replaces the base AC
+            armorClass = item.armorClass;
         }
         if (item.armorBonus) {
-            shieldBonus += item.armorBonus;  // Shield bonus adds to current total
+            shieldBonus += item.armorBonus;
         }
     });
-
-    // Set totalAC based on whether armor was found
     totalAC = armorClass > 0 ? armorClass + shieldBonus : calcACNoArmor + shieldBonus;
-
     return (
         <div className='bg-[#1d1e2a] h-[800px] w-full flex-[4_4_0%] p-4 rounded-lg border-4 border-[#14151f] border-solid'>
             <div className='flex flex-row gap-x-4 text-center justify-around border border-[#bfbfba] border-solid h-[110px] text-[#bfbfba] bg-[#14151f]' id='initAcResistances'>
@@ -225,15 +185,10 @@ function RightSection() {
                     </div>
                 </div>
             </div>
-
-            {/* ------------------------ Actions and inventory -------------------------- */}
             <div className='flex flex-col gap-y-4'>
                 <CharacterTabsPanel />
             </div>
         </div>
     );
 }
-
-
-
 export default BottomPanel

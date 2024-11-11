@@ -68,7 +68,7 @@ const redDiv = () => {
                     <p>PH</p>
                 </div>
                 <div className='flex justify-center'>
-                    <p>Darkvision { } ft.</p>
+                    <p>Darkvision 15 ft.</p>
                 </div>
                 <div className='flex justify-center'>
                     <p>SENSES</p>

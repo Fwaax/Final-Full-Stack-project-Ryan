@@ -52,7 +52,7 @@ export default function StatsPanel() {
                         </div>
                         <div className='flex flex-col gap-2 items-center justify-center border border-[#bfbfba] p-2 rounded-md w-[100px] bg-[#14151f]'>
                             <h6 className='text-[#bfbfba]'>Speed</h6>
-                            <h6 className='text-gray-400'><span>ft.</span></h6>
+                            <h6 className='text-gray-400'><span>30 ft.</span></h6>
                         </div>
                     </div>
                 </div>

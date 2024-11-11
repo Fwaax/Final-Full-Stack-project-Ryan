@@ -16,7 +16,7 @@ export default function TopPanel(props: { characterId: string | undefined }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/character-edit/${props.characterId}`);  // Navigate to the CharacterEditPage
+        navigate(`/character-edit/${props.characterId}`);
     };
 
     return (
@@ -27,9 +27,6 @@ export default function TopPanel(props: { characterId: string | undefined }) {
                         <div className='flex flex-col'>
                             <div className="flex flex-row gap-x-4">
                                 <h6 className='text-xl text-[#bfbfba]'>{name}</h6>
-                                <button className='text-sm border border-solid border-[#bfbfba] hover:border-[#556b82] rounded-sm px-2 py-1 text-[#bfbfba]'>
-                                    MANAGE
-                                </button>
                             </div>
                             <h6 className="text-sm text-[#bfbfba]">
                                 {`${appearance.gender} ${race} ${classy}`}
@@ -39,11 +36,7 @@ export default function TopPanel(props: { characterId: string | undefined }) {
                     <p className='text-sm text-gray-400'>{`Level ${level}`}</p>
                 </div>
             </div>
-            <div className='w-[350px] h-full flex flex-row justify-center items-center gap-4'>
-                <div className='flex flex-row justify-center items-center border border-[#bfbfba] rounded-sm hover:border-[#556b82] cursor-pointer px-3 py-1'>
-                    <CampfireSvg className="w-[25px]" />
-                    <h6 className='text-[#bfbfba] ml-2'>SHORT REST</h6>
-                </div>
+            <div className='w-[350px] h-full flex flex-row justify-end items-center gap-4'>
                 <div className='flex flex-row justify-center items-center border border-[#bfbfba] rounded-sm hover:border-[#556b82] cursor-pointer px-3 py-1'>
                     <MoonSvg className="w-[25px] h-[15px]" />
                     <h6 className='text-[#bfbfba] ml-2' onClick={() => { setHitPoints({ ...hitPoints, current: hitPoints.max }) }}>LONG REST</h6>

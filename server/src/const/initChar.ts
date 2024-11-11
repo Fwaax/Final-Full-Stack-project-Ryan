@@ -13,8 +13,6 @@ type AdditionalParams = {
 }
 
 export function initChar(charInitalParamsFromFrontend: INewCharacterToSentFromFrontend, requesterId: string) {
-    console.log("initChar", charInitalParamsFromFrontend);
-
     const s1name: string = charInitalParamsFromFrontend.firstSelectedCantrip
     const s2name: string = charInitalParamsFromFrontend.secondSelectedCantrip
 

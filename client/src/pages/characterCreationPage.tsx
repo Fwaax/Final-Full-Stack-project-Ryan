@@ -68,7 +68,6 @@ const CharacterCreationPage: React.FC = () => {
                 return;
             }
             await axios.post('http://localhost:6969/char/new-character', character, { headers: { 'Authorization': token } });
-            console.log("Character created successfully");
             navigate("/character-selection", { state: { refetch: true } });
             toast(`Character created successfully`);
         } catch (error) {

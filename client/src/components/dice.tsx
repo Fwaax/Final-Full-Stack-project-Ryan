@@ -11,9 +11,6 @@ const Dice = () => {
     function handleDimension(value: number, modifier: number) {
         const randomValue = getRandomInt(1, value)
         setDiceResult(randomValue + modifier);
-        console.log(`randomValue`, randomValue);
-        console.log(`modifier`, modifier);
-        console.log(randomValue + modifier);
     }
 
 

@@ -23,7 +23,6 @@ const queryClient = new QueryClient();
 function MainLayout() {
   return (
     <div className="flex flex-col w-full min-h-screen">
-      {/* Header appears on all pages */}
       <Header />
       <ToastContainer
         position="bottom-right"
@@ -33,28 +32,22 @@ function MainLayout() {
         hideProgressBar={true}
       />
       <div className="flex-grow">
-        {/* Outlet is where the child route components will render */}
         <Outlet />
       </div>
     </div>
   );
 }
 
-// ProtectedRoute component to handle route protection
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const { token, loading } = useJwtToken();
 
-  // Wait until loading is complete before making a decision
   if (loading) {
-    return <div>Loading...</div>; // Show a loading spinner or message
+    return <div>Loading...</div>;
   }
 
-  // If the user is not logged in, redirect to the login page
   if (!token) {
     return <Navigate to="/login" />;
   }
-
-  // If the user is logged in, allow access to the child routes
   return children;
 }
 
@@ -63,10 +56,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          {/* Public route for the login page */}
           <Route path="/login" element={<LoginPage />} />
 
-          {/* Protected routes */}
           <Route
             path="/"
             element={
@@ -75,8 +66,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            {/* Define child routes that require authentication */}
-            <Route index element={<HomePage />} /> {/* Default route for "/" */}
+            <Route index element={<HomePage />} />
             <Route path="debug" element={<DebugPage />} />
             <Route path="dice" element={<NumberDNumber />} />
             <Route path="character-creation" element={<CharacterCreationPage />} />

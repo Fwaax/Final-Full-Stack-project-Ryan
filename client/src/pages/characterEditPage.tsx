@@ -75,9 +75,6 @@ const CharacterEditPage: React.FC = () => {
                     { headers: { Authorization: token } }
                 );
                 const data = response.data.data as ICharacterCurrentStateApiResponse;
-                console.log(`Chracter fetched from backend`, data);
-
-                // Populate atoms with character data
                 setName(data.name);
                 setClass(data.class);
                 setRace(data.race);
@@ -102,35 +99,6 @@ const CharacterEditPage: React.FC = () => {
 
     if (loading) return <p>Loading...</p>;
 
-    console.log('Appearance:', appearance);
-    console.log('Hit Points:', hitPoints);
-    console.log(`coreAttributesAtom`, coreAttributesAtom);
-
-
-
-    // Function to handle saving character data
-    // const handleSubmit = async () => {
-    //     const updatedCharacterData = {
-    //         name,
-    //         class: characterClass,
-    //         race,
-    //         level,
-    //         appearance,
-    //         hitPoints,
-    //         allies,
-    //         enemies,
-    //         other,
-    //     };
-    //     try {
-    //         console.log(`updatedCharacterData`, updatedCharacterData);
-    //         await axios.put(`${BACKEND_URL}/char/edit-character/${characterId}`, updatedCharacterData);
-    //         alert('Character updated successfully!');
-    //     } catch (error) {
-    //         console.error("Error updating character:", error);
-    //         alert("Failed to update character.");
-    //     }
-    // };
-
     const handleSubmit = async () => {
         const updatedCharacterData = {
             name,
@@ -145,35 +113,29 @@ const CharacterEditPage: React.FC = () => {
         };
 
         try {
-            const token = localStorage.getItem('token'); // Retrieve token from localStorage
+            const token = localStorage.getItem('token');
             if (!token) {
                 alert('User is not authenticated.');
                 return;
             }
-
-            console.log('updatedCharacterData', updatedCharacterData);
-
             await axios.put(`${BACKEND_URL}/char/edit-character/${characterId}`, updatedCharacterData, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
             alert('Character updated successfully!');
-            navigate(`/character-sheet/${characterId}`); // Navigate to the character-sheet page
+            navigate(`/character-sheet/${characterId}`);
         } catch (error) {
             console.error('Error updating character:', error);
             alert('Failed to update character.');
         }
     };
 
-
-
     return (
         <div className="edit-character-page p-6 text-gray-300 flex flex-col items-center max-w-3xl mx-auto">
             <h1 className="text-2xl font-bold mb-6">Edit Character</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                {/* Name */}
                 <label className="block font-semibold">
                     Name:
                     <input
@@ -182,7 +144,6 @@ const CharacterEditPage: React.FC = () => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </label>
-                {/* Class */}
                 <label className="block font-semibold">
                     Class:
                     <select
@@ -206,7 +167,6 @@ const CharacterEditPage: React.FC = () => {
                         <option value="Wizard">Wizard</option>
                     </select>
                 </label>
-                {/* Race */}
                 <label className="block font-semibold">
                     Race:
                     <select
@@ -225,7 +185,6 @@ const CharacterEditPage: React.FC = () => {
                         <option value="Orc">Orc</option>
                     </select>
                 </label>
-                {/* Level */}
                 <label className="block font-semibold">
                     Level:
                     <input
@@ -235,7 +194,6 @@ const CharacterEditPage: React.FC = () => {
                         onChange={(e) => setLevel(parseInt(e.target.value))}
                     />
                 </label>
-                {/* Appearance Section */}
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Appearance</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -245,7 +203,6 @@ const CharacterEditPage: React.FC = () => {
                                     <label className="mb-1 block">
                                         {field.charAt(0).toUpperCase() + field.slice(1)}:
                                     </label>
-                                    {/* Render select element for specific fields */}
                                     {(field === 'alignment' || field === 'gender' || field === 'faith' || field === 'size') ? (
                                         <select
                                             className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
@@ -272,10 +229,8 @@ const CharacterEditPage: React.FC = () => {
                         )}
                     </div>
                 </div>
-                {/* Hit Points Section */}
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Hit Points</h2>
-                    {/* Render Hit Points fields only if data is available */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {hitPoints ? (
                             (['max'] as (keyof typeof hitPoints)[]).map((field) => (
@@ -284,17 +239,16 @@ const CharacterEditPage: React.FC = () => {
                                     <input
                                         className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
                                         type="number"
-                                        value={hitPoints[field] || 0}  // Ensure no undefined values
+                                        value={hitPoints[field] || 0}
                                         onChange={(e) => setHitPoints({ ...hitPoints, [field]: parseInt(e.target.value) || 0 })}
                                     />
                                 </label>
                             ))
                         ) : (
-                            <p>Loading hit points data...</p>  // Placeholder while loading
+                            <p>Loading hit points data...</p>
                         )}
                     </div>
                 </div>
-                {/* Allies, Enemies, Other */}
                 {['Allies', 'Enemies', 'Other'].map((field) => (
                     <label className="block font-semibold col-span-2" key={field}>
                         {field}:

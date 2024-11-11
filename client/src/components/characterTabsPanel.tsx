@@ -4,14 +4,9 @@ import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import { backgroundAtom, classAtom, levelAtom, nameAtom, raceAtom, inventoryAtom, backstoryAtom, alliesAtom, enemiesAtom, appearanceAtom, otherAtom, spellsAtom } from '../atoms';
 
-// Placeholder components for each tab's content
-
-function ActionsTab() {
-    return <div>Actions content goes here</div>;
-}
 
 function SpellsTab() {
-    const [spells] = useAtom(spellsAtom); // assuming spells is an object
+    const [spells] = useAtom(spellsAtom);
     return (
         <div>
             <div className="border-b-2 border-solid border-[#556b82]">
@@ -29,7 +24,7 @@ function SpellsTab() {
 }
 
 function InventoryTab() {
-    const [inventory] = useAtom(inventoryAtom);  // Access the inventoryAtom
+    const [inventory] = useAtom(inventoryAtom);
     return (
         <div>
             <div className="border-b-2 border-solid border-[#556b82]">
@@ -38,7 +33,6 @@ function InventoryTab() {
             <ul>
                 {inventory.map((item, index) => (
                     <li key={index}>
-                        {/* Adjust to display relevant item properties */}
                         <strong>{item.name}</strong> - {item.description}
                     </li>
                 ))}
@@ -46,7 +40,6 @@ function InventoryTab() {
         </div>
     );
 }
-
 function BackgroundTab() {
     const [background] = useAtom(backgroundAtom);
     const [allies] = useAtom(alliesAtom);
@@ -109,19 +102,13 @@ function NotesTab() {
 }
 
 function CharacterTabsPanel() {
-    // State to manage the active tab
     const [activeTab, setActiveTab] = useState('ACTIONS');
-
-    // Array of tab labels and corresponding components
     const tabs = [
-        { label: 'ACTIONS', component: <ActionsTab /> },
         { label: 'SPELLS', component: <SpellsTab /> },
         { label: 'INVENTORY', component: <InventoryTab /> },
         { label: 'BACKGROUND', component: <BackgroundTab /> },
         { label: 'NOTES', component: <NotesTab /> },
     ];
-
-    // Function to render the active tab's content
     function renderTabContent() {
         const activeTabObject = tabs.find(tab => tab.label === activeTab);
         return activeTabObject ? activeTabObject.component : null;
@@ -146,13 +133,10 @@ function CharacterTabsPanel() {
                     </button>
                 ))}
             </div>
-
-            {/* Tab Content */}
             <div className="tab-content mt-4 p-4 bg-[#14151f] text-[#bfbfba] border border-[#bfbfba] border-solid h-[550px]">
                 {renderTabContent()}
             </div>
         </div>
     );
 }
-
 export default CharacterTabsPanel;
