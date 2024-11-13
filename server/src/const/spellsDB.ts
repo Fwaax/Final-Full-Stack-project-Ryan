@@ -21,7 +21,7 @@ const SpellSchema: Schema = new Schema({
         required: true,
     },
 }, {
-    timestamps: true, // Automatically manage createdAt and updatedAt timestamps
+    timestamps: true,
 });
 
 const Spell = mongoose.model<ISpell>('Spell', SpellSchema);

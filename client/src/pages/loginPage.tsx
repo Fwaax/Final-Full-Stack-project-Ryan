@@ -9,7 +9,7 @@ const LoginPage: React.FC = () => {
     const { saveData } = useJwtToken();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate(); // React Router hook for navigation
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -21,15 +21,9 @@ const LoginPage: React.FC = () => {
                 email,
                 password,
             });
-
             const data = response.data;
-
-            // Save the returned token and user data using the custom hook
             saveData(data);
-
             setLoading(false);
-
-            // Navigate to the character selection page upon successful login
             navigate("/character-selection");
         } catch (err: any) {
             setLoading(false);
@@ -69,7 +63,6 @@ const LoginPage: React.FC = () => {
                             required
                         />
                     </div>
-
                     <button
                         type="submit"
                         className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#bfbfba] bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${loading ? "opacity-50 cursor-not-allowed" : ""
@@ -78,7 +71,6 @@ const LoginPage: React.FC = () => {
                     >
                         {loading ? "Logging in..." : "Login"}
                     </button>
-
                     {error && <p className="mt-4 text-center text-sm text-red-600">{error}</p>}
                 </form>
             </div>

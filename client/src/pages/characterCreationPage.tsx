@@ -71,12 +71,10 @@ const CharacterCreationPage: React.FC = () => {
             navigate("/character-selection", { state: { refetch: true } });
             toast(`Character created successfully`);
         } catch (error) {
-            // Check if the error is an AxiosError and has a response
             if (axios.isAxiosError(error) && error.response) {
                 toast(`Failed to create character: ${error.response.data}`);
                 console.error("Failed to create character:", error.response.data);
             } else {
-                // For any other types of errors
                 toast(`Failed to create character: An unknown error occurred`);
                 console.error("Failed to create character:", error);
             }

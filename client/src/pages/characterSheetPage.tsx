@@ -29,7 +29,6 @@ const CharacterSheetPage = () => {
     const [error, setError] = useState<string | null>(null);
     const [isFetched, setIsFetched] = useState(false);
 
-    // Atom setters
     const setName = useSetAtom(nameAtom);
     const setClass = useSetAtom(classAtom);
     const setRace = useSetAtom(raceAtom);
@@ -50,7 +49,6 @@ const CharacterSheetPage = () => {
     const setSpells = useSetAtom(spellsAtom);
     const setProficiencies = useSetAtom(proficienciesAtom);
 
-    // Atom values
     const name = useAtomValue(nameAtom);
     const characterClass = useAtomValue(classAtom);
     const race = useAtomValue(raceAtom);
@@ -71,7 +69,6 @@ const CharacterSheetPage = () => {
     const spells = useAtomValue(spellsAtom);
     const proficiencies = useAtomValue(proficienciesAtom);
 
-    // Fetch character data with useEffect
     useEffect(() => {
         const fetchCharacter = async () => {
             if (!token) {
@@ -90,7 +87,6 @@ const CharacterSheetPage = () => {
                     { headers: { Authorization: token } }
                 );
                 const data = response.data.data as ICharacterCurrentStateApiResponse;
-                // Populate atoms with character data
                 setName(data.name);
                 setClass(data.class);
                 setRace(data.race);

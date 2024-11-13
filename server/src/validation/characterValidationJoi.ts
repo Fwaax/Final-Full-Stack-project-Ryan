@@ -1,7 +1,6 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 import Joi from 'joi';
 
-// Define skill modifiers
 export const SKILL_MODIFIER: { [key: string]: string } = {
     acrobatics: "DEX",
     animalHandling: "WIS",
@@ -23,7 +22,6 @@ export const SKILL_MODIFIER: { [key: string]: string } = {
     survival: "WIS",
 };
 
-// Enum-like definitions for valid attributes, skills, etc.
 const attributeKeys = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'] as const;
 const skillKeys = [
     'acrobatics', 'animalHandling', 'arcana', 'athletics', 'deception',
@@ -31,17 +29,13 @@ const skillKeys = [
     'nature', 'perception', 'performance', 'persuasion', 'religion',
     'sleightOfHand', 'stealth', 'survival',
 ] as const;
-
 const alignmentValues = [
     "Lawful Good", "Neutral Good", "Chaotic Good",
     "Lawful Neutral", "True Neutral", "Chaotic Neutral",
     "Lawful Evil", "Neutral Evil", "Chaotic Evil", ""
 ] as const;
-
 const sizeValues = ["Small", "Medium", "Large", ""] as const;
-
 const genderValues = ["Male", "Female", ""] as const;
-
 const faithValues = [
     "Torm", "Tyr", "Lathander", "Mystra", "Selûne", "Sune", "Tempus",
     "Kelemvor", "Bane", "Bhaal", "Shar", "Lolth", "Pelor", "Heironeous",
@@ -49,8 +43,6 @@ const faithValues = [
     "Balinor", "Boldrei", "The Devourer", "The Mockery", "Nature",
     "Philosophies", ""
 ] as const;
-
-// Appearance Joi Schema
 const appearanceSchema = Joi.object({
     alignment: Joi.string().valid(...alignmentValues).required(),
     gender: Joi.string().valid(...genderValues).required(),
@@ -63,30 +55,21 @@ const appearanceSchema = Joi.object({
     age: Joi.string().required(),
     weight: Joi.string().required(),
 }).required();
-
-// Core Attributes Joi Schema
 const coreAttributesSchema = Joi.object(
     attributeKeys.reduce((acc, key) => ({ ...acc, [key]: Joi.number().required() }), {})
 ).required();
-
-// Skill Schema for Individual Skills
 const skillSchema = Joi.object({
     modifier: Joi.string().valid(...attributeKeys).required(),
     proficiency: Joi.boolean().required(),
 }).required();
-
-// Skills Joi Schema
 const skillsSchema = Joi.object(
     skillKeys.reduce((acc, key) => ({ ...acc, [key]: skillSchema }), {})
 ).required();
-
-// Hit Points Joi Schema
 const hitPointsSchema = Joi.object({
     max: Joi.number().integer().min(0).required(),
     current: Joi.number().integer().min(0).required(),
     temp: Joi.number().integer().min(0).optional(),
 }).required();
-
 export const newCharacterValidationJoi = Joi.object({
     name: Joi.string().min(1).required(),
     race: Joi.string().min(1).required(),
@@ -113,7 +96,7 @@ export const newCharacterValidationJoi = Joi.object({
     spells: Joi.array().items(Joi.string()).optional(),
     firstSelectedCantrip: Joi.string().allow('').optional(),
     secondSelectedCantrip: Joi.string().allow('').optional(),
-}).unknown(false); // Disallow unknown fields
+}).unknown(false);
 
 export const editCharacterValidationJoi = Joi.object({
     name: Joi.string().min(1).optional(),
@@ -134,7 +117,6 @@ export const editCharacterValidationJoi = Joi.object({
     proficiencyBonus: Joi.number().integer().min(1).optional(),
     hitPoints: hitPointsSchema.optional(),
 
-    // Inventory should be an array of valid Item objects
     inventory: Joi.array().items(
         Joi.object({
             name: Joi.string().min(1).required(),
@@ -152,7 +134,6 @@ export const editCharacterValidationJoi = Joi.object({
         })
     ).optional(),
 
-    // Spells should be an array of valid spell objects
     spells: Joi.array().items(
         Joi.object({
             name: Joi.string().min(1).required(),
@@ -181,7 +162,6 @@ export const editCharacterValidationJoi = Joi.object({
         })
     ).optional(),
 
-    // Proficiencies should be an array of valid Profs objects
     proficiencies: Joi.array().items(
         Joi.object({
             armor: Joi.string().required(),

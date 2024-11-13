@@ -117,7 +117,7 @@ const SkillSchema = new Schema(
         modifier: { type: String, required: true },
         proficiency: { type: Boolean, required: true },
     },
-    { _id: false } // Disable _id field for skill schema
+    { _id: false }
 );
 
 const CharacterAppearanceSchema = new Schema(
@@ -133,7 +133,7 @@ const CharacterAppearanceSchema = new Schema(
         age: { type: String, required: true },
         weight: { type: String, required: true },
     },
-    { _id: false } // Disable _id for appearance schema
+    { _id: false }
 );
 
 const CoreAttributesSchema = new Schema(
@@ -145,7 +145,7 @@ const CoreAttributesSchema = new Schema(
         WIS: { type: Number, required: true },
         CHA: { type: Number, required: true },
     },
-    { _id: false } // Disable _id field for core attributes schema
+    { _id: false }
 );
 
 const SkillsSchema = new Schema(
@@ -157,7 +157,7 @@ const SkillsSchema = new Schema(
             'sleightOfHand', 'stealth', 'survival',
         ].map((skill) => [skill, SkillSchema])
     ),
-    { _id: false } // Disable _id for the entire skills schema
+    { _id: false }
 );
 
 const CharacterSchema: Schema = new Schema({

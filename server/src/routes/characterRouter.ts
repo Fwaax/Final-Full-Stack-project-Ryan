@@ -15,7 +15,6 @@ const characterRouter: Router = express.Router();
 characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;
-        // to do: character model find
         const foundCharacters = await CharacterModel.find({ userId: requesterId });
         if (!foundCharacters || foundCharacters.length === 0) {
             return res.status(404).send({ message: "No characters found." });
@@ -37,9 +36,6 @@ characterRouter.get("/my-character/:id", userGaurd, async (req: Request, res: Re
         res.status(500).send(error);
     }
 });
-
-// Import the CharacterModel at the top of your file
-
 characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;
@@ -52,15 +48,12 @@ characterRouter.post("/new-character", userGaurd, async (req: AuthorizedRequest,
             return res.status(404).send({ message: "User not found." });
         }
         const charFromFrontend: INewCharacterToSentFromFrontend = req.body;
-        // Directly create and save a new character using CharacterModel.create()
         const newCharacterWeAreStoringToDB: ICharacterInDB = initChar(charFromFrontend, requesterId);
         const savedCharacter = await CharacterModel.create(
             newCharacterWeAreStoringToDB
         );
-        // Respond with a success message and the saved character data
         res.status(201).send({ message: "Character created successfully.", data: savedCharacter });
     } catch (error) {
-        // Return a 500 error with a message
         res.status(500).send({ message: "Error creating character.", error });
     }
 });

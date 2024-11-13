@@ -9,17 +9,15 @@ import CharacterSheetPage from "./pages/characterSheetPage";
 import CharacterSelectionPage from "./pages/characterSelectionPage";
 import LoginPage from "./pages/loginPage";
 import Header from "./components/header";
-import { useJwtToken } from "./hooks/useJwtToken"; // Assuming this is your custom hook
+import { useJwtToken } from "./hooks/useJwtToken";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Practice from "./pages/practice";
 import DiceComponent from "./components/diceComponent";
 import NumberDNumber from "./components/numberDNumber";
 import CharacterEditPage from "./pages/characterEditPage";
-// Create a QueryClient instance for react-query
 const queryClient = new QueryClient();
 
-// Main layout component with a header and outlet for rendering pages
 function MainLayout() {
   return (
     <div className="flex flex-col w-full min-h-screen">

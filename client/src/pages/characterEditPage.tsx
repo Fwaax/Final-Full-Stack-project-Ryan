@@ -20,7 +20,6 @@ const CharacterEditPage: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
 
-    // Setters for atoms
     const setName = useSetAtom(nameAtom);
     const setClass = useSetAtom(classAtom);
     const setRace = useSetAtom(raceAtom);
@@ -31,7 +30,6 @@ const CharacterEditPage: React.FC = () => {
     const setEnemies = useSetAtom(enemiesAtom);
     const setOther = useSetAtom(otherAtom);
 
-    // Values for form fields
     const name = useAtomValue(nameAtom);
     const characterClass = useAtomValue(classAtom);
     const race = useAtomValue(raceAtom);
@@ -57,7 +55,6 @@ const CharacterEditPage: React.FC = () => {
         }
     };
 
-    // Load character data on component mount
     useEffect(() => {
         const fetchCharacter = async () => {
             if (!token) {
@@ -96,22 +93,9 @@ const CharacterEditPage: React.FC = () => {
         };
         fetchCharacter();
     }, [characterIdFromUrl, token]);
-
     if (loading) return <p>Loading...</p>;
-
     const handleSubmit = async () => {
-        const updatedCharacterData = {
-            name,
-            class: characterClass,
-            race,
-            level,
-            appearance,
-            hitPoints,
-            allies,
-            enemies,
-            other,
-        };
-
+        const updatedCharacterData = { name, class: characterClass, race, level, appearance, hitPoints, allies, enemies, other, };
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -123,7 +107,6 @@ const CharacterEditPage: React.FC = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-
             alert('Character updated successfully!');
             navigate(`/character-sheet/${characterId}`);
         } catch (error) {
@@ -138,20 +121,11 @@ const CharacterEditPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                 <label className="block font-semibold">
                     Name:
-                    <input
-                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+                    <input className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]" value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
                 <label className="block font-semibold">
                     Class:
-                    <select
-                        name="class"
-                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
-                        value={characterClass}
-                        onChange={(e) => setClass(e.target.value)}
-                    >
+                    <select name="class" className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]" value={characterClass} onChange={(e) => setClass(e.target.value)} >
                         <option value="">Select Class</option>
                         <option value="Barbarian">Barbarian</option>
                         <option value="Bard">Bard</option>
@@ -169,12 +143,7 @@ const CharacterEditPage: React.FC = () => {
                 </label>
                 <label className="block font-semibold">
                     Race:
-                    <select
-                        name="race"
-                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
-                        value={race}
-                        onChange={(e) => setRace(e.target.value)}
-                    >
+                    <select name="race" className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]" value={race} onChange={(e) => setRace(e.target.value)} >
                         <option value="">Select Race</option>
                         <option value="Human">Human</option>
                         <option value="Elf">Elf</option>
@@ -183,17 +152,10 @@ const CharacterEditPage: React.FC = () => {
                         <option value="Halfling">Halfling</option>
                         <option value="Tiefling">Tiefling</option>
                         <option value="Orc">Orc</option>
-                    </select>
-                </label>
+                    </select> </label>
                 <label className="block font-semibold">
                     Level:
-                    <input
-                        type="number"
-                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
-                        value={level}
-                        onChange={(e) => setLevel(parseInt(e.target.value))}
-                    />
-                </label>
+                    <input type="number" className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]" value={level} onChange={(e) => setLevel(parseInt(e.target.value))} /> </label>
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Appearance</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -232,43 +194,12 @@ const CharacterEditPage: React.FC = () => {
                 <div className="col-span-2">
                     <h2 className="text-xl font-semibold mb-3">Hit Points</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {hitPoints ? (
-                            (['max'] as (keyof typeof hitPoints)[]).map((field) => (
-                                <label className="block font-semibold" key={field}>
-                                    {field.charAt(0).toUpperCase() + field.slice(1)} Hit Points:
-                                    <input
-                                        className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]"
-                                        type="number"
-                                        value={hitPoints[field] || 0}
-                                        onChange={(e) => setHitPoints({ ...hitPoints, [field]: parseInt(e.target.value) || 0 })}
-                                    />
-                                </label>
-                            ))
-                        ) : (
-                            <p>Loading hit points data...</p>
-                        )}
-                    </div>
-                </div>
+                        {hitPoints ? ((['max'] as (keyof typeof hitPoints)[]).map((field) => (<label className="block font-semibold" key={field}> {field.charAt(0).toUpperCase() + field.slice(1)} Hit Points: <input className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c]" type="number" value={hitPoints[field] || 0} onChange={(e) => setHitPoints({ ...hitPoints, [field]: parseInt(e.target.value) || 0 })} /> </label>))) : (<p>Loading hit points data...</p>)} </div> </div>
                 {['Allies', 'Enemies', 'Other'].map((field) => (
                     <label className="block font-semibold col-span-2" key={field}>
                         {field}:
-                        <textarea
-                            className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c] resize-none"
-                            value={field === 'Allies' ? allies : field === 'Enemies' ? enemies : other}
-                            onChange={(e) => (field === 'Allies' ? setAllies(e.target.value) : field === 'Enemies' ? setEnemies(e.target.value) : setOther(e.target.value))}
-                        />
-                    </label>
-                ))}
-            </div>
-            <div className="flex justify-center mt-6">
-                <button
-                    className="p-4 rounded-md bg-blue-600 text-gray-300 hover:bg-blue-700 transition duration-200"
-                    onClick={handleSubmit}
-                >
-                    Save
-                </button>
-            </div>
-        </div>
+                        <textarea className="mt-1 block w-full p-2 border border-[#bfbfba] rounded-md bg-[#2a2b3c] resize-none" value={field === 'Allies' ? allies : field === 'Enemies' ? enemies : other} onChange={(e) => (field === 'Allies' ? setAllies(e.target.value) : field === 'Enemies' ? setEnemies(e.target.value) : setOther(e.target.value))} /> </label>))}</div>
+            <div className="flex justify-center mt-6"> <button className="p-4 rounded-md bg-blue-600 text-gray-300 hover:bg-blue-700 transition duration-200" onClick={handleSubmit}>Save</button> </div> </div>
     );
 };
 export default CharacterEditPage;

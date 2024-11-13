@@ -44,5 +44,5 @@ export const filterByKey = (items: Item[], key: keyof Item) => {
     return items.filter(item => item[key] !== undefined);
 };
 
-export const armorItems = filterByKey(ALL_AC_ITEMS, "armorClass"); // Returns only items with `armorClass`
-export const shieldItems = filterByKey(ALL_AC_ITEMS, "armorBonus"); // Returns only items with `armorBonus`
+export const armorItems = filterByKey(ALL_AC_ITEMS, "armorClass");
+export const shieldItems = filterByKey(ALL_AC_ITEMS, "armorBonus");

@@ -21,7 +21,7 @@ export const userGaurd = async (req: any, res: any, next: any) => {
             return res.status(401).send("Unauthorized, invalid token");
         }
         console.log(`decoded JWT`, decoded);
-        req.jwtDecodedUser = decoded; // Attach decoded user info to the request
+        req.jwtDecodedUser = decoded;
         next();
     } catch (error) {
         console.error("Token verification error:", error);

@@ -69,7 +69,6 @@ export default function StatsPanel() {
                     <div className="flex flex-col gap-2 items-center">
                         <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={healHandler}>HEAL</button>
                         <input type="number" placeholder='' className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={inputValue} onChange={(e) => setInputValue(parseInt(e.target.value))} />
-                        {/* <NumericInputWithNumberValue className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={inputValue} setValue={(e) => setInputValue(parseInt(e.target.value))} /> */}
                         <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={damageHandler}>DAMAGE</button>
                     </div>
                     <div className="flex flex-col flex-[6_6_0%]  border border-[#bfbfba] rounded-md p-2 text-[#bfbfba] gap-4 items-center bg-[#14151f]">

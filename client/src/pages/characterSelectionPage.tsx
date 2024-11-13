@@ -19,12 +19,10 @@ const CharacterSelection: React.FC = () => {
             handleDeleteCharacter(characterId);
         }
     };
-    // Check for state passed when navigating
     const shouldRefetch = location.state?.refetch ?? false;
-    // Fetch characters using React Query and the JWT token
     const { data: yourCharacters = [], isLoading, isError, refetch } = useQuery({
-        staleTime: 0,   // Ensure query refetches fresh data
-        gcTime: 0,   // Prevent caching if necessary
+        staleTime: 0,
+        gcTime: 0,
         queryKey: ["yourCharacters", token],
         queryFn: async () => {
             if (!token) {
@@ -44,15 +42,15 @@ const CharacterSelection: React.FC = () => {
                 return [];
             }
         },
-        refetchOnMount: shouldRefetch,  // Force refetch on remount if `refetch` state is true
+        refetchOnMount: shouldRefetch,
     });
 
     const handleSelectCharacter = (characterId: string) => {
-        navigate(`/character-sheet/${characterId}`); // Navigate to the character sheet page
+        navigate(`/character-sheet/${characterId}`);
     };
 
     const handleAddCharacter = () => {
-        navigate("/character-creation"); // Navigate to the character creation page
+        navigate("/character-creation");
     };
 
     const handleDeleteCharacter = async (characterId: string) => {

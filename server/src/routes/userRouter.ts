@@ -6,7 +6,6 @@ import { AuthorizedRequest } from "../interfaces";
 
 const usersRouter: Router = express.Router();
 
-// Search all users that are in the database
 usersRouter.get("/", userGaurd, async (req: Request, res: Response) => {
     try {
         const users = await UserModel.find();
@@ -19,7 +18,6 @@ usersRouter.get("/", userGaurd, async (req: Request, res: Response) => {
     }
 });
 
-// Get one user
 usersRouter.get("/:id", userGaurd, async (req: Request, res: Response) => {
     try {
         const user = await UserModel.findById(req.params.id);
@@ -32,7 +30,6 @@ usersRouter.get("/:id", userGaurd, async (req: Request, res: Response) => {
     }
 });
 
-// Delete one user
 usersRouter.delete("/delete", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;
@@ -46,7 +43,6 @@ usersRouter.delete("/delete", userGaurd, async (req: AuthorizedRequest, res: Res
     }
 });
 
-// Update one user
 usersRouter.put("/update", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;

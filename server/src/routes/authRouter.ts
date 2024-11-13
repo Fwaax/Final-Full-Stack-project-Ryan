@@ -6,18 +6,6 @@ import { UserModel } from "../schema/user";
 
 const authRouter: Router = express.Router();
 
-/**
- * Login
- * Request should be a POST request with the following body:
- * - name: string
- * - password: string
- * e.g. {
- *  "name": "John",
- *  "password": "password"
- *  }
- */
-
-// Added lines 25~38  but not 28~30 -------------------------------------------------------------
 authRouter.post("/by-email", async (req: Request, res: Response) => {
     try {
         const validationResult = LoginValidationJoi.validate(req.body, { allowUnknown: false });
@@ -34,8 +22,6 @@ authRouter.post("/by-email", async (req: Request, res: Response) => {
         if (!user) {
             return res.status(403).send("email or password is incorrect");
         }
-
-
         const loginTokenAndUser = await getLoginTokenByEmailValidation(email, password);
         res.json({ token: loginTokenAndUser.token, user: loginTokenAndUser.user });
     } catch (error) {
@@ -43,7 +29,6 @@ authRouter.post("/by-email", async (req: Request, res: Response) => {
     }
 });
 
-// logout
 authRouter.post("/logout", async (req: Request, res: Response) => {
     try {
         res.send("Logout successful.");
@@ -51,19 +36,5 @@ authRouter.post("/logout", async (req: Request, res: Response) => {
         res.status(500).send(error);
     }
 })
-
-// authRouter.post("/by-username", async (req: Request, res: Response) => {
-//     try {
-//         const { userName, password } = req.body;
-//         if (!userName || !password) {
-//             return res.status(400).send("Missing name or password");
-//         }
-
-//         const loginTokenAndUser = await getLoginTokenByUsernameValidation(userName, password);
-//         res.json({ token: loginTokenAndUser.token, user: loginTokenAndUser.user });
-//     } catch (error) {
-//         res.status(500).send(error);
-//     }
-// });
 
 export default authRouter;

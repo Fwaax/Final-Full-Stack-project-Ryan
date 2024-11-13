@@ -10,10 +10,8 @@ import registerRouter from "./routes/registerRouter";
 import characterRouter from "./routes/characterRouter";
 
 export async function startExpressServer() {
-    // Create Express app
     const app: Express = express();
 
-    // Connect to db
     if (!DB_CONNECTION_URL) {
         console.error(`\x1b[31mDB_CONNECTION_URL is not defined, go to .env file and define it.
         You can try using ${DEFAULT_CONNECTION_URL}.\x1b[0m`);
@@ -21,20 +19,9 @@ export async function startExpressServer() {
     }
     await mongoose.connect(DB_CONNECTION_URL, {});
 
-    // Middleware to parse JSON bodies
     app.use(express.json());
-
-    // Enable CORS for all routes
     app.use(cors());
-
-    // Log all requests and responses
     app.use(morgan(colorfulMorganFormat));
-
-    /**
-     * Check if the server is alive
-     * Request should be a GET request
-     * e.g. /
-     */
     app.get("/", (req: Request, res: Response) => {
         res.send("Alive!");
     });

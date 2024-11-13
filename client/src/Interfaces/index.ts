@@ -46,6 +46,4 @@ export interface CharacterAppearance {
     age: string;
     weight: string;
 }
-
-// Create a type for the ability score keys
 export type AbilityScore = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';

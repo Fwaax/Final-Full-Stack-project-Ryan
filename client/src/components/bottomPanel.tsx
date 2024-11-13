@@ -106,8 +106,8 @@ function LeftSection() {
 }
 function formatSkillName(skillKey: string) {
     return skillKey
-        .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
-        .toUpperCase(); // Convert to uppercase
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .toUpperCase();
 }
 function MiddleSection() {
     const skill = useAtomValue(skillsAtom);
@@ -116,7 +116,6 @@ function MiddleSection() {
     const calcProficiency = Math.ceil((level / 4) + 1);
     return (
         <div className="bg-[#1d1e2a] h-[800px] w-full flex-[2_2_0%] p-4 rounded-lg flex flex-col border-4 border-[#14151f] border-solid">
-            {/* Header Table */}
             <div className='bg-[#14151f] p-2 border border-[#bfbfba] border-solid'>
                 <div className="grid grid-cols-[1fr_3fr_3fr_1fr] w-full text-center underline mb-4 text-[#bfbfba] font-semibold ">
                     <div>PROF</div>
@@ -124,7 +123,6 @@ function MiddleSection() {
                     <div>MOD</div>
                     <div>BONUS</div>
                 </div>
-                {/* Content Table */}
                 <div className="flex flex-col gap-y-3">
                     {Object.entries(skill).map(([skillKey, skillObj], index) => {
                         const modifierValueOfCurrentSkill = coreAttributes[skillObj.modifier];

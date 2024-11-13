@@ -50,7 +50,6 @@ const redDiv = () => {
 
                 </div>
             </div>
-            {/* ----------------------------------------------------------- */}
             <div className='grid grid-rows-3 gap-4 w-[30%] justify-center'>
                 <div className='flex flex-row gap-x-3 justify-around'>
                     <p>•</p>
@@ -74,8 +73,6 @@ const redDiv = () => {
                     <p>SENSES</p>
                 </div>
             </div>
-
-            {/* ------------------------------------------------ */}
 
             <div className='grid grid-cols-1 gap-4 w-[30%] justify-center'>
                 <div className='flex flex-col items-center'>
