@@ -34,8 +34,8 @@ export default function StatsPanel() {
 
     return (
         <div className='flex flex-row bg-[#1d1e2a] p-4 shadow-lg border-4 border-[#14151f] border-solid'>
-            <div className="flex flex-row gap-4 items-center flex-[4_4_0%] justify-center">
-                <div className='h-full flex flex-row gap-4 items-center flex-[4_4_0%] justify-center text-[#bfbfba]'>
+            <div className="flex flex-row flex-wrap gap-4 items-center flex-[4_4_0%] justify-center">
+                <div className='h-fit flex flex-row gap-4 items-center flex-[4_4_0%] justify-center text-[#bfbfba]'>
                     {Object.entries(coreAttributes).map((stat) => {
                         const [attrKey, attrValue] = stat;
                         const calcModifier = Math.floor((attrValue - 10) / 2);
@@ -56,7 +56,7 @@ export default function StatsPanel() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-row flex-[6_6_0%] justify-center  gap-4'>
+                <div className='flex flex-row flex-[3_3_0%] justify-center gap-4'>
                     <div className="flex flex-col gap-2 justify-center items-center border border-[#bfbfba] px-2 rounded-md bg-[#14151f]" onClick={() => setIsInspired(!isInspired)}>
                         <button className="h-[30px] w-[30px] flex justify-center items-center" >
                             <DragonSvg className={clsx("w-[30px] h-[30px]", isInspired ? "visible" : "hidden")} />
@@ -71,7 +71,7 @@ export default function StatsPanel() {
                         <input type="number" placeholder='' className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={inputValue} onChange={(e) => setInputValue(parseInt(e.target.value))} />
                         <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={damageHandler}>DAMAGE</button>
                     </div>
-                    <div className="flex flex-col flex-[6_6_0%]  border border-[#bfbfba] rounded-md p-2 text-[#bfbfba] gap-4 items-center bg-[#14151f]">
+                    <div className="flex flex-col border border-[#bfbfba] rounded-md p-2 text-[#bfbfba] gap-4 items-center bg-[#14151f]">
                         <div>
                             <p>HIT POINTS</p>
                         </div>
@@ -93,7 +93,6 @@ export default function StatsPanel() {
                                 <p>{hp.temp}</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

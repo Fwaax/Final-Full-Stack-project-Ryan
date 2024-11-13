@@ -123,7 +123,7 @@ export const editCharacterValidationJoi = Joi.object({
             quantity: Joi.number().integer().min(1).required(),
             weight: Joi.number().required(),
             description: Joi.string().allow('').optional(),
-            cost: Joi.string().optional(),
+            cost: Joi.string().allow('').optional(),
             isActivatable: Joi.boolean().required(),
             numberOfCharges: Joi.number().integer().optional(),
             dmgDice: Joi.string().optional(),
