@@ -6,9 +6,7 @@ import { UserSignupValidationJoi, LoginValidationJoi } from "../validation/valid
 import { error, log } from "console";
 
 const registerRouter: Router = express.Router();
-
 registerRouter.post("/register", async (req: Request, res: Response) => {
-
     try {
         const validationResult = UserSignupValidationJoi.validate(req.body, { allowUnknown: false });
         if (validationResult.error) {
@@ -29,8 +27,6 @@ registerRouter.post("/register", async (req: Request, res: Response) => {
         }
         res.status(500).send("Failed to register user.");
     }
-
-
 });
 
 export default registerRouter;

@@ -16,6 +16,7 @@ import Practice from "./pages/practice";
 import DiceComponent from "./components/diceComponent";
 import NumberDNumber from "./components/numberDNumber";
 import CharacterEditPage from "./pages/characterEditPage";
+import SignupPage from "./pages/signupPage";
 const queryClient = new QueryClient();
 
 function MainLayout() {
@@ -55,7 +56,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-
+          <Route path="register" element={<SignupPage />} />
           <Route
             path="/"
             element={
@@ -67,6 +68,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="debug" element={<DebugPage />} />
             <Route path="dice" element={<NumberDNumber />} />
+
             <Route path="character-creation" element={<CharacterCreationPage />} />
             <Route path="character-selection" element={<CharacterSelectionPage />} />
             <Route path="character-edit/:characterId" element={<CharacterEditPage />} />

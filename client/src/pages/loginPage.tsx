@@ -31,6 +31,11 @@ const LoginPage: React.FC = () => {
         }
     };
 
+    const handleSignup = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        navigate("/register");
+    };
+
     return (
         <div className="flex h-screen items-center justify-center bg-gray-900">
             <div className="bg-gray-600 p-8 rounded-lg shadow-md w-full max-w-sm">
@@ -73,8 +78,12 @@ const LoginPage: React.FC = () => {
                     </button>
                     {error && <p className="mt-4 text-center text-sm text-red-600">{error}</p>}
                 </form>
-            </div>
-        </div>
+                <div className="mt-4 text-center">
+                    <p className="text-[#bfbfba]">Don't have an account?</p>
+                    <button type="button" className="text-green-500 hover:underline" onClick={handleSignup}>Sign Up</button>
+                </div>
+            </div >
+        </div >
     );
 };
 
