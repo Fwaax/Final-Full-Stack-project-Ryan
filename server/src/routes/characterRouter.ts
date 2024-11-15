@@ -16,12 +16,12 @@ characterRouter.get("/all-my-characters", userGaurd, async (req: AuthorizedReque
     try {
         const requesterId = req.jwtDecodedUser.id;
         const foundCharacters = await CharacterModel.find({ userId: requesterId });
-        if (!foundCharacters || foundCharacters.length === 0) {
-            return res.status(404).send({ message: "No characters found." });
-        }
-        res.status(200).send({ message: "Characters fetched successfully.", data: foundCharacters });
+        res.status(200).send({
+            message: "Characters fetched successfully.",
+            data: foundCharacters || [],
+        });
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({ message: "Failed to fetch characters.", error });
     }
 });
 

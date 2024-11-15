@@ -39,7 +39,7 @@ const NumberDNumber = () => {
             <main className="flex-grow flex flex-col items-center justify-start p-4">
                 <h1 className="text-[#bfbfba] text-2xl mb-6">Roll your luck!</h1>
                 <div className="flex flex-col gap-5 items-center">
-                    <div className='flex flex-row gap-3'>
+                    <div className="flex flex-row flex-wrap sm:gap-3 gap-2 justify-center">
                         {DICE_SIDES.map((d, i) => (
                             <button
                                 key={i}
@@ -50,8 +50,8 @@ const NumberDNumber = () => {
                             </button>
                         ))}
                     </div>
-                    <div className="flex flex-row gap-3 mt-4">
-                        <div className="flex flex-col">
+                    <div className="flex flex-row flex-wrap gap-3 mt-4 justify-center">
+                        <div className="flex flex-col w-full sm:w-auto">
                             <label htmlFor="modifier" className="text-[#bfbfba]">
                                 Modifier:
                             </label>
@@ -63,7 +63,7 @@ const NumberDNumber = () => {
                                 onChange={(e) => setMod(Number(e.target.value))}
                             />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col w-full sm:w-auto">
                             <label htmlFor="numberOfRolls" className="text-[#bfbfba]">
                                 Number of Dices
                             </label>
@@ -89,6 +89,7 @@ const NumberDNumber = () => {
                 )}
             </main>
         </div>
+
     );
 };
 
