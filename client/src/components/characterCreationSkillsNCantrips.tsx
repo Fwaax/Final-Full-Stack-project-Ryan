@@ -66,7 +66,6 @@ export default function CharacterCreationSkillsNCantrips(props: {
         }))
     };
 
-    // Auto-select initial cantrips based on class
     useEffect(() => {
         if (character.class) {
             setCharacter(prev => ({
@@ -80,7 +79,6 @@ export default function CharacterCreationSkillsNCantrips(props: {
     return (
         <>
             <div>
-                {/* picking 2 skills for the class */}
                 <h6>Choose 2 skills for your {character.class}</h6>
                 <div>
                     <label htmlFor="firstSelectedSkill" className="font-semibold">Skill 1</label>
@@ -130,7 +128,6 @@ export default function CharacterCreationSkillsNCantrips(props: {
 
             {classesWithCantrips.includes(character.class) && (
                 <div>
-                    {/* Picking 2 cantrips for the class */}
                     <h6>Choose 2 cantrips for your {character.class}</h6>
                     <div>
                         <label htmlFor="firstSelectedCantrip" className="font-semibold">Cantrip 1</label>

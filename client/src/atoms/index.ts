@@ -7,7 +7,6 @@ export const raceAtom = atom<string>('');
 export const levelAtom = atom<number>(1);
 export const backgroundAtom = atom<string>('');
 
-// Appearance
 export const appearanceAtom = atom({
     alignment: '',
     gender: '',
@@ -21,7 +20,6 @@ export const appearanceAtom = atom({
     weight: '',
 });
 
-// Core attributes
 export const coreAttributesAtom = atom<Record<AttributeKey, number>>({
     STR: 10,
     DEX: 10,
@@ -52,7 +50,6 @@ export const skillsAtom = atom<Record<SkillKey, Skill>>({
     survival: { modifier: "WIS", proficiency: false },
 } as Record<SkillKey, Skill>);
 
-// Hit points
 export const hitPointsAtom = atom({
     max: 10,
     current: 10,
@@ -64,7 +61,6 @@ export type Item = { name: string, quantity: number, weight: number, description
 export type Spells = { name: string, damageRoll?: string, damageType?: string, savingThrow?: string, hitRoll?: string, shape?: string, size?: string, damageInstances?: number, spellSlot?: number, discription: string, range?: string, duration?: string, effect?: string, action: string, classAvailability: string, school: string, castingTime?: string, concentration?: boolean, ritual?: boolean, verbalComponents?: boolean, somaticComponents?: boolean, materialComponents?: boolean, higherLevelScaling?: boolean };
 
 export type Profs = { armor: string, weapons: string, tools: string, savingThrows: string };
-// Other character details
 export const alliesAtom = atom<string>('');
 export const enemiesAtom = atom<string>('');
 export const backstoryAtom = atom<string>('');

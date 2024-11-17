@@ -70,14 +70,13 @@ function BackgroundTab() {
                 <div className="border-b-2 border-solid border-[#556b82]">
                     <strong className='text-[#556b82]'><h2>Appearance</h2></strong>
                 </div>
-                <p><ul className='flex flex-row'>
+                <div><ul className='flex flex-col flex-wrap'>
                     {Object.entries(appearance).map(([key, item]) => (
                         <li key={key}>
-                            {/* Adjust to display relevant item properties */}
-                            <strong>{key}</strong> {item}
+                            <strong>{key}</strong> - {item}
                         </li>
                     ))}
-                </ul></p>
+                </ul></div>
             </div>
             <div>
                 <div className="border-b-2 border-solid border-[#556b82]">
@@ -116,13 +115,12 @@ function CharacterTabsPanel() {
 
     return (
         <div className="flex flex-col w-full">
-            {/* Tabs Navigation */}
-            <div className="flex justify-around bg-[#1d1e2a] m-2 border border-[#bfbfba] border-solid">
+            <div className="flex flex-wrap justify-around gap-2 bg-[#1d1e2a] m-2 border border-[#bfbfba] border-solid p-2">
                 {tabs.map((tab) => (
                     <button
                         key={tab.label}
                         className={clsx(
-                            'px-4 py-2 transition-colors duration-300',
+                            'px-4 py-2 text-sm sm:text-base flex-1 sm:flex-none transition-colors duration-300 text-center',
                             activeTab === tab.label
                                 ? 'bg-[#556b82] text-[#bfbfba]'
                                 : 'bg-[#1a1b26] text-[#bfbfba] hover:bg-[#14151f]'

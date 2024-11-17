@@ -15,8 +15,8 @@ function Header() {
     return (
         <header className="bg-[#14151f] text-[#bfbfba] p-4">
             <div className="flex flex-row justify-between">
-                <div className="">
-                    <div className="flex  sm:w-auto">
+                <div>
+                    <div className="flex sm:w-auto">
                         <button
                             className="sm:hidden text-[#bfbfba] focus:outline-none"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -37,20 +37,23 @@ function Header() {
                             </svg>
                         </button>
                     </div>
-                    {/* Navigation Links */}
                     <nav
-                        className={`${isMenuOpen ? "block" : "hidden"
-                            } sm:flex flex-col sm:flex-row sm:space-x-4 mt-4 sm:mt-0`}
+                        className={`flex flex-col gap-3 items-center ${isMenuOpen ? "block" : "hidden"} sm:flex-row`}
                     >
-                        <Link to="/character-creation" className="hover:underline">
+                        <Link
+                            to="/character-creation"
+                            className="hover:underline"
+                        >
                             Character Creation
                         </Link>
-                        <Link to="/character-selection" className="hover:underline">
+                        <Link
+                            to="/character-selection"
+                            className="hover:underline"
+                        >
                             Character Selection
                         </Link>
                     </nav>
                 </div>
-                {/* User Links */}
                 <div className="hidden sm:flex items-center space-x-4">
                     {token && user ? (
                         <>
@@ -72,10 +75,8 @@ function Header() {
                     )}
                 </div>
             </div>
-            {/* User Links in Menu */}
             <div
-                className={`${isMenuOpen ? "block" : "hidden"
-                    } sm:hidden mt-4 flex flex-col space-y-2`}
+                className={`${isMenuOpen ? "block" : "hidden"} sm:hidden mt-4 flex flex-col space-y-2`}
             >
                 {token && user ? (
                     <>
@@ -97,6 +98,7 @@ function Header() {
                 )}
             </div>
         </header>
+
     );
 }
 

@@ -33,69 +33,101 @@ export default function StatsPanel() {
     }
 
     return (
-        <div className='flex flex-row bg-[#1d1e2a] p-4 shadow-lg border-4 border-[#14151f] border-solid'>
-            <div className="flex flex-row flex-wrap gap-4 items-center flex-[4_4_0%] justify-center">
-                <div className='h-fit flex flex-row gap-4 items-center flex-[4_4_0%] justify-center text-[#bfbfba]'>
-                    {Object.entries(coreAttributes).map((stat) => {
-                        const [attrKey, attrValue] = stat;
-                        const calcModifier = Math.floor((attrValue - 10) / 2);
-                        const displayModifier = calcModifier >= 0 ? `+${calcModifier}` : `${calcModifier}`;
-                        return <CoreStatCard name={attrKey} key={attrKey} modifier={displayModifier} currentStat={attrValue} />
-                    })}
+        <div className="flex flex-row flex-wrap bg-[#1d1e2a] p-4 shadow-lg border-4 border-[#14151f] border-solid gap-4 2xl:flex-row sm:flex-wrap md:flex-col">
+            <div className="flex flex-wrap gap-4 items-center justify-center flex-[4_4_0%] text-[#bfbfba]">
+                {Object.entries(coreAttributes).map(([attrKey, attrValue]) => {
+                    const calcModifier = Math.floor((attrValue - 10) / 2);
+                    const displayModifier = calcModifier >= 0 ? `+${calcModifier}` : `${calcModifier}`;
+                    return (
+                        <CoreStatCard
+                            name={attrKey}
+                            key={attrKey}
+                            modifier={displayModifier}
+                            currentStat={attrValue}
+                        />
+                    );
+                })}
+            </div>
+
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 items-center justify-center w-full sm:w-auto">
+                <div className="flex flex-col items-center gap-2 border border-[#bfbfba] p-2 rounded-md w-[100px] bg-[#14151f]">
+                    <h6 className="text-[#bfbfba]">Proficiency</h6>
+                    <h6 className="text-[#bfbfba]">Bonus</h6>
+                    <h6>{displayProficiency}</h6>
                 </div>
-                <div className="flex flex-col w-[300px]">
-                    <div className='flex flex-row flex-[3_3_0%] justify-around h-full'>
-                        <div className=' flex flex-col gap-2 items-center justify-center border border-[#bfbfba] p-2 rounded-md w-[100px] bg-[#14151f]'>
-                            <h6 className='text-[#bfbfba]'>Proficiency</h6>
-                            <h6 className='text-[#bfbfba]'>Bonus</h6>
-                            <h6>{displayProficiency}</h6>
-                        </div>
-                        <div className='flex flex-col gap-2 items-center justify-center border border-[#bfbfba] p-2 rounded-md w-[100px] bg-[#14151f]'>
-                            <h6 className='text-[#bfbfba]'>Speed</h6>
-                            <h6 className='text-gray-400'><span>30 ft.</span></h6>
-                        </div>
+                <div className="flex flex-col items-center gap-2 h-[105px] border border-[#bfbfba] p-2 rounded-md w-[100px] bg-[#14151f]">
+                    <h6 className="text-[#bfbfba]">Speed</h6>
+                    <h6 className="text-gray-400">
+                        <span>30 ft.</span>
+                    </h6>
+                </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center w-full sm:w-auto items-center">
+                <div
+                    className="flex flex-col h-[105px] items-center border border-[#bfbfba] p-2 rounded-md bg-[#14151f] gap-2"
+                    onClick={() => setIsInspired(!isInspired)}
+                >
+                    <button className="h-[30px] w-[30px] flex justify-center items-center">
+                        <DragonSvg
+                            className={clsx(
+                                "w-[30px] h-[30px]",
+                                isInspired ? "visible" : "hidden"
+                            )}
+                        />
+                    </button>
+                    <div className="flex flex-col items-center bg-[#14151f]">
+                        <span className="text-xs text-[#bfbfba]">HEROIC</span>
+                        <span className="text-xs text-[#bfbfba]">INSPIRATION</span>
                     </div>
                 </div>
-                <div className='flex flex-row flex-[3_3_0%] justify-center gap-4'>
-                    <div className="flex flex-col gap-2 justify-center items-center border border-[#bfbfba] px-2 rounded-md bg-[#14151f]" onClick={() => setIsInspired(!isInspired)}>
-                        <button className="h-[30px] w-[30px] flex justify-center items-center" >
-                            <DragonSvg className={clsx("w-[30px] h-[30px]", isInspired ? "visible" : "hidden")} />
-                        </button>
-                        <div className="flex flex-col items-center bg-[#14151f]">
-                            <span className="text-xs text-[#bfbfba]">HEROIC</span>
-                            <span className="text-xs text-[#bfbfba]">INSPIRATION</span>
-                        </div>
+
+                <div className="flex flex-col gap-2 items-center">
+                    <button
+                        className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]"
+                        onClick={healHandler}
+                    >
+                        HEAL
+                    </button>
+                    <input
+                        type="number"
+                        placeholder=""
+                        className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(parseInt(e.target.value))}
+                    />
+                    <button
+                        className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]"
+                        onClick={damageHandler}
+                    >
+                        DAMAGE
+                    </button>
+                </div>
+
+                <div className="flex flex-col border h-fit border-[#bfbfba] rounded-md p-2 text-[#bfbfba] gap-4 items-center bg-[#14151f]">
+                    <div>
+                        <p>HIT POINTS</p>
                     </div>
-                    <div className="flex flex-col gap-2 items-center">
-                        <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={healHandler}>HEAL</button>
-                        <input type="number" placeholder='' className="w-[80px] border border-[#bfbfba] rounded-sm text-[#bfbfba] bg-[#14151f] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={inputValue} onChange={(e) => setInputValue(parseInt(e.target.value))} />
-                        <button className="text-sm border border-[#bfbfba] rounded-sm px-2 py-1 text-[#bfbfba] w-[80px] bg-[#14151f]" onClick={damageHandler}>DAMAGE</button>
-                    </div>
-                    <div className="flex flex-col border border-[#bfbfba] rounded-md p-2 text-[#bfbfba] gap-4 items-center bg-[#14151f]">
-                        <div>
-                            <p>HIT POINTS</p>
+                    <div className="flex flex-row justify-center gap-3">
+                        <div className="flex flex-col items-center">
+                            <p>Current</p>
+                            <p>{hp.current}</p>
                         </div>
-                        <div className="flex flex-row justify-center gap-3 ">
-                            <div className="flex flex-col items-center">
-                                <p>Current</p>
-                                <p>{hp.current}</p>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <p>{invisibleSpace}</p>
-                                <p>/</p>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <p>Max</p>
-                                <p>{hp.max}</p>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <p>Temp</p>
-                                <p>{hp.temp}</p>
-                            </div>
+                        <div className="flex flex-col items-center">
+                            <p>/</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <p>Max</p>
+                            <p>{hp.max}</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <p>Temp</p>
+                            <p>{hp.temp}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     );
 }

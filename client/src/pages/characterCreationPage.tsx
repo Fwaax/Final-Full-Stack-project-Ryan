@@ -120,7 +120,6 @@ const CharacterCreationPage: React.FC = () => {
             secondSelectedCantrip: '',
         });
     };
-    // Helper function for handling ability score changes
     const handleAbilityChange = (ability: AbilityScore, value: number) => {
         setCharacter({ ...character, [ability]: value });
     };

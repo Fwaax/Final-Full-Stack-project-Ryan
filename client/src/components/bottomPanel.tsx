@@ -170,7 +170,8 @@ function RightSection() {
     });
     totalAC = armorClass > 0 ? armorClass + shieldBonus : calcACNoArmor + shieldBonus;
     return (
-        <div className='bg-[#1d1e2a] h-[800px] w-full flex-[4_4_0%] p-4 rounded-lg border-4 border-[#14151f] border-solid'>
+        <div className="bg-[#1d1e2a] 2xl:h-full w-full flex-[4_4_0%] p-4 rounded-lg border-4 border-[#14151f] border-solid md:h-fit">
+
             <div className='flex flex-row gap-x-4 text-center justify-around border border-[#bfbfba] border-solid h-[110px] text-[#bfbfba] bg-[#14151f]' id='initAcResistances'>
                 <div className='flex flex-row gap-x-10 items-center'>
                     <div>

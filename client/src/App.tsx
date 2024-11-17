@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
 
-// Import your pages
 import DebugPage from "./pages/debugPage";
 import HomePage from "./pages/homePage";
 import CharacterCreationPage from "./pages/characterCreationPage";
