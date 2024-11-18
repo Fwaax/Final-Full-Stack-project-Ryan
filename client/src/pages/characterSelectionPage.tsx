@@ -87,18 +87,24 @@ const CharacterSelection: React.FC = () => {
         );
     }
 
+    const handleEditAccount = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        navigate("/account-edit");
+    };
+
     return (
         <div className="min-h-screen bg-[#1d1e2a]">
             <main className="container mx-auto py-12 px-4">
                 <h2 className="text-3xl font-semibold text-center mb-8 text-[#bfbfba]">Select Your Character</h2>
 
-                <div className="text-right mb-4">
+                <div className="text-right mb-4 flex flex-row justify-between">
                     <button
                         onClick={handleAddCharacter}
                         className="bg-[#556b82] text-[#bfbfba] py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
                     >
                         Add Character
                     </button>
+                    <div onClick={handleEditAccount} className="mt-4 text-center text-[#bfbfba] cursor-pointer">Change Password</div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

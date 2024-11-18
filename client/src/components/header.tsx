@@ -15,10 +15,12 @@ function Header() {
     return (
         <header className="bg-[#14151f] text-[#bfbfba] p-4">
             <div className="flex flex-row justify-between">
+                {/* Left Section */}
                 <div>
-                    <div className="flex sm:w-auto">
+                    {/* Hamburger Button (Small Screens Only) */}
+                    <div className="flex sm:hidden">
                         <button
-                            className="sm:hidden text-[#bfbfba] focus:outline-none"
+                            className="text-[#bfbfba] focus:outline-none"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
                             <svg
@@ -32,28 +34,31 @@ function Header() {
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                     strokeWidth={2}
-                                    d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                                    d={
+                                        isMenuOpen
+                                            ? "M6 18L18 6M6 6l12 12" // Cross Icon
+                                            : "M4 6h16M4 12h16M4 18h16" // Hamburger Icon
+                                    }
                                 />
                             </svg>
                         </button>
                     </div>
+
+                    {/* Navigation Links */}
                     <nav
-                        className={`flex flex-col gap-3 items-center ${isMenuOpen ? "block" : "hidden"} sm:flex-row`}
+                        className={`flex flex-col gap-3 items-center ${isMenuOpen ? "block" : "hidden"
+                            } sm:flex sm:flex-row`}
                     >
-                        <Link
-                            to="/character-creation"
-                            className="hover:underline"
-                        >
+                        <Link to="/character-creation" className="hover:underline">
                             Character Creation
                         </Link>
-                        <Link
-                            to="/character-selection"
-                            className="hover:underline"
-                        >
+                        <Link to="/character-selection" className="hover:underline">
                             Character Selection
                         </Link>
                     </nav>
                 </div>
+
+                {/* Right Section */}
                 <div className="hidden sm:flex items-center space-x-4">
                     {token && user ? (
                         <>
@@ -75,8 +80,11 @@ function Header() {
                     )}
                 </div>
             </div>
+
+            {/* Mobile View for Auth Buttons */}
             <div
-                className={`${isMenuOpen ? "block" : "hidden"} sm:hidden mt-4 flex flex-col space-y-2`}
+                className={`${isMenuOpen ? "block" : "hidden"
+                    } sm:hidden mt-4 flex flex-col space-y-2`}
             >
                 {token && user ? (
                     <>

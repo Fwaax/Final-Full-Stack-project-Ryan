@@ -3,6 +3,8 @@ import express, { Request, Response, Router } from "express";
 import { UserModel } from "../schema/user";
 import { userGaurd } from "../gaurd/userGaurd";
 import { AuthorizedRequest } from "../interfaces";
+import { hashPassword } from "../utils";
+import bcrypt from "bcrypt";
 
 const usersRouter: Router = express.Router();
 
@@ -46,10 +48,25 @@ usersRouter.delete("/delete", userGaurd, async (req: AuthorizedRequest, res: Res
 usersRouter.put("/update", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const requesterId = req.jwtDecodedUser.id;
-        const updatedUser = await UserModel.findByIdAndUpdate(requesterId, req.body, { new: true });
-        if (!updatedUser) {
+        console.log(`requesterId`, requesterId);
+        console.log(`req.body`, req.body);
+
+        const user = (await UserModel.findById(requesterId).select("+hashedPassword"));
+        if (!user) {
             return res.status(404).send({ message: "User not found." });
         }
+
+        const passwordMatch: boolean = await bcrypt.compare(
+            req.body.currentPassword,
+            user.hashedPassword
+        );
+        if (!passwordMatch) {
+            return res.status(403).send({ message: "Current password is incorrect." });
+        }
+        const newHashedPassword = hashPassword(req.body.newPassword);
+        user.hashedPassword = newHashedPassword;
+        const updatedUser = await user.save();
+
         res.status(200).send({ message: "User updated successfully.", data: updatedUser });
     } catch (error) {
         res.status(500).send({ message: "Error updating user.", error });
