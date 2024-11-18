@@ -36,7 +36,6 @@ const CreationStatRoll: React.FC = () => {
                     Roll
                 </button>
             </div>
-
             <div className="flex flex-wrap gap-3 justify-center">
                 {statRoll.map((roll, index) => (
                     <div
