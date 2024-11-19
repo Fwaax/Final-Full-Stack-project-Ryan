@@ -1,4 +1,3 @@
-// routes.ts
 import express, { Request, Response, Router } from "express";
 import { getLoginTokenByEmailValidation } from "../logic";
 import { EMAIL_REGEX, PASSWORD_REGEX, LoginValidationJoi } from "../validation/validationJoi";

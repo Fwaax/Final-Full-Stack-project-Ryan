@@ -15,9 +15,7 @@ function Header() {
     return (
         <header className="bg-[#14151f] text-[#bfbfba] p-4">
             <div className="flex flex-row justify-between">
-                {/* Left Section */}
                 <div>
-                    {/* Hamburger Button (Small Screens Only) */}
                     <div className="flex sm:hidden">
                         <button
                             className="text-[#bfbfba] focus:outline-none"
@@ -43,8 +41,6 @@ function Header() {
                             </svg>
                         </button>
                     </div>
-
-                    {/* Navigation Links */}
                     <nav
                         className={`flex flex-col gap-3 items-center ${isMenuOpen ? "block" : "hidden"
                             } sm:flex sm:flex-row`}
@@ -57,8 +53,6 @@ function Header() {
                         </Link>
                     </nav>
                 </div>
-
-                {/* Right Section */}
                 <div className="hidden sm:flex items-center space-x-4">
                     {token && user ? (
                         <>
@@ -80,8 +74,6 @@ function Header() {
                     )}
                 </div>
             </div>
-
-            {/* Mobile View for Auth Buttons */}
             <div
                 className={`${isMenuOpen ? "block" : "hidden"
                     } sm:hidden mt-4 flex flex-col space-y-2`}

@@ -80,7 +80,6 @@ characterRouter.delete("/delete-character", userGaurd, async (req: AuthorizedReq
     }
 });
 
-// edit character
 characterRouter.put("/edit-character/:id", userGaurd, async (req: AuthorizedRequest, res: Response) => {
     try {
         const sentCharacterId = req.params.id;
